@@ -62,12 +62,12 @@ signupForm.addEventListener('submit', async (evt) => {
     return;
   }
 
+
   const fetchOptions = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/form-data',
-    },
-    body: JSON.stringify(data),
+    }
   };
   // TODO: Remove logging the data before "publishing"
   console.log(JSON.stringify(data));
