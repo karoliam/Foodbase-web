@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="../css/feed.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <script src="https://kit.fontawesome.com/ee9ba64db8.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<main>
+    <header>
+        <nav>
+            <a class="home" href="feed.html">Name</a>
+            <ul>
+                <li class="search"><a href=""><i class="fa-solid fa-magnifying-glass"></i></a></li>
+                <li class="message"><a href=""><i class="fa-solid fa-envelope"></i></a></li>
+                <li class="profile"><a href=""><i class="fa-solid fa-user"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="profile-links">
+    <a href="profile.html">Profile</a>
+        <a href="yourPosts.html">Your posts</a>
+    </div>
+    <article>
+        <ul class="profile-list">
+            <li id="username">Username: horse_girl_94</li>
+            <li id="e-mail">E-mail: horse_girl_94@example.com</li>
+            <li id="area">Area: Kera</li>
+            <li id="password">Password: *****</li>
+            <li id="feed-preferences">Feed preferences: </li>
+            <li>        <form action="" class="checkbox">
+                <input type="checkbox" id="vegan" name="vegan" value="Vegan">
+                <label for="vegan">Vegan</label>
+                <input type="checkbox" id="gluten-free" name="gluten-free" value="gluten-free">
+                <label for="gluten-free">Gluten-free</label><br>
+                <input type="checkbox" id="sugar-free" name="sugar-free" value="sugar-free">
+                <label for="sugar-free">Sugar-free</label>
+                <input type="checkbox" id="nut-free" name="nut-free" value="nut-free">
+                <label for="nut-free">Nut-free</label>
+            </form></li>
+            <div class="edit-delete">
+            <li><form action="profile-edit.html"><input type="submit" value="Edit" class="edit-button"></form></li>
+            <li><button class="delete-button">Delete profile</button></li>
+            </div>
+        </ul>
+
+    </article>
+</main>
+</body>
+</html>

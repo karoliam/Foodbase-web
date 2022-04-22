@@ -1,0 +1,79 @@
+.profile-links {
+    display: flex;
+    justify-content: space-evenly;
+}
+.profile-links a {
+    font-size: 50px;
+    text-decoration: underline;
+    color: rgb(107, 133, 132);
+    transition: font-size 300ms;
+}
+.profile-links a:hover {
+    color: rgb(80, 98, 97);
+    font-size: 51px;
+}
+.profile-links a:active {
+    color: #6b8581;
+}
+
+.profile-list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(253, 249, 247);
+    border-radius: 20px;
+    padding: 10px;
+}
+ul li {
+    font-size: 50px;
+    padding: 20px;
+}
+
+label {
+    font-size: 45px;
+}
+input {
+    width: 30px;
+    height:30px;
+}
+
+form  {
+    margin-bottom: 30px;
+}
+
+.edit-button {
+    border-style: none;
+    background-color: #ffae00;
+    border-radius: 20px;
+    font-size: 40px;
+    padding: 20px;
+    margin-top: 30px;
+    width: 120px;
+    height: 90px;
+}
+.edit-button:hover {
+    background-color: #de9a01;
+}
+
+#username-edit {
+    width: 200px;
+    height: 40px;
+}
+
+.delete-button {
+    border-style: none;
+    background-color: rgb(208, 88, 88);
+    border-radius: 20px;
+    font-size: 40px;
+    padding: 20px;
+    margin-top: 30px;
+}
+.delete-button:hover {
+    background-color: rgb(182, 76, 76);
+}
+
+.edit-delete {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

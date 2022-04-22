@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit profile</title>
+    <link rel="stylesheet" href="../css/feed.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/createPost.css">
+    <script src="https://kit.fontawesome.com/ee9ba64db8.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<main>
+    <header>
+        <nav>
+            <a class="home" href="feed.html">Name</a>
+            <ul>
+                <li class="search"><a href=""><i class="fa-solid fa-magnifying-glass"></i></a></li>
+                <li class="message"><a href=""><i class="fa-solid fa-envelope"></i></a></li>
+                <li class="profile"><a href="profile.html"><i class="fa-solid fa-user"></i></a></li>
+            </ul>
+        </nav>
+        <h4>Create a post</h4>
+    </header>
+
+    <article>
+        <form action="" class="create-post">
+            <div class="text-input">
+                <label for="post-area">Area:</label>
+                <input type="text" id="post-area" name="post-area" value="Kera" required>
+                <label for="expiration">Expiration date of the post:</label>
+                <input type="date" id="expiration" name="expiration" required>
+                <label for="title-edit">Title:</label>
+                <input type="text" id="title-edit" name="title" placeholder="Title" required>
+                <label for="description-edit">Description:</label>
+                <textarea id="description-edit" name="description-edit" placeholder="Write a description" rows="4" cols="32" required></textarea>
+                <label for="picture-edit">Select a picture:</label>
+                <input type="file" id="picture-edit" name="picture-edit">
+            </div>
+            <div class="checkbox">
+                <label for="vegan">Vegan <input type="checkbox" id="vegan" name="vegan"></label>
+                <label for="gluten-free">Gluten-free<input type="checkbox" id="gluten-free" name="gluten-free"></label>
+                <label for="sugar-free">Sugar-free <input type="checkbox" id="sugar-free" name="sugar-free"></label>
+                <label for="nut-free">Nut-free<input type="checkbox" id="nut-free" name="nut-free"></label>
+                <label for="lactose-free">Lactose-free<input type="checkbox" id="lactose-free" name="lactose-free"></label>
+                <label for="vegetarian">Vegetarian<input type="checkbox" id="vegetarian" name="vegetarian"></label>
+                <input type="submit" id="save-edit" value="Create a post!">
+            </div>
+
+        </form>
+
+    </article>
+</main>
+</body>
+</html>
