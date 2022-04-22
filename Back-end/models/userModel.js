@@ -5,11 +5,6 @@ const promisePool = pool.promise();
 
 //user authentication
 
-const pool = require('../database/db');
-const promisePool = pool.promise();
-
-//user authentication
-
 const getUserLogin = async (params) => {
   try {
     console.log(params);
