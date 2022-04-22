@@ -108,3 +108,42 @@ figure {
     flex-direction: column;
     justify-content: space-between;
 }
+
+
+/*SEARCH*/
+
+.search-bar {
+    display: none;
+    margin-bottom: 50px;
+}
+
+#search {
+    height: 70px;
+    font-size: 40px;
+    border-style: none;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.search-button {
+    background-color: transparent;
+    border-style: none;
+}
+.search-button .fa-magnifying-glass {
+    font-size: 50px;
+}
+.fa-magnifying-glass:hover {
+    color: #6b8581;
+}
+.search-button .fa-magnifying-glass:active {
+    color: pink;
+}
+
+.search-checkbox input {
+    width: 30px;
+    height: 30px;
+}
+
+.search-checkbox label {
+    font-size: 30px;
+}
