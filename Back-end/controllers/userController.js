@@ -23,10 +23,17 @@ const get_user_by_id = async (req, res) => {
 
 //  /user/      PUT
 const modify_user = async (req, res) => {
-    console.log('request body');
-    console.log(req.body);
-    const user = req.body;
-    const modified = await userModel.modifyUser(user, res);
+    console.log('user controller PUT body: \n', req.body);
+    const hash = await bcrypt.hash(req.body.password, 12);
+    console.log('hashed pass', hash, hash.length);
+    const moddedUser = {
+        email: req.body.email,
+        password: hash,
+        username: req.body.username,
+        area: req.body.area,
+        ID: req.body.ID,
+    }
+    const modified = await userModel.modifyUser(moddedUser, res);
     res.json({ message: `user modified successfully: ${modified}.` });
     // res.json(req.params);
     // res.send(`From this endpoint you can modify a user.`);
@@ -43,7 +50,6 @@ const create_new_user = async (req, res) => {
         username: req.body.username,
         area: req.body.area,
     };
-
     const id = await userModel.addUser(newUser, res);
     res.json({ message: `user created with id: ${id}.`});
     // res.send(`From this endpoint you can add a user.`);
