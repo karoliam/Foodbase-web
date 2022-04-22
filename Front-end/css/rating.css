@@ -1,0 +1,38 @@
+.thumbs {
+    margin: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+}
+.thumbs-up, .thumbs-down{
+    border-style: none;
+    border-radius: 20px;
+    background-color: white;
+}
+
+.thumbs-up:hover, .thumbs-down:hover {
+    background-color: #ccdedb;
+}
+
+.thumbs-up:active, .thumbs-down:active {
+    background-color: #899893;
+}
+
+.rating-container {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 20px;
+    padding: 100px;
+}
+
+.text-content {
+    display: flex;
+    flex-direction: column;
+}
+
+p, h6{
+    font-size: 40px;
+    margin: auto;
+}
