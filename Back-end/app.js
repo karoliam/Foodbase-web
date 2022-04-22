@@ -4,12 +4,17 @@ const cors = require('cors');                           // cors
 const userRoute = require('./routes/userRoute');        // route user
 const postRoute = require('./routes/postRoute');        // route post
 const foodFactRoute = require('./routes/foodFactRoute');// route food_fact
+const passport = require('./utils/pass');               // utils passport
 const app = express();                                  // express
 const port = 3000;                                      // port
 
 app.use(cors());                                        // cors
 app.use(express.json());                                // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(passport.initialize());
+
+app.use('/uploads', express.static('uploads'));
+
 app.use('/user', userRoute);                            // route for user
 app.use('/post', postRoute);                            // route for post
 app.use('/food_fact', foodFactRoute);                   // route for food_fact

@@ -1,4 +1,6 @@
 'use strict';
+//TODO these gotta move to their own place later
+const bcrypt = require('bcryptjs');
 
 const userModel = require('../models/userModel');           //model
 //  /user/      GET
@@ -32,10 +34,17 @@ const modify_user = async (req, res) => {
 
 //  /user/      POST
 const create_new_user = async (req, res) => {
-    console.log('request body');
-    console.log(req.body);
-    const user = req.body;
-    const id = await userModel.addUser(user, res);
+    console.log('user controller POST body: \n', req.body);
+    const hash = await bcrypt.hash(req.body.password, 12);
+    console.log('hashed pass', hash, hash.length);
+    const newUser = {
+        email: req.body.email,
+        password: hash,
+        username: req.body.username,
+        area: req.body.area,
+    };
+
+    const id = await userModel.addUser(newUser, res);
     res.json({ message: `user created with id: ${id}.`});
     // res.send(`From this endpoint you can add a user.`);
 };
