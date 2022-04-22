@@ -20,8 +20,6 @@ const modify_food_fact = async (req, res) => {
     const fact = req.body;
     const modified = await foodFactModel.modifyFoodFact(fact, res);
     res.json({ message: `food fact modified successfully: ${modified}.` });
-    // res.json(req.params);
-    // res.send(`From this endpoint you can modify a food fact.`);
 };
 
 //  /food_fact/      POST
@@ -31,7 +29,6 @@ const create_new_food_fact = async (req, res) => {
     const fact = req.body;
     const id = await foodFactModel.addFoodFact(fact, res);
     res.json({ message: `food fact created with id: ${id}.`});
-    // res.send(`From this endpoint you can add a food fact.`);
 };
 
 //  /food_fact/      DELETE

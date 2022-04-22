@@ -5,15 +5,15 @@ const {body} = require('express-validator');                                    
 const router = express.Router();                                                    // router
 const foodFactController = require('../controllers/foodFactController');            // controller
 
-const upload = multer({ dest: './uploads/' });                               // multer
+const upload = multer();                               // multer
 
 router.route('/')                                                             // route /food_fact
     .get(foodFactController.get_food_facts)
-    .post(upload.single('food_fact'),
+    .post(upload.none(),
         body('name').isAlphanumeric(),
         body('type').isNumeric(),
         foodFactController.create_new_food_fact)
-    .put(upload.single('food_fact'),
+    .put(upload.none(),
         body('name').isAlphanumeric(),
         body('type').isNumeric(),
         foodFactController.modify_food_fact);

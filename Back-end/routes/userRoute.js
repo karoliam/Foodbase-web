@@ -5,18 +5,18 @@ const {body} = require('express-validator');                            // expre
 const router = express.Router();                                        // router
 const userController = require('../controllers/userController');        // controller
 
-const upload = multer({ dest: './uploads/' });                   // multer
+const upload = multer();                   // multer
 
 router.route('/')                                                 // route /user
     .get(userController.get_users)
-    .post(upload.single('user'),
+    .post(upload.none(),
         body('email').isEmail(),    // TODO still accepts non emails
         body('password').isLength({ min: 8, max: 45 }),
         body('username').isLength({ min: 3, max: 45 }),
         body('area').isAlphanumeric(),
         // body('role').isNumeric(),
         userController.create_new_user)
-    .put(upload.single('user'),
+    .put(upload.none(),
         body('email').isEmail(),
         body('password').isLength({ min: 8, max: 45 }),
         body('username').isLength({ min: 3, max: 45 }),

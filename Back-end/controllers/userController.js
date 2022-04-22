@@ -35,8 +35,6 @@ const modify_user = async (req, res) => {
     }
     const modified = await userModel.modifyUser(moddedUser, res);
     res.json({ message: `user modified successfully: ${modified}.` });
-    // res.json(req.params);
-    // res.send(`From this endpoint you can modify a user.`);
 };
 
 //  /user/      POST
@@ -52,7 +50,6 @@ const create_new_user = async (req, res) => {
     };
     const id = await userModel.addUser(newUser, res);
     res.json({ message: `user created with id: ${id}.`});
-    // res.send(`From this endpoint you can add a user.`);
 };
 
 //  /user/      DELETE

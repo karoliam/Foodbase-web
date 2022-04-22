@@ -20,8 +20,6 @@ const modify_post = async (req, res) => {
     const post = req.body;
     const modified = await postModel.modifyPost(post, res);
     res.json({ message: `post modified successfully: ${modified}.` });
-    // res.json(req.params);
-    // res.send(`From this endpoint you can modify a post.`);
 };
 
 //  /post/      POST
@@ -31,7 +29,6 @@ const create_new_post = async (req, res) => {
     const post = req.body;
     const id = await postModel.addPost(post, res);
     res.json({ message: `post created with id: ${id}.`});
-    // res.send(`From this endpoint you can add a post.`);
 };
 
 //  /post/      DELETE

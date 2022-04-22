@@ -26,7 +26,7 @@ const getPostByID = async (id, res) => {
 const addPost = async (post, res) => {
     try {
         // TODO add food_fact relations to post in post_to_food_fact table
-        const [rows] = await promisePool.query('INSERT INTO post(filename, description, name) VALUES (?,?,?)', [post.filename, post.description, post.name]);
+        const [rows] = await promisePool.query('INSERT INTO post(filename, description, name, owner_ID) VALUES (?,?,?,?)', [post.filename, post.description, post.name, post.owner_ID]);
         console.log('post model insert', rows);
         return rows.insertId;
     } catch (e) {

@@ -57,7 +57,6 @@ const deleteUserByID = async (id, res) => {
         res.status(500).json({ message: 'something went wrong src: userModel deleteUserByID' });
         return;
     }
-
 };
 // exports
 module.exports = {

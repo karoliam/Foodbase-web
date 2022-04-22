@@ -57,7 +57,6 @@ const deleteFoodFactByID = async (id, res) => {
         res.status(500).json({ message: 'something went wrong src: foodFactModel deleteFoodFactByID' });
         return;
     }
-
 };
 // exports
 module.exports = {
