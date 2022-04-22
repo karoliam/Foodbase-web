@@ -22,3 +22,7 @@ figure label:first-child {
 .profile-links {
     margin-bottom: 50px;
 }
+
+.details {
+    margin-top: -0.5em;
+}

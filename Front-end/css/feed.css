@@ -109,9 +109,6 @@ figure {
     justify-content: space-between;
 }
 
-
-/*SEARCH*/
-
 .search-bar {
     display: none;
     margin-bottom: 50px;
@@ -146,4 +143,8 @@ figure {
 
 .search-checkbox label {
     font-size: 30px;
+}
+
+.details {
+    margin-top: -0.5em;
 }
