@@ -10,7 +10,7 @@ const getAllPosts = async () => {
         console.error('error', e.message);
     }
 };
-// GET post by req.params.id
+// GET post by number that is passed to id
 const getPostByID = async (id, res) => {
     try {
         const [rows] = await promisePool.query('SELECT * FROM post WHERE ID = ?', [id]);
@@ -25,8 +25,21 @@ const getPostByID = async (id, res) => {
 const addPost = async (post, res) => {
     try {
         // TODO add food_fact relations to post in post_to_food_fact table
-        const [rows] = await promisePool.query('INSERT INTO post(filename, description, name, owner_ID) VALUES (?,?,?,?)', [post.filename, post.description, post.name, post.owner_ID]);
+        const [rows] = await promisePool.query('INSERT INTO post(filename, description, name, owner_ID, area) VALUES (?,?,?,?,?)',
+            [post.filename, post.description, post.name, post.owner_ID, post.area]);
         console.log('post model insert', rows);
+        // delete non-preferneces from post
+        delete post.filename;
+        delete post.description;
+        delete post.name;
+        delete post.owner_ID;
+        delete post.area;
+        for (const prefs in post) {
+            // TODO this will change according to post contents
+            const [rows1] = await promisePool.query('INSERT INTO post_to_food_fact(post_ID, food_fact_ID) VALUES (?,?)',
+                [rows.insertId, post[prefs]]);
+            console.log("post food_fact note created with id:",rows1.insertId)
+        }
         return rows.insertId;
     } catch (e) {
         console.error('post model addPost error', e.message);
