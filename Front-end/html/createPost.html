@@ -23,14 +23,14 @@
     </header>
 
     <article>
-        <form action="" class="create-post">
+        <form action="https://localhost:3000/post" method="post" class="create-post">
             <div class="text-input">
                 <label for="post-area">Area:</label>
                 <input type="text" id="post-area" name="post-area" value="Kera" required>
                 <label for="expiration">Expiration date of the post:</label>
                 <input type="date" id="expiration" name="expiration" required>
                 <label for="title-edit">Title:</label>
-                <input type="text" id="title-edit" name="title" placeholder="Title" required>
+                <input type="text" id="title-edit" name="title-edit" placeholder="Title" required>
                 <label for="description-edit">Description:</label>
                 <textarea id="description-edit" name="description-edit" placeholder="Write a description" rows="4" cols="32" required></textarea>
                 <label for="picture-edit">Select a picture:</label>
@@ -43,12 +43,15 @@
                 <label for="nut-free">Nut-free<input type="checkbox" id="nut-free" name="nut-free"></label>
                 <label for="lactose-free">Lactose-free<input type="checkbox" id="lactose-free" name="lactose-free"></label>
                 <label for="vegetarian">Vegetarian<input type="checkbox" id="vegetarian" name="vegetarian"></label>
-                <input type="submit" id="save-edit" value="Create a post!">
+                <button type="submit" id="save-edit">Create a post!</button>
             </div>
-
         </form>
 
     </article>
 </main>
+<script src="Back-end/utilities/resize.js"></script>
+<script src="../javascript/createPost.js"></script>
+<script src="../javascript/createPost.js"></script>
+<script src="../javascript/serialize.js"></script>
 </body>
 </html>
