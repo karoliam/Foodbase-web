@@ -4,7 +4,6 @@ const pool = require('../database/db');
 const promisePool = pool.promise();
 
 //user authentication
-
 const getUserLogin = async (params) => {
   try {
     console.log(params);
@@ -43,16 +42,26 @@ const getUserById = async (id, res) => {
 //For creating new users
 const createUser = async (user, res) => {
   try {
-    // TODO preferences have to be saved in seprate table
-    // TODO so preferneces & user comes here in same package
-    // TODO and create rows on separate tables
-    const [rows] = await promisePool.query('INSERT INTO user(username, email, password, role) VALUES (?,?,?,?)',
-        [user.name,user.email,user.password,user.role]);
+    // TODO here the user still has all values
+    const [rows] = await promisePool.query('INSERT INTO user(email, password, username, area) VALUES (?,?,?,?)',
+        [user.name,user.email,user.password,user.area]);
+    // TODO delete non-preference stuff here
+    delete user.name;
+    delete user.email;
+    delete user.password; // TODO or passwd
+    delete user.area;
+    // TODO now we should only have the prefs
+    for (const pref in user) {
+      // TODO atm this only works with numbers
+      const [rows1] = await promisePool.query('INSERT INTO user_prefences(user_ID, food_fact_ID) VALUES (?,?)',
+          [rows.insertId, user[pref]]);
+      console.log("preference created with id:",rows1.insertId);
+    };
     console.log('user model insert: ', rows);
     return rows;
   } catch (e) {
     console.error('userModel createUser error', e.message);
-    res.status(500).json({message: 'An error occurred'});
+    res.status(500).json({message: 'An error occurred src: userModel createUser'});
   }
 };
 
@@ -61,14 +70,14 @@ const updateUser = async (user, newUser, res) => {
   try {
     if (user.role === 0) {
       //admin can update which user they ever want to.
-      const [rows] = await promisePool.query('UPDATE user SET username = ?, email = ?, password = ?, role = ? WHERE id=?',
-          [newUser.name,newUser.email,newUser.passwd,newUser.role, newUser.user_id]);
+      const [rows] = await promisePool.query('UPDATE user SET username = ?, password = ?, role = ? WHERE id=?',
+          [newUser.name,newUser.password,newUser.role, newUser.user_id]);
       console.log('user model admin update: ', rows);
       return rows.affectedRows === 1;
     } else {
       //normal users can update only their own user except for role
-      const [rows] = await promisePool.query('UPDATE user SET username = ?, email = ?, password = ? WHERE id=? AND user_id=?',
-          [newUser.name,newUser.email,newUser.passwd, newUser.user_id, user.user_id]);
+      const [rows] = await promisePool.query('UPDATE user SET username = ?, password = ? WHERE id=? AND user_id=?',
+          [newUser.name,newUser.password, newUser.user_id, user.user_id]);
       console.log('user model normal update: ', rows);
       return rows.affectedRows === 1;
     }
@@ -83,18 +92,26 @@ const deleteUser = async (user, id, res) => {
   try {
     if (user.role === 0) {
       //Moderator can delete which user they ever want to.
+      // delete preferences
+      const [rows1] = await promisePool.query('DELETE from user_preferences WHERE id=?', [id]);
+      // delete user
+      console.log('user model admin delete user_preferences: ', rows1);
       const [rows] = await promisePool.query('DELETE from user WHERE id=?', [id]);
       console.log('user model admin delete: ', rows);
       return rows.affectedRows === 1;
     } else {
       //normal users can delete only their own user
+      // delete preferences
+      const [rows1] = await promisePool.query('DELETE from user_preferences WHERE id=?', [id]);
+      // delete user
+      console.log('user model normal delete user_preferences: ', rows1);
       const [rows] = await promisePool.query('DELETE from user WHERE id=? AND id=?', [id, user.user_id]);
       console.log('user model normal delete: ', rows);
       return rows.affectedRows === 1;
     }
   } catch (e) {
     console.error('userModel deleteUser error', e.message);
-    res.status(500).json({message: 'something went wrong'});
+    res.status(500).json({message: 'something went wrong src: userModel deleteUser'});
     return;
   }
 };
