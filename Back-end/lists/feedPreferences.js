@@ -16,7 +16,12 @@ const allergenList = [
 
 const dietList = [
     'vegan',
-    'sugar',
-    'meat',
+    'sugar_free',
+    'meat_free',
     'low_fat'
 ]
+
+module.exports = {
+    allergenList,
+    dietList,
+}

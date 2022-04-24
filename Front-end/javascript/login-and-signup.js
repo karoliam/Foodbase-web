@@ -87,7 +87,7 @@ function generateCheckBoxList(checkboxlist, appendList, addonString) {
     const checkboxText = `${checkboxlist[i]}${addonString}`;
     newPreference.id = checkboxText;
     newPreference.type = "checkbox";
-    newPreference.name = checkboxText;
+    newPreference.name = checkboxlist[i];
     //Create label for input
     const newPreferenceLabel = document.createElement('label');
     newPreferenceLabel.htmlFor = `${newPreference.id}`;

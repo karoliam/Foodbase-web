@@ -16,7 +16,7 @@ const allergenList = [
 
 const dietList = [
     'vegan',
-    'sugar-free',
-    'meat-free',
-    'low_fat',
+    'sugar_free',
+    'meat_free',
+    'low_fat'
 ]

@@ -4,7 +4,6 @@ const passport = require('passport');
 const userModel = require('../models/userModel');
 const bcryptjs = require('bcryptjs');
 const {validationResult} = require("express-validator");
-const lists = require('../lists/feedPreferences');
 
 
 const login = (req, res, next) => {
@@ -42,11 +41,11 @@ const userCreate_post = async (req, res, next) => {
     let user = req.body.user;
     user.password = cryptedPass;
 
-    let user_preferences = req.body.preferences
+    const user_preferences = req.body.preferences
 
     const result = await userModel.createUser(user, user_preferences, res);
     if (result.insertId) {
-      res.json({ message: `User added`, user_id: result.insertId });
+      res.json({ message: 'User added!'});
     } else {
       res.status(400).json({error: 'register error'});
     }

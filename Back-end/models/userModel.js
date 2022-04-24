@@ -2,6 +2,7 @@
 
 const pool = require('../database/db');
 const promisePool = pool.promise();
+const lists = require('../lists/feedPreferences');
 
 //user authentication
 const getUserLogin = async (params) => {
@@ -40,23 +41,26 @@ const getUserById = async (id, res) => {
 };
 
 //For creating new users
-const createUser = async (user, res) => {
+const createUser = async (user, userPreferences, res) => {
   try {
-    // TODO here the user still has all values
-    const [rows] = await promisePool.query('INSERT INTO user(email, password, username, area) VALUES (?,?,?,?)',
-        [user.name,user.email,user.password,user.area]);
-    // TODO delete non-preference stuff here
-    delete user.name;
-    delete user.email;
-    delete user.password; // TODO or passwd
-    delete user.area;
-    // TODO now we should only have the prefs
-    for (const pref in user) {
-      // TODO atm this only works with numbers
-      const [rows1] = await promisePool.query('INSERT INTO user_prefences(user_ID, food_fact_ID) VALUES (?,?)',
-          [rows.insertId, user[pref]]);
+    const [rows] = await promisePool.query('INSERT INTO user(username, email, password) VALUES (?,?,?)',
+        [user.username,user.email,user.password]);
+
+    // Looping through the preferences
+    for (const pref in userPreferences) {
+      // Number to be inserted as the food_fact_ID
+      let prefNumber;
+      if (lists.allergenList.includes(pref)) {
+        prefNumber = lists.allergenList.indexOf(pref) + 1;
+      }
+      if (lists.dietList.includes(pref)) {
+        //Same deal but with the addition of the allergenLists' length
+        prefNumber = lists.allergenList.length + lists.dietList.indexOf(pref) + 1;
+      }
+      const [rows1] = await promisePool.query('INSERT INTO user_preferences(user_ID, food_fact_ID) VALUES (?,?)',
+          [rows.insertId, prefNumber]);
       console.log("preference created with id:",rows1.insertId);
-    };
+    }
     console.log('user model insert: ', rows);
     return rows;
   } catch (e) {
