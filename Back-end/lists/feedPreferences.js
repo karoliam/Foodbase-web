@@ -11,12 +11,12 @@ const allergenList = [
     'nut',
     'apple',
     'citrus_fruit',
-    'sesame_seed',
+    'sesame_seed'
 ]
 
 const dietList = [
     'vegan',
-    'sugar-free',
-    'meat-free',
-    'low_fat',
+    'sugar',
+    'meat',
+    'low_fat'
 ]
