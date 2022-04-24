@@ -4,6 +4,7 @@ const passport = require('passport');
 const userModel = require('../models/userModel');
 const bcryptjs = require('bcryptjs');
 const {validationResult} = require("express-validator");
+const lists = require('../lists/feedPreferences');
 
 
 const login = (req, res, next) => {
@@ -27,6 +28,7 @@ const login = (req, res, next) => {
 };
 
 const userCreate_post = async (req, res, next) => {
+
   // Extract the validation errors from a request.
   const errors = validationResult(req);
 
@@ -35,17 +37,14 @@ const userCreate_post = async (req, res, next) => {
     res.send(errors.array());
   } else {
     // bcrypted password
-    const cryptedPass = await bcryptjs.hash(req.body.password, 15);
-    //Account role by default is a normal user
-    const userRole = 1;
+    const cryptedPass = await bcryptjs.hash(req.body.user.password, 15);
 
-    const user = {
-      name: req.body.name,
-      email: req.body.email,
-      password: cryptedPass,
-      role: userRole
-    }
-    const result = await userModel.createUser(user, res);
+    let user = req.body.user;
+    user.password = cryptedPass;
+
+    let user_preferences = req.body.preferences
+
+    const result = await userModel.createUser(user, user_preferences, res);
     if (result.insertId) {
       res.json({ message: `User added`, user_id: result.insertId });
     } else {
