@@ -17,6 +17,15 @@ const get_post_by_id = async (req, res) => {
 const post_posting = async (req, res) => {
   console.log('post controller post body',  req.body);
   console.log('post controller post file', req.file);
+  if (!req.file) {
+    return res.status(400).json(
+        {
+          message: `post upload failed: file invalid`
+        }
+    );
+  }
+  console.log('post controller post file', req.file);
+
   //stop if validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -28,9 +37,11 @@ const post_posting = async (req, res) => {
   const post = req.body;
   post.owner = req.user_id;
   console.log('post uploaded', post);
-  post.filename = req.filename;
-  await makeThumbnail(req.path, post.filename);
-  const id = await postModel.addPost(post, res);
+  post.filename = req.file.filename;
+  console.log('req path', req.file.path);
+  console.log('filename' , post.filename);
+  await makeThumbnail(req.file.path, post.filename);
+  const id = await postModel.addPost(post,req.file, res);
   res.json({message: `post created with ${id}.`});
 };
 

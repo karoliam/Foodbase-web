@@ -5,6 +5,7 @@ const postController = require('../controllers/postController');
 const router = express.Router();
 const multer  = require('multer');
 const {body} = require('express-validator');
+const path = require('path');
 
 
 const validateFileFormat = (req, file, cb) => {
@@ -15,15 +16,32 @@ const validateFileFormat = (req, file, cb) => {
     cb(null, false);
   }
 };
-const upload = multer({ dest: './uploads/', validateFileFormat });
+
+//Function for filtering out wrong file types
+/* const validateFileFormat = (file, cb) => {
+  const allowedExtensions = /jpeg|jpg|png|gif/;
+  // Checking the file extension
+  const extname = allowedExtensions.test(path.extname(file.originalname).toLowerCase());
+  // Check media type
+  const mimetype = allowedExtensions.test(file.mimetype);
+
+  if(mimetype && extname){
+    return cb(null,true);
+  } else {
+    cb('Error: You tried to upload something, which is not an image!');
+  }
+} */
+
+
+const upload = multer({ dest: 'uploads/', validateFileFormat});
 
 router.route('/')
 .get(postController.post_list_get)
-.post(upload.single('post'),
-    body('post-area', 'Area must contain minimum 2 characters').isLength({min: 2}).escape(),
+.post(upload.single('picture'),
+    body('area', 'Area must contain minimum 2 characters').isLength({min: 2}),
     body('expiration', 'Not a valid date').isDate(),
-    body('title-edit', 'Title must contain minimum 2 characters').isLength({min:2}).escape(),
-    body('description-edit', 'Description must contain minimum 2 characters').isLength({min:2}).escape(),
+    body('title', 'Title must contain minimum 2 characters').isLength({min:2}),
+    body('description', 'Description must contain minimum 2 characters').isLength({min:2}),
     postController.post_posting)
 .put(postController.post_update_put);
 

@@ -23,18 +23,18 @@
     </header>
 
     <article>
-        <form action="https://localhost:3000/post" method="post" class="create-post">
+        <form action="https://localhost:3000/post" method="post" class="create-post" enctype="multipart/form-data">
             <div class="text-input">
-                <label for="post-area">Area:</label>
-                <input type="text" id="post-area" name="post-area" value="Kera" required>
+                <label for="area">Area:</label>
+                <input type="text" id="area" name="area" value="Kera" required>
                 <label for="expiration">Expiration date of the post:</label>
                 <input type="date" id="expiration" name="expiration" required>
-                <label for="title-edit">Title:</label>
-                <input type="text" id="title-edit" name="title-edit" placeholder="Title" required>
-                <label for="description-edit">Description:</label>
-                <textarea id="description-edit" name="description-edit" placeholder="Write a description" rows="4" cols="32" required></textarea>
-                <label for="picture-edit">Select a picture:</label>
-                <input type="file" id="picture-edit" name="picture-edit">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" placeholder="Title" required>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" placeholder="Write a description" rows="4" cols="32" required></textarea>
+                <label for="picture">Select a picture:</label>
+                <input type="file" id="picture" name="picture">
             </div>
             <div class="checkbox">
                 <label for="vegan">Vegan <input type="checkbox" id="vegan" name="vegan"></label>
@@ -46,11 +46,9 @@
                 <button type="submit" id="save-edit">Create a post!</button>
             </div>
         </form>
-
     </article>
 </main>
 <script src="Back-end/utilities/resize.js"></script>
-<script src="../javascript/createPost.js"></script>
 <script src="../javascript/createPost.js"></script>
 <script src="../javascript/serialize.js"></script>
 </body>
