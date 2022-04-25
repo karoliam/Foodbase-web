@@ -82,7 +82,7 @@ typings/
 .idea/
 
 #SSL certificates and keys
-.csr.pem
+*.csr.pem
 *.pem
 
 # ignore content of uploads folder
