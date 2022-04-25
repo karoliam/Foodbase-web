@@ -11,7 +11,7 @@ const allergenList = [
     'nut',
     'apple',
     'citrus_fruit',
-    'sesame_seed',
+    'sesame_seed'
 ]
 
 const dietList = [
@@ -20,3 +20,8 @@ const dietList = [
     'meat_free',
     'low_fat'
 ]
+
+module.exports = {
+    allergenList,
+    dietList,
+}
