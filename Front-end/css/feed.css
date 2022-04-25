@@ -62,9 +62,12 @@ img {
     width: 500px;
     border-radius: 10px;
     padding: 0px 10px 0px 10px;
+    word-wrap: break-word;
 
 }
 figure {
+    display: flex;
+    flex-direction: column;
     background-color: rgb(220, 211, 196);
     margin: auto;
     padding: 30px;
@@ -147,4 +150,13 @@ figure {
 
 .details {
     margin-top: -0.5em;
+}
+
+h6 {
+    word-wrap: break-word;
+    font-size: 1em;
+    margin: 0;
+}
+ul li {
+    list-style-type: none;
 }

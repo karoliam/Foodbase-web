@@ -76,16 +76,21 @@ typings/
 .fusebox/
 
 #DynamoDB Local files 
-.dynamodb/ 
+.dynamodb/
 
-#Webstorm's idea folder
+#webstorms idea folder
 .idea/
 
 #SSL certificates and keys
-*.csr
+.csr.pem
 *.pem
 
 # ignore content of uploads folder
 uploads/*
-# except one (empty) file to have the folder in version control
+
+ # except one (empty) file to have the folder in version control
 !uploads/.gitkeep
+
+# except one (empty) file to have the folder in version control
+thumbnails/*
+!thumbnails/.gitkeep
