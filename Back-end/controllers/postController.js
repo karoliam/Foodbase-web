@@ -57,7 +57,7 @@ const post_update_put = async (req, res, next) => {
     console.log('user create error', errors);
     res.send(errors.array());
   } else {
-    let post = req.body.user;
+    let post = req.body.post;
 
     const post_food_facts = req.body.preferences
 
