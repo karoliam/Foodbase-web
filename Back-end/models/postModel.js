@@ -99,9 +99,10 @@ const getPostFoodFactsByID = async (id,res) => {
         return rows;
     } catch (e) {
         console.error('post, post model getPostByID error', e.message);
-        res.status(500).json({ message: 'something went wrong src: postModel getPost' });
+        res.status(500).json({message: 'something went wrong src: postModel getPost'});
         return;
     }
+};
 module.exports = {
     getAllPosts,
     getPostByID,
