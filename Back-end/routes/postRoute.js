@@ -5,7 +5,6 @@ const postController = require('../controllers/postController');
 const router = express.Router();
 const multer  = require('multer');
 const {body} = require('express-validator');
-const path = require('path');
 
 
 const validateFileFormat = (req, file, cb) => {
@@ -16,21 +15,6 @@ const validateFileFormat = (req, file, cb) => {
     cb(null, false);
   }
 };
-
-//Function for filtering out wrong file types
-/* const validateFileFormat = (file, cb) => {
-  const allowedExtensions = /jpeg|jpg|png|gif/;
-  // Checking the file extension
-  const extname = allowedExtensions.test(path.extname(file.originalname).toLowerCase());
-  // Check media type
-  const mimetype = allowedExtensions.test(file.mimetype);
-
-  if(mimetype && extname){
-    return cb(null,true);
-  } else {
-    cb('Error: You tried to upload something, which is not an image!');
-  }
-} */
 
 
 const upload = multer({ dest: 'uploads/', validateFileFormat});
