@@ -27,6 +27,7 @@ const allPosts = (posts) => {
       const flagLink = document.createElement('a');
       const flagIcon = document.createElement('i');
       const onePost = document.createElement('li');
+      const tag = document.createElement('p');
 
     locationIcon.className = "fa-solid fa-location-dot";
     h6.textContent = post.name;

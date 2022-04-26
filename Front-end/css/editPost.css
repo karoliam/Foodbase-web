@@ -1,0 +1,70 @@
+h4 {
+    margin-top: 0em;
+    font-size: 0.8em;
+}
+.create-post {
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+}
+.text-input {
+    display: flex;
+    flex-direction: column;
+}
+.text-input input{
+    display: flex;
+    font-size: 40px;
+    width: 720px;
+    height: 100px;
+    border-radius: 20px;
+    padding: 10px;
+    margin:auto;
+    border-style: none;
+}
+label {
+    margin-left: 10px;
+}
+.checkbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 60px;
+}
+
+.checkbox label {
+    font-size: 40px;
+}
+
+#save-edit {
+    font-size: 30px;
+    background-color: #ffae00;
+    margin-top: 100px;
+    width: 300px;
+    height: 100px;
+    border-style: none;
+    border-radius: 20px;
+}
+
+#save-edit:hover {
+    background-color: #de9a01;
+}
+
+#description {
+    font-size: 40px;
+    resize: none;
+    border-radius: 20px;
+    border-style: none;
+    width: 720px;
+    margin: auto;
+}
+
+form {
+    background-color: rgba(146, 169, 168, 0.53);
+    padding: 40px 0px 40px 0px;
+    border-radius: 20px;
+}
+
+.checkbox input {
+    width: 30px;
+    height:30px;
+}
