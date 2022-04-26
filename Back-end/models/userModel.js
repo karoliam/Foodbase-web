@@ -7,7 +7,6 @@ const lists = require('../lists/feedPreferences');
 //user authentication
 const getUserLogin = async (params) => {
   try {
-    console.log(params);
     const [rows] = await promisePool.execute(
         'SELECT * FROM user WHERE email = ?;',
         params);

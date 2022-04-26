@@ -11,7 +11,7 @@ const login = (req, res, next) => {
     //In case of errors or missing user
     if (error || !user) {
       return res.status(400).json({
-        message: `Authentication failed due to bad credentials}`
+        message: `Authentication failed due to bad credentials`
       });
     }
     //If no errors

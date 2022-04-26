@@ -1,5 +1,5 @@
 'use strict';
-const url = 'https://localhost:8200';
+const url = 'https://localhost:3000';
 
 // selecting login and signup forms and their necessary children
 const loginForm = document.querySelector('#login-form');
@@ -13,27 +13,25 @@ const dietsUL = document.querySelector('#diets');
 const signupError = document.querySelector('#signup-error-message');
 
 // Login form
-// loginForm.attributes.action="https://localhost:8200/auth/login";
 loginForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
-  console.log(loginForm);
+
+  //First serialize the form
   const serializedLoginForm = serializeForm(loginForm);
-  console.log(JSON.stringify(serializedLoginForm));
+  //Stringify the user object
+  const stringifiedForm = JSON.stringify(serializedLoginForm.user);
+
   const fetchOptions = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(serializedLoginForm),
+    body: stringifiedForm,
   };
 
   // Waiting for server response. Saving token if response ok
   const response = await fetch(url + '/auth/login', fetchOptions);
   const loginJsonResponse = await response.json();
-
-  // TODO: Remove logging the login response before "publishing"
-  console.log(url);
-  console.log('login response', loginJsonResponse);
 
   //If the response doesn't contain the user or token
   if (!loginJsonResponse.user || !loginJsonResponse.token) {
@@ -42,7 +40,7 @@ loginForm.addEventListener('submit', async (evt) => {
     // save the token
     sessionStorage.setItem('token', loginJsonResponse.token);
     sessionStorage.setItem('user', JSON.stringify(loginJsonResponse.user));
-    location.href = 'mainView.html';
+    location.href = '../html/feed.html';
   }
 });
 
