@@ -8,6 +8,7 @@ const userModel = require("../models/userModel");
 
 const post_list_get = async (req, res) => {
   const posts = await postModel.getAllPosts(res);
+  console.log('post_list_get', posts);
   res.json(posts);
 };
 

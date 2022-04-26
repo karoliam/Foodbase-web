@@ -1,11 +1,10 @@
 'use strict';
 const pool = require('../database/db');
-const lists = require("../lists/feedPreferences");
 const promisePool = pool.promise();
 
 const getAllPosts = async () => {
     try {
-        const [rows] = await promisePool.query('SELECT * FROM post INNER JOIN user ON owner_ID = user.id');
+        const [rows] = await promisePool.query('SELECT * FROM post ORDER BY time_stamp DESC');
         return rows;
     } catch (e) {
         console.error('error', e.message);
@@ -103,7 +102,6 @@ const getPostFoodFactsByID = async (id,res) => {
         res.status(500).json({ message: 'something went wrong src: postModel getPost' });
         return;
     }
-};
 module.exports = {
     getAllPosts,
     getPostByID,
