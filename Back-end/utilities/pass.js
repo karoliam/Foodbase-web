@@ -10,8 +10,8 @@ const { getUserLogin } = require('../models/userModel');
 
 // local strategy for username password login
 passport.use(new Strategy(
-    async (username, password, done) => {
-        const params = [username];
+    async (email, password, done) => {
+        const params = [email];
         try {
             const [user] = await getUserLogin(params);
             console.log('Local strategy', user); // result is binary row

@@ -1,5 +1,5 @@
 'use strict';
-const url = 'https://localhost:8200';
+const url = 'https://localhost:3000';
 
 // selecting login and signup forms and their necessary children
 const loginForm = document.querySelector('#login-form');

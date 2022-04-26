@@ -1,66 +1,112 @@
-const postUl = document.getElementsByClassName('post-feed');
-const url = 'https://localhost:3000';
+'use strict';
 
+
+const url = 'https://localhost:3000';
+const postFeed = document.createElement('ul');
+function showSearch() {
+  document.querySelector('.search-bar').style.display = 'block';
+}
 
 const allPosts = (posts) => {
-  postUl.innerHTML = '';
+  postFeed.innerHTML = '';
   posts.forEach((post) => {
-    const onePost = document.createElement('li');
-    onePost.classList.add('one-post');
-    const postFigure = document.createElement('figure');
-    postFigure.classList.add('post-figure');
-    const postTitle = document.createElement('h6');
-    postTitle.classList.add('post-title');
-    postTitle.innerText = post.title;
-    postFigure.appendChild(postTitle);
-    const postImageLink = document.createElement('a');
-    postImageLink.href = "openedPost.html";
-    const postImage = document.createElement('img');
-    postImage.src = post.filename;
-    postImage.alt = post.title;
-    postImage.classList.add('post-image');
-    postImageLink.appendChild(postImage);
-    postFigure.appendChild(postImageLink);
-    const details = document.createElement('div');
-    details.classList.add('details');
-    const postLocation = document.createElement('p');
-    postLocation.innerText = post.area;
-    const locationIcon = document.createElement('i');
-    locationIcon.classList.add('fa-solid fa-location-dot');
-    postLocation.appendChild(locationIcon);
-    const postDate = document.createElement('p');
+      const main = document.querySelector('main');
+      const article = document.createElement('article');
+      const header = document.createElement('header');
+      const h6 = document.createElement('h6');
+      const figure = document.createElement('figure');
+      const img = document.createElement('img');
+      const figcaption = document.createElement('figcaption');
+      const p = document.createElement('p');
+      const imageLink = document.createElement('a');
+      const detailDiv = document.createElement('div');
+      const locationP = document.createElement('p');
+      const postDate = document.createElement('p');
+      const postTime = document.createElement('p');
+      const locationIcon = document.createElement('i');
+      const username = document.createElement('p');
+      const innerFigcap = document.createElement('p');
+      const flagLink = document.createElement('a');
+      const flagIcon = document.createElement('i');
+      const onePost = document.createElement('li');
+
+    locationIcon.className = "fa-solid fa-location-dot";
+    h6.textContent = post.name;
+    h6.classList.add('post-title');
+
+    img.src = url + '/thumbnails/' + post.filename;
+    img.alt = post.name;
+    img.classList.add('post-image');
+
+    figcaption.classList.add('description');
+    imageLink.href = 'openedPost.html';
+    imageLink.classList.add('post-image-link');
+
+    //time and date into readable form
+    const time = new Date(post.time_stamp).toLocaleTimeString('fi-FI',
+        { timeStyle: 'short', hour12: false});
+    const date = new Date(post.time_stamp).toLocaleDateString();
+
+    //details (under the picture)
+    detailDiv.classList.add('details');
+    locationP.classList.add('location');
+    locationP.textContent = post.area;
+    postDate.textContent = date;
     postDate.classList.add('date');
-    postDate.innerText = post.date;
-    const postTime = document.createElement('p');
+    postTime.textContent = time;
     postTime.classList.add('time');
-    postTime.innerText = post.time;
-    postFigure.appendChild(details);
-    const description = document.createElement('figcaption');
-    description.classList.add('description');
-    description.innerText = post.description;
-    const postUsername = document.createElement('p');
-    postUsername.classList.add('username');
-    postUsername.innerText = post.username;
-    const flagLink = document.createElement('a');
-    flagLink.href = '';
-    const flagIcon = document.createElement('i');
-    flagIcon.classList.add('fa-solid fa-flag');
-    description.appendChild(postUsername);
+    figure.appendChild(detailDiv);
+    locationP.appendChild(locationIcon);
+    detailDiv.appendChild(locationP);
+    detailDiv.appendChild(postDate);
+    detailDiv.appendChild(postTime);
+
+//stuff inside of the white box (username, description and flag)
+    username.classList.add('username');
+    username.textContent = 'horse_girl_94'
+    innerFigcap.textContent = post.description;
+    innerFigcap.classList.add('descriptionText');
+    figcaption.appendChild(username);
+    figcaption.appendChild(innerFigcap);
+    flagIcon.className = "fa-solid fa-flag";
     flagLink.appendChild(flagIcon);
-    description.appendChild(flagLink);
-    postFigure.appendChild(description);
-    onePost.appendChild(postFigure);
-    postUl.appendChild(onePost);
+    figcaption.appendChild(flagLink);
+
+//adding figcaption, image and title to figure
+    figure.appendChild(figcaption);
+    figure.appendChild(h6);
+    imageLink.appendChild(img);
+    figure.appendChild(imageLink);
+
+//adding details and figcaption to figure, header, figure and p to article and finally article to main
+    figure.appendChild(detailDiv);
+    figure.appendChild(figcaption);
+    onePost.classList.add('post');
+    onePost.appendChild(figure);
+    postFeed.classList.add('post-feed');
+    postFeed.appendChild(onePost);
+
+    article.appendChild(header);
+    article.appendChild(postFeed);
+    article.appendChild(p);
+    main.appendChild(article);
+
   })
 };
 
-const getAllPosts = async () => {
+
+const getPost = async () => {
   try {
-    const response = await fetch(url + '/post');
+    const fetchOptions = {
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      },
+    };
+    const response = await fetch(url + '/post', fetchOptions);
     const posts = await response.json();
     allPosts(posts);
   } catch (e) {
     console.log(e.message);
   }
 };
-getAllPosts();
+getPost();
