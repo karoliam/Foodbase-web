@@ -1,0 +1,30 @@
+{
+  "name": "foodproject",
+  "version": "1.0.0",
+  "description": "A web app for people who want to pass their excess food to other people.",
+  "main": "./Back-end/app.js",
+  "author": "Reima N., Karoliina M., Vili M.",
+  "license": "GPL-3.0",
+  "scripts": {
+    "start": "nodemon ./Back-end/app.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-session": "^1.17.2",
+    "express-validator": "^6.14.0",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.4",
+    "mysql2": "^2.3.3",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "sharp": "^0.30.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

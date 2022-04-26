@@ -5,11 +5,14 @@
     font-family: Corbel, sans-serif;
 
 }
+html {
+    background-color: rgb(241, 232, 216);
 
+}
 main {
     background-color: rgb(241, 232, 216);
-    width: 800px;
     margin: auto;
+    width: 800px;
     padding: 30px;
 }
 
@@ -59,9 +62,12 @@ img {
     width: 500px;
     border-radius: 10px;
     padding: 0px 10px 0px 10px;
+    word-wrap: break-word;
 
 }
 figure {
+    display: flex;
+    flex-direction: column;
     background-color: rgb(220, 211, 196);
     margin: auto;
     padding: 30px;
@@ -104,4 +110,53 @@ figure {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.search-bar {
+    display: none;
+    margin-bottom: 50px;
+}
+
+#search {
+    height: 70px;
+    font-size: 40px;
+    border-style: none;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.search-button {
+    background-color: transparent;
+    border-style: none;
+}
+.search-button .fa-magnifying-glass {
+    font-size: 50px;
+}
+.fa-magnifying-glass:hover {
+    color: #6b8581;
+}
+.search-button .fa-magnifying-glass:active {
+    color: pink;
+}
+
+.search-checkbox input {
+    width: 30px;
+    height: 30px;
+}
+
+.search-checkbox label {
+    font-size: 30px;
+}
+
+.details {
+    margin-top: -0.5em;
+}
+
+h6 {
+    word-wrap: break-word;
+    font-size: 1em;
+    margin: 0;
+}
+ul li {
+    list-style-type: none;
 }

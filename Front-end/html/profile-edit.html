@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit profile</title>
+    <link rel="stylesheet" href="../css/feed.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/editProfile.css">
+    <script src="https://kit.fontawesome.com/ee9ba64db8.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<main>
+    <header>
+        <nav>
+            <a class="home" href="feed.html">Name</a>
+            <ul>
+                <li class="message"><a href="messages.html"><i class="fa-solid fa-envelope"></i></a></li>
+                <li class="profile"><a href="profile.html"><i class="fa-solid fa-user"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="profile-links">
+        <a href="profile.html">Profile</a>
+        <a href="yourPosts.html">Your posts</a>
+    </div>
+    <article>
+        <form action="" class="userinfo-edit">
+            <label for="uname">Username:</label>
+            <input type="text" id="uname" name="uname" value="horse_girl_94" maxlength="40" required>
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" value="horse_girl_94@example.com" readonly>
+            <label for="area-edit">Area:</label>
+            <input type="text" id="area-edit" name="area" value="Kera" required>
+            <label for="pword">Password:</label>
+            <input type="password" id="pword" name="pword" value="******" required>
+            <input type="submit" id="save-edit" value="Save changes">
+        </form>
+
+    </article>
+</main>
+</body>
+</html>

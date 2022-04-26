@@ -1,68 +1,44 @@
 'use strict';
-//TODO these gotta move to their own place later
-const bcrypt = require('bcryptjs');
 
-const userModel = require('../models/userModel');           //model
-//  /user/      GET
-const get_users = async (req, res) => {
-    const users = await userModel.getAllUsers();
-    if (users.length > 0) {
-        for (const user of users) {
-            delete user.password;
-        }
-    }
-    res.json(users);
+// userController
+const userModel = require('../models/userModel');
+const {validationResult} = require("express-validator");
+
+
+//Authentication
+const checkToken = (req, res, next) => {
+  if (!req.user) {
+    next(new Error('token not valid'));
+  } else {
+    res.json({ user: req.user });
+  }
 };
 
-//  /user/:id   GET
-const get_user_by_id = async (req, res) => {
-    const user = await userModel.getUserByID(req.params.id, res);
-    delete  user.password;
-    res.json(user || {});
+//Possibly for moderator to be able to see reported users
+const user_get_byId = async (req, res) => {
+  console.log('user get by id', req.params.id);
+  const userFilter = users.filter((item) => item.id == req.params.id);
+  res.json(userFilter[0] || {})
 };
 
-//  /user/      PUT
-const modify_user = async (req, res) => {
-    console.log('user controller PUT body: \n', req.body);
-    const hash = await bcrypt.hash(req.body.password, 12);
-    console.log('hashed pass', hash, hash.length);
-    const moddedUser = {
-        email: req.body.email,
-        password: hash,
-        username: req.body.username,
-        area: req.body.area,
-        ID: req.body.ID,
-    }
-    const modified = await userModel.modifyUser(moddedUser, res);
-    res.json({ message: `user modified successfully: ${modified}.` });
-};
+//For updating users
+const user_put = async (req, res) => {
+  console.log('user controller update body', req.body);
+  const newUser = req.body;
+  const updated = await userModel.updateUser(req.user, newUser, res);
+  res.json({message: `user updated: ${updated}.`});
+}
 
-//  /user/      POST
-const create_new_user = async (req, res) => {
-    console.log('user controller POST body: \n', req.body);
-    const hash = await bcrypt.hash(req.body.password, 12);
-    console.log('hashed pass', hash, hash.length);
-    const newUser = {
-        email: req.body.email,
-        password: hash,
-        username: req.body.username,
-        area: req.body.area,
-    };
-    const id = await userModel.addUser(newUser, res);
-    res.json({ message: `user created with id: ${id}.`});
-};
-
-//  /user/      DELETE
-const delete_user_by_ID = async (req, res) => {
-    console.log('User controller delete by id', req.params.id);
-    const del = await userModel.deleteUserByID(req.params.id, res);
-    res.json({ message: `user deleted ${del}` });
-};
+//For deleting accounts
+const user_delete_byId = async (req, res) => {
+  console.log('User controller delete by id: ', req.params.id);
+  const del = await userModel.deleteUser(req.user, req.params.id, res);
+  res.json({message: `user deleted: ${del}.`});
+}
 
 module.exports = {
-    get_user_by_id,
-    modify_user,
-    get_users,
-    create_new_user,
-    delete_user_by_ID,
-}
+  user_get_byId,
+  user_put,
+  user_delete_byId,
+  checkToken,
+};

@@ -1,52 +1,39 @@
 'use strict';
-const express = require('express');                     // express
-const cors = require('cors');                           // cors
-const userRoute = require('./routes/userRoute');        // route user
-const postRoute = require('./routes/postRoute');        // route post
-const foodFactRoute = require('./routes/foodFactRoute');// route food_fact
-const passport = require('./utils/pass');               // utils passport
-const app = express();                                  // express
-const port = 3000;                                      // port
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const userRoute = require('./routes/userRoute');
+const postRoute = require('./routes/postRoute');
+const authorizationRoute = require('./routes/authorizationRoute');
+const passport = require('./utilities/pass');
+const app = express();
+const port = process.env.PORT || 3000;
 
-app.use(cors());                                        // cors
-app.use(express.json());                                // for parsing application/json
-app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+//Port number decision
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+if (process.env.NODE_ENV === 'production') {
+  require('./utilities/production')(app, process.env.PORT || 3000);
+} else {
+  require('./utilities/localhost')(app, port);
+}
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 app.use(passport.initialize());
+app.use('/thumbnails', express.static('thumbnails'));
+app.use(express.static('uploads'));
 
-app.use('/uploads', express.static('uploads'));
+// Non-authenticated routes
+app.use('/auth', authorizationRoute);
+app.get('/', (req, res) => {
+  if (req.secure) {
+    res.send('Hello Secure World!');
+  } else {
+    res.send('not secured?');
+  }
+});
+app.use('/post', postRoute);
 
-app.use('/user', userRoute);                            // route for user
-app.use('/post', postRoute);                            // route for post
-app.use('/food_fact', foodFactRoute);                   // route for food_fact
-
-app.listen(port, () =>
-    console.log(`app listening on port ${port}!`));
-
-// TODO database is still missing a link between posts & food_facts
-// TODO database is still missing a link between posts & users
-
-// TODO my idea is to make a table that takes in foreach as input from tickboxes in frontend
-
-// "cors": "^2.8.5",
-// npm install cors
-
-// "dotenv": "^16.0.0",
-// npm install dotenv --save
-
-// "express": "^4.17.3",
-// npm install express
-
-// "multer": "^1.4.4",
-// npm install --save multer
-
-// "mysql2": "^2.3.3",
-// npm install --save mysql2
-
-// "node": "^17.7.2",
-// npm install node
-
-// "nodemon": "^2.0.15",
-// npm install nodemon
-
-// "express-validator": "^6.14.0",
-// npm install --save express-validator
+// Authenticated routes
+app.use('/user', passport.authenticate('jwt', {session: false}),userRoute);

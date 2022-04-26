@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit profile</title>
+    <link rel="stylesheet" href="../css/feed.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/createPost.css">
+    <script src="https://kit.fontawesome.com/ee9ba64db8.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<main>
+    <header>
+        <nav>
+            <a class="home" href="feed.html">Name</a>
+            <ul>
+                <li class="message"><a href="messages.html"><i class="fa-solid fa-envelope"></i></a></li>
+                <li class="profile"><a href="profile.html"><i class="fa-solid fa-user"></i></a></li>
+            </ul>
+        </nav>
+        <h4>Create a post</h4>
+    </header>
+
+    <article>
+        <form action="https://localhost:3000/post" method="post" class="create-post" enctype="multipart/form-data">
+            <div class="text-input">
+                <label for="area">Area:</label>
+                <input type="text" id="area" name="area" value="Kera" required>
+                <label for="expiration">Expiration date of the post:</label>
+                <input type="date" id="expiration" name="expiration" required>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" placeholder="Title" required>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" placeholder="Write a description" rows="4" cols="32" required></textarea>
+                <label for="picture">Select a picture:</label>
+                <input type="file" id="picture" name="picture">
+            </div>
+            <div class="checkbox">
+                <label for="vegan">Vegan <input type="checkbox" id="vegan" name="vegan"></label>
+                <label for="gluten-free">Gluten-free<input type="checkbox" id="gluten-free" name="gluten-free"></label>
+                <label for="sugar-free">Sugar-free <input type="checkbox" id="sugar-free" name="sugar-free"></label>
+                <label for="nut-free">Nut-free<input type="checkbox" id="nut-free" name="nut-free"></label>
+                <label for="lactose-free">Lactose-free<input type="checkbox" id="lactose-free" name="lactose-free"></label>
+                <label for="vegetarian">Vegetarian<input type="checkbox" id="vegetarian" name="vegetarian"></label>
+                <button type="submit" id="save-edit">Create a post!</button>
+            </div>
+        </form>
+    </article>
+</main>
+<script src="Back-end/utilities/resize.js"></script>
+<script src="../javascript/createPost.js"></script>
+<script src="../javascript/serialize.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+
+h4 {
+    font-size: 60px;
+}
+
+.username-time {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.timevalue {
+    margin-right: 30px;
+}
+h5, p {
+    font-size: 40px;
+    margin-left: 30px;
+}
+
+.message-thread {
+    background-color: #ccae85;
+    padding-bottom: 40px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: 20px;
+    border-top-style: groove;
+
+}
+
+.message-thread:hover {
+    background-color: #b79b76;
+}
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.item-received-button {
+    font-size: 50px;
+    border-radius: 20px;
+    background-color: #ffae00;
+    border-style: none;
+    padding: 20px;
+}
+
+.item-received-button:hover {
+    background-color: #de9a01;
+}
+
+.item-received-button:active {
+    background-color: pink;
+}

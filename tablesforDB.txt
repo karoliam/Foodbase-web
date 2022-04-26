@@ -1,0 +1,83 @@
+
+--Ignore if database already exists
+CREATE DATABASE foodbase;
+USE foodbase;
+--end of comment
+
+CREATE TABLE user (
+	ID Int NOT NULL AUTO_INCREMENT,
+	email VARCHAR(45),
+	password VARCHAR(500),
+	username VARCHAR(45),
+	area VARCHAR(45),
+	role Int DEFAULT 1,
+	PRIMARY KEY (ID)
+);
+
+CREATE TABLE food_fact (
+	ID Int NOT NULL AUTO_INCREMENT,
+	name VARCHAR(45),
+	type Int,
+	PRIMARY KEY (ID)
+);
+
+CREATE TABLE post (
+	ID Int NOT NULL AUTO_INCREMENT,
+	filename VARCHAR(45),
+	description VARCHAR(1000) DEFAULT "",
+	time_stamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+	name VARCHAR(45),
+	owner_ID Int,
+	area VARCHAR(45),
+	PRIMARY KEY (ID),
+	FOREIGN KEY (owner_ID) REFERENCES user(ID)
+);
+
+CREATE TABLE post_to_food_fact (
+	ID Int NOT NULL AUTO_INCREMENT,
+	post_ID Int,
+	food_fact_ID Int,
+	PRIMARY KEY (ID),
+	FOREIGN KEY (post_ID) REFERENCES post(ID),
+	FOREIGN KEY (food_fact_ID) REFERENCES food_fact(ID)
+);
+
+CREATE TABLE user_preferences (
+	ID Int NOT NULL AUTO_INCREMENT,
+	user_ID Int,
+	food_fact_ID Int,
+	PRIMARY KEY (ID),
+	FOREIGN KEY (user_ID) REFERENCES user(ID),
+	FOREIGN KEY (food_fact_ID) REFERENCES food_fact(ID)
+);
+
+INSERT INTO food_fact(name,type)
+VALUES("gluten",0),
+("fish",0),
+("crustacean",0),
+("egg",0),
+("lactose",0),
+("milk",0),
+("soybean",0),
+("nut",0),
+("apple",0),
+("citrus_fruit",0),
+("sesame_seed",0),
+("vegan",1),
+("sugar_free",1),
+("meat_free",1),
+("low_fat",1);
+
+--VET (valid end time) not yet implemented
+--description DEFAULT is set to empty string
+--user roles 0 = admin, 1 = registered user
+
+--flagging not yet implemented
+--rating not yet implemented
+
+SHOW TABLES;
+DESCRIBE user;
+DESCRIBE food_fact;
+DESCRIBE post;
+DESCRIBE post_to_food_fact;
+DESCRIBE user_preferences;

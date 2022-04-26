@@ -1,17 +1,16 @@
 'use strict';
-
 const pool = require('../database/db');
 const promisePool = pool.promise();
 
 const getAllPosts = async () => {
     try {
-        const [rows] = await promisePool.query('SELECT * FROM post');
+        const [rows] = await promisePool.query('SELECT * FROM post INNER JOIN user ON owner_ID = user_id');
         return rows;
     } catch (e) {
         console.error('error', e.message);
     }
 };
-
+// GET post by number that is passed to id
 const getPostByID = async (id, res) => {
     try {
         const [rows] = await promisePool.query('SELECT * FROM post WHERE ID = ?', [id]);
@@ -22,12 +21,25 @@ const getPostByID = async (id, res) => {
         return;
     }
 };
-
-const addPost = async (post, res) => {
+// create new post
+const addPost = async (post,file, res) => {
     try {
         // TODO add food_fact relations to post in post_to_food_fact table
-        const [rows] = await promisePool.query('INSERT INTO post(filename, description, name, owner_ID) VALUES (?,?,?,?)', [post.filename, post.description, post.name, post.owner_ID]);
+        const [rows] = await promisePool.query('INSERT INTO post(filename, description, name, owner_ID, area) VALUES (?,?,?,?,?)',
+            [file.filename, post.description, post.title, post.owner_ID, post.area]);
         console.log('post model insert', rows);
+        // delete non-preferneces from post
+        delete post.filename;
+        delete post.description;
+        delete post.title;
+        delete post.owner_ID;
+        delete post.area;
+        /*for (const prefs in post) {
+            // TODO this will change according to post contents
+            const [rows1] = await promisePool.query('INSERT INTO post_to_food_fact(post_ID, food_fact_ID) VALUES (?,?)',
+                [rows.insertId, post[prefs]]);
+            console.log("post food_fact note created with id:",rows1.insertId)
+        }*/
         return rows.insertId;
     } catch (e) {
         console.error('post model addPost error', e.message);
@@ -35,7 +47,7 @@ const addPost = async (post, res) => {
         return;
     }
 };
-
+// modify existing post
 const modifyPost = async (post, res) => {
     try {
         // TODO modify food_fact relations to post in post_to_food_fact table
@@ -48,7 +60,7 @@ const modifyPost = async (post, res) => {
         return;
     }
 };
-
+// delete post by req.params.id
 const deletePostByID = async (id, res) => {
     try {
         const [rows] = await promisePool.query('DELETE FROM post WHERE ID = ?', [id]);
@@ -61,7 +73,6 @@ const deletePostByID = async (id, res) => {
     }
 
 };
-
 module.exports = {
     getAllPosts,
     getPostByID,

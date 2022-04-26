@@ -1,33 +1,19 @@
 'use strict';
-const express = require('express');                                     // express
-const multer = require('multer');                                       // multer
-const {body} = require('express-validator');                            // express-validator
-const router = express.Router();                                        // router
-const userController = require('../controllers/userController');        // controller
+const express = require('express');
+const userController = require('../controllers/userController');
+const router = express.Router();
 
-const upload = multer();                   // multer
+//authentication
+router.get('/token', userController.checkToken);
 
-router.route('/')                                                 // route /user
-    .get(userController.get_users)
-    .post(upload.none(),
-        body('email').isEmail(),    // TODO still accepts non emails
-        body('password').isLength({ min: 8, max: 45 }),
-        body('username').isLength({ min: 3, max: 45 }),
-        body('area').isAlphanumeric(),
-        // body('role').isNumeric(),
-        userController.create_new_user)
-    .put(upload.none(),
-        body('email').isEmail(),
-        body('password').isLength({ min: 8, max: 45 }),
-        body('username').isLength({ min: 3, max: 45 }),
-        body('area').isAlphanumeric(),
-        // body('role').isNumeric(),
-        userController.modify_user);
+//Modifying an account
+router.route('/')
+.put(userController.user_put);
 
-router.route('/:id')                                              // route /user/:id
-    .get(userController.get_user_by_id)
-    .delete(userController.delete_user_by_ID);
+//Moderator tools/user account self-deletion
+router.route('/:id')
+.get(userController.user_get_byId)
+.delete(userController.user_delete_byId);
 
-module.exports = router;                                                // exports
-
-// don't understand why, but I got PUT only working with multer
+//exporting the router
+module.exports = router;
