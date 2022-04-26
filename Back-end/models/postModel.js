@@ -4,7 +4,7 @@ const promisePool = pool.promise();
 
 const getAllPosts = async () => {
     try {
-        const [rows] = await promisePool.query('SELECT * FROM post INNER JOIN user ON owner_ID = user_id');
+        const [rows] = await promisePool.query('SELECT * FROM post ORDER BY time_stamp DESC');
         return rows;
     } catch (e) {
         console.error('error', e.message);

@@ -104,6 +104,7 @@ figure {
 
 .fa-location-dot {
     font-size: 30px;
+    padding-left: 10px;
 }
 
 .feed {
@@ -159,4 +160,8 @@ h6 {
 }
 ul li {
     list-style-type: none;
+}
+
+.descriptionText {
+    font-size: 40px;
 }
