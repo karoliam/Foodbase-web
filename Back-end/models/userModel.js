@@ -17,9 +17,9 @@ const getUserLogin = async (params) => {
 };
 
 
-const getAllUsers = async (res) => {
+const getAllUsers = async () => {
   try {
-    const [rows] = await promisePool.query('SELECT * FROM user');
+    const [rows] = await promisePool.query('SELECT ID,email,username,area FROM user');
     return rows;
   } catch (e) {
     console.error('userModel getAllUsers error', e.message);
@@ -30,7 +30,7 @@ const getAllUsers = async (res) => {
 //Possibly for moderator to be able to see flagged users
 const getUserById = async (id, res) => {
   try {
-    const [rows] = await promisePool.query('SELECT * FROM user WHERE id = ?', [id]);
+    const [rows] = await promisePool.query('SELECT ID,email,username,area FROM user WHERE id = ?', [id]);
     return rows[0];
   } catch (e) {
     console.error('userModel getUserById error', e.message);
@@ -118,6 +118,16 @@ const deleteUser = async (user, id, res) => {
     return;
   }
 };
+const getUserPreferencesByID = async (id,res) => {
+  try {
+    const [rows] = await promisePool.query('SELECT * FROM user_preferences WHERE ID = ?', [id]);
+    return rows;
+  } catch (e) {
+    console.error('userModel getUserPreferencesByID error', e.message);
+    res.status(500).json({ message: 'something went wrong src: userModel getUserPreferencesByID' });
+    return;
+  }
+};
 
 module.exports = {
   getAllUsers,
@@ -126,4 +136,5 @@ module.exports = {
   updateUser,
   deleteUser,
   getUserLogin,
+  getUserPreferencesByID,
 }

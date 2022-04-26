@@ -3,6 +3,8 @@
 const postModel = require('../models/postModel');
 const {validationResult} = require('express-validator');
 const {makeThumbnail} = require('../utilities/resize');
+const bcryptjs = require("bcryptjs");
+const userModel = require("../models/userModel");
 
 const post_list_get = async (req, res) => {
   const posts = await postModel.getAllPosts(res);
@@ -45,13 +47,26 @@ const post_posting = async (req, res) => {
   res.json({message: `post created with ${id}.`});
 };
 
-const post_update_put = async (req, res) => {
-  console.log('post controller post body',  req.body);
-  console.log('post controller post file', req.file);
-  const post = req.body;
-  const user = req.user;
-  const modified = await postModel.modifyPost(post, res, user);
-  res.json({message: `post modified successfully: ${modified}.`});
+const post_update_put = async (req, res, next) => {
+
+  // Extract the validation errors from a request.
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log('user create error', errors);
+    res.send(errors.array());
+  } else {
+    let post = req.body.user;
+
+    const post_food_facts = req.body.preferences
+
+    const result = await postModel.modifyPost(post, post_food_facts, res);
+    if (result.insertId) {
+      res.json({ message: 'post modified!'});
+    } else {
+      res.status(400).json({error: 'register error'});
+    }
+  }
 };
 
 const delete_post_by_id = async (req, res) => {
