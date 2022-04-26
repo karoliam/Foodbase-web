@@ -1,6 +1,4 @@
 'use strict';
-
-
 const url = 'https://localhost:3000';
 const postFeed = document.createElement('ul');
 function showSearch() {
