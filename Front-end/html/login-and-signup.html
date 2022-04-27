@@ -21,7 +21,7 @@
 
     <div id="signup-div-just-for-clarity-during-development" style="width: 175px;">
       <!--Signup form-->
-      <form method="post" id="signup-form">
+      <form method="post" id="signup-form" enctype="multipart/form-data">
         <label for="signup-username">Username for your account:</label>
         <input id="signup-username" type="text" name="username" placeholder="Username" required>
         <label for="signup-email">Your email address:</label>
@@ -30,22 +30,26 @@
         <input id="signup-password" type="password" name="password" placeholder="Password" minlength="8" required>
         <label for="signup-password-again">Re-enter password:</label>
         <input id="signup-password-again" type="password" name="re-enter-password" placeholder="Password" minlength="8" required>
+        <label for="area">Your general location:</label>
+        <select name="area" id="area">
+          <!--Areas, js generated-->
+        </select>
 
         <div id="food-facts">
-          <!--Allergens-->
+          <!--Allergens, js generated-->
           <ul id="allergens">
           </ul>
-          <!--Diets-->
+          <!--Diets, js generated-->
           <ul id="diets">
           </ul>
-
         </div>
         <button type="submit">Sign up</button>
         <p id="signup-error-message"></p>
       </form>
     </div>
 
-    <script src="../lists/feedPreferences.js"></script>
+    <script src="../lists/areas.js"></script>
+    <script src="../javascript/checkBoxGen.js"></script>
     <script src="../javascript/login-and-signup.js"></script>
   </body>
 </html>

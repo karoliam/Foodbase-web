@@ -1,5 +1,6 @@
 'use strict';
 const pool = require('../database/db');
+const {json} = require('express');
 const promisePool = pool.promise();
 // GET all food_facts
 const getAllFoodFacts = async () => {
@@ -10,6 +11,7 @@ const getAllFoodFacts = async () => {
         console.error('error', e.message);
     }
 };
+
 // GET food_fact based on req.params.id
 const getFoodFactByID = async (id, res) => {
     try {

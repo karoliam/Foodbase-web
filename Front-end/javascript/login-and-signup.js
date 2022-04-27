@@ -8,11 +8,12 @@ const loginError = document.querySelector('#login-error-message');
 const signupForm = document.querySelector('#signup-form');
 const signupPassword = document.querySelector('#signup-password');
 const signupPasswordAgain = document.querySelector('#signup-password-again');
+const area = document.querySelector('#area');
 const allergensUL = document.querySelector('#allergens');
 const dietsUL = document.querySelector('#diets');
 const signupError = document.querySelector('#signup-error-message');
 
-// Login form
+//---------------Login form----------------------------------------------------
 loginForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
 
@@ -44,14 +45,16 @@ loginForm.addEventListener('submit', async (evt) => {
   }
 });
 
-// Signup form
+//---------------Signup form----------------------------------------------------
 
-// Generate the feed-preference lists upon page load
+// Generating the form inputs
 
-// List of allergens
-generateCheckBoxList(allergenList, allergensUL, '-free');
-// List of diets
-generateCheckBoxList(dietList, dietsUL, '');
+// Generate the area dropdown options
+generateAreas(area);
+// Generate List of allergens
+generateCheckBoxList(allergensUL,0);
+// generate List of diets
+generateCheckBoxList(dietsUL,1);
 
 // When the form is submitted
 signupForm.addEventListener('submit', async (evt) => {
@@ -63,7 +66,7 @@ signupForm.addEventListener('submit', async (evt) => {
   }
   // Serialize the form data
   const serializedSignupForm = serializeForm(signupForm);
-
+  console.log(serializedSignupForm);
   // Create the options for posting the data
   const fetchOptions = {
     method: 'POST',
@@ -77,29 +80,30 @@ signupForm.addEventListener('submit', async (evt) => {
   alert(signupJsonResponse.message);
 });
 
-//function for generating the checkbox lists
-function generateCheckBoxList(checkboxlist, appendList, addonString) {
-  for (let i = 0; i<checkboxlist.length; i++) {
-    //Create input
-    const newPreference= document.createElement('input');
-    const checkboxText = `${checkboxlist[i]}${addonString}`;
-    newPreference.id = checkboxText;
-    newPreference.type = "checkbox";
-    newPreference.name = checkboxlist[i];
-    //Create label for input
-    const newPreferenceLabel = document.createElement('label');
-    newPreferenceLabel.htmlFor = `${newPreference.id}`;
-    newPreferenceLabel.textContent = checkboxText;
+//---------------Functions------------------------------------------------------
 
-    //Append the input with label to the list of feedPreferences
-    const li = document.createElement('li');
-    li.appendChild(newPreference);
-    li.appendChild(newPreferenceLabel);
-    appendList.appendChild(li);
+// Generating the area options
+function generateAreas(selectElement) {
+  //list of areas
+  const areaList = locations;
+
+  //Add every location to the selectElement with a label
+  for (let i = 0; i<areaList.length; i++) {
+    // Create option element
+    const option = document.createElement('option');
+    option.id = areaList[i];
+    option.value = areaList[i];
+    option.innerText = areaList[i];
+    // Create label for option
+    const label = document.createElement('label');
+    label.htmlFor = option.id;
+    //Append to the selectElement
+    selectElement.appendChild(label);
+    selectElement.appendChild(option);
   }
 }
 
-// Serialization function
+// Serialization
 function serializeForm (formToBeSerialized) {
   // The user data and preferences-data will be added to signupFormData object
   let signupFormData = {
@@ -115,7 +119,7 @@ function serializeForm (formToBeSerialized) {
     const dataItem = formToBeSerialized.children[i];
 
     // To be able to identify the most important user data
-    const stringValueIdentifiers = ['username', 'password', 'email'];
+    const stringValueIdentifiers = ['username', 'password', 'email', 'area'];
 
     // Add the user data to the user object
     if (stringValueIdentifiers.includes(dataItem.name)) {

@@ -2,7 +2,7 @@
 
 const pool = require('../database/db');
 const promisePool = pool.promise();
-const lists = require('../lists/feedPreferences');
+const foodFactModel = require('../models/foodFactModel');
 
 //user authentication
 const getUserLogin = async (params) => {
@@ -40,26 +40,36 @@ const getUserById = async (id, res) => {
 };
 
 //For creating new users
-const createUser = async (user, userPreferences, res) => {
+const createUser = async (user, res) => {
   try {
-    const [rows] = await promisePool.query('INSERT INTO user(username, email, password) VALUES (?,?,?)',
-        [user.username,user.email,user.password]);
+    const [rows] = await promisePool.query('INSERT INTO user(username, email, password, area) VALUES (?,?,?,?)',
+        [user.username,user.email,user.password,user.area]);
 
-    // Looping through the preferences
+    //Remove all but user preferences
+    let userPreferences = user;
+    userPreferences.remove(name);
+
+    // Add all user preference names into an array
+    let preferencesInArray = [];
     for (const pref in userPreferences) {
-      // Number to be inserted as the food_fact_ID
-      let prefNumber;
-      if (lists.allergenList.includes(pref)) {
-        prefNumber = lists.allergenList.indexOf(pref) + 1;
-      }
-      if (lists.dietList.includes(pref)) {
-        //Same deal but with the addition of the allergenLists' length
-        prefNumber = lists.allergenList.length + lists.dietList.indexOf(pref) + 1;
-      }
-      const [rows1] = await promisePool.query('INSERT INTO user_preferences(user_ID, food_fact_ID) VALUES (?,?)',
-          [rows.insertId, prefNumber]);
-      console.log("preference created with id:",rows1.insertId);
+      preferencesInArray.push(pref);
     }
+
+    // All food_facts from the db
+    const foodFacts = await foodFactModel.getAllFoodFacts();
+    console.log('foodfacts', foodFacts);
+
+    // For every preference name that exists in name array data we add the ID to the Database
+    for (const i in foodFacts) {
+      if (preferencesInArray.includes(foodFacts[i].name)) {
+        // Number to be inserted as the food_fact_ID
+        const prefNumber = foodFacts[i].ID;
+        const [rows1] = await promisePool.query('INSERT INTO user_preferences(user_ID, food_fact_ID) VALUES (?,?)',
+            [rows.insertId, prefNumber]);
+        console.log("preference created with id:",rows1.insertId);
+      }
+    }
+
     console.log('user model insert: ', rows);
     return rows;
   } catch (e) {
