@@ -27,7 +27,11 @@ router.route('/')
     body('title', 'Title must contain minimum 2 characters').isLength({min:2}),
     body('description', 'Description must contain minimum 2 characters').isLength({min:2}),
     postController.post_posting)
-.put(postController.post_update_put);
+.put(upload.single('picture'),
+    body('area', 'Area must contain minimum 2 characters').isLength({min: 2}),
+    body('title', 'Title must contain minimum 2 characters').isLength({min:2}),
+    body('description', 'Description must contain minimum 2 characters').isLength({min:2}),
+    postController.post_update_put);
 
 
 router.route('/:id')

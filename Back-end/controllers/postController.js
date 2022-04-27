@@ -1,10 +1,11 @@
 'use strict';
 
 const postModel = require('../models/postModel');
-const {validationResult} = require('express-validator');
+const {validationResult, body} = require('express-validator');
 const {makeThumbnail} = require('../utilities/resize');
 const bcryptjs = require("bcryptjs");
 const userModel = require("../models/userModel");
+const foodFactModel = require("../models/foodFactModel");
 
 const post_list_get = async (req, res) => {
   const posts = await postModel.getAllPosts(res);
@@ -48,26 +49,48 @@ const post_posting = async (req, res) => {
   res.json({message: `post created with ${id}.`});
 };
 
+// modify posts with this
 const post_update_put = async (req, res, next) => {
-
-  // Extract the validation errors from a request.
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    console.log('user create error', errors);
-    res.send(errors.array());
+  console.log('request put body', req.body);
+  const postInfo = {};
+  const prefIDS = [];
+  // TODO currently we don't get the modified post's ID in req
+  const testID = 1;
+  
+  // base info for post goes to postInfo and are removed from req.body
+  postInfo.area = req.body.area;
+  delete req.body.area;
+  postInfo.title = req.body.title;
+  delete req.body.title;
+  postInfo.description = req.body.description;
+  delete req.body.description;
+  
+  // Image filename
+  if (typeof req.file !== 'undefined') {
+    postInfo.filename = req.file.filename;
   } else {
-    let post = req.body.post;
+    postInfo.filename = null;
+  }
+  
+  // after deleting other post info theres only preferences left in req.body
+  const prefs = req.body;
 
-    const post_food_facts = req.body.preferences
+  // get food facts from DB
+  const foodFacts = await foodFactModel.getAllFoodFacts();
 
-    const result = await postModel.modifyPost(post, post_food_facts, res);
-    if (result.insertId) {
-      res.json({ message: 'post modified!'});
-    } else {
-      res.status(400).json({error: 'register error'});
+  // compare preferences from req.body food_names to get the ID
+  for (const prefItem in prefs) {
+    for (let i = 0; i < foodFacts.length; i++) {
+      if (prefItem == foodFacts[i].name) {
+        console.log('foodFactsin id:', foodFacts[i].ID);
+        prefIDS.push(foodFacts[i].ID);
+      }
     }
   }
+
+  // send post related data to postModel for DB changes
+  const result = await postModel.modifyPost(postInfo,prefIDS,testID,res)
+  res.json({message: `post edited succesfully: ${result}`});
 };
 
 const delete_post_by_id = async (req, res) => {

@@ -48,11 +48,22 @@ const addPost = async (post,file, res) => {
     }
 };
 // modify existing post
-const modifyPost = async (post, res) => {
+const modifyPost = async (postInfo, prefs, testID, res) => {
     try {
-        // TODO modify food_fact relations to post in post_to_food_fact table
-        const [rows] = await promisePool.query('UPDATE post SET filename = ?, description = ?, name = ? WHERE ID = ?', [post.filename, post.description, post.name, post.ID]);
-        console.log('post model update', rows);
+        // delete old preferences from DB
+        const [rows1] = await promisePool.query('DELETE FROM post_to_food_fact WHERE post_ID =?', [testID]);
+        console.log('old preferences deleted from DB:', rows1.affectedRows)
+        // update post's main data to DB
+        const [rows] = await promisePool.query('UPDATE post SET filename=?, description=?, name=?, area=? WHERE ID = ?',
+            [postInfo.filename, postInfo.description, postInfo.title, postInfo.area, testID]);
+        console.log('post model update post info:', rows);
+        console.log(prefs)
+        // insert new post food facts to DB
+        for (const prefID in prefs) {
+            const [rows2] = await promisePool.query('INSERT INTO post_to_food_fact(post_ID, food_fact_ID) VALUES (?,?)',
+        [testID, prefs[prefID]]);
+            console.log("post food_fact note created with id:",rows2.insertId)
+        }
         return rows.affectedRows === 1;
     } catch (e) {
         console.error('post model modifyPost error', e.message);
@@ -71,7 +82,6 @@ const deletePostByID = async (id, res) => {
         res.status(500).json({ message: 'something went wrong src: postModel deletePostByID' });
         return;
     }
-
 };
 module.exports = {
     getAllPosts,

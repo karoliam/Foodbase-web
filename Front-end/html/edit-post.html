@@ -23,12 +23,10 @@
     </header>
 
     <article>
-        <form action="https://localhost:3000/post" method="post" class="create-post" enctype="multipart/form-data">
+        <form action="https://localhost:3000/post" id="editPostForm" method="post" class="edit-post" enctype="multipart/form-data">
             <div class="text-input">
                 <label for="area">Area:</label>
                 <input type="text" id="area" name="area" value="Kera" required>
-                <label for="expiration">Expiration date of the post:</label>
-                <input type="date" id="expiration" name="expiration" required>
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" placeholder="Title" required>
                 <label for="description">Description:</label>
@@ -36,9 +34,10 @@
                 <label for="picture">Select a picture:</label>
                 <input type="file" id="picture" name="picture">
             </div>
-            <div class="checkbox">
+
+            <div id="food-facts" class="checkbox">
                 <label for="vegan">Vegan <input type="checkbox" id="vegan" name="vegan"></label>
-                <label for="gluten-free">Gluten-free<input type="checkbox" id="gluten-free" name="gluten-free"></label>
+                <label for="gluten">Gluten-free<input type="checkbox" id="gluten" name="gluten"></label>
                 <label for="sugar-free">Sugar-free <input type="checkbox" id="sugar-free" name="sugar-free"></label>
                 <label for="nut-free">Nut-free<input type="checkbox" id="nut-free" name="nut-free"></label>
                 <label for="lactose-free">Lactose-free<input type="checkbox" id="lactose-free" name="lactose-free"></label>
@@ -48,8 +47,6 @@
         </form>
     </article>
 </main>
-<script src="Back-end/utilities/resize.js"></script>
-<script src="../javascript/createPost.js"></script>
-<script src="../javascript/serialize.js"></script>
+<script src="../javascript/editPost.js"></script>
 </body>
 </html>
