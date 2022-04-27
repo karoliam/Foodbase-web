@@ -93,6 +93,77 @@ DESCRIBE user_preferences;
 --  TABLE food_fact         all the food facts are stored here
 --	ID                      primary key of this table
 --	name                    the name of a food fact
+--  display_name            the name being displayed at frontend
+--	type                    defines if food fact is a diet or allergy (0=allergy, 1=diet)
+
+--  TABLE post              all the user created posts are stored here
+--	ID                      primary key of this table
+--	filename                refers to the filename of the post's image file
+--	description             the main text inside a post
+--	time_stamp              the time the post was created
+--	name                    title of the post
+--	owner_ID                refers to the ID of the user who uploaded the post
+--	area                    refers to the location of the item in the  post
+
+
+--  TABLE post_to_food_fact all the post's food facts are stored here
+--	ID                      primary key of this table
+--	post_ID                 refers to the related post by ID
+--	food_fact_ID            refers to the related food fact by ID
+
+--  TABLE user_preferences  all the user's food fact preferences are stored here
+--	ID                      primary key of this table
+--	user_ID                 refers to the related user of this preference
+--	food_fact_ID            refers to the related food fact of this preference
+
+--DESCRIPTIONS FOR TABLES
+
+--  TABLE user              all the user data is store here except user preferences
+--	ID                      primary key of this table
+--	email                   user's email used for login and signup
+--	password                this is used for the user to login
+--	username                used to identify users
+--	area                    default area for user's posts
+--	role                    this gives privileges for users (0=admin, 1=registered user)
+
+--  TABLE food_fact         all the food facts are stored here
+--	ID                      primary key of this table
+--	name                    the name of a food fact
+--	type                    defines if food fact is a diet or allergy (0=allergy, 1=diet)
+
+--  TABLE post              all the user created posts are stored here
+--	ID                      primary key of this table
+--	filename                refers to the filename of the post's image file
+--	description             the main text inside a post
+--	time_stamp              the time the post was created
+--	name                    title of the post
+--	owner_ID                refers to the ID of the user who uploaded the post
+--	area                    refers to the location of the item in the  post
+
+
+--  TABLE post_to_food_fact all the post's food facts are stored here
+--	ID                      primary key of this table
+--	post_ID                 refers to the related post by ID
+--	food_fact_ID            refers to the related food fact by ID
+
+--  TABLE user_preferences  all the user's food fact preferences are stored here
+--	ID                      primary key of this table
+--	user_ID                 refers to the related user of this preference
+--	food_fact_ID            refers to the related food fact of this preference
+
+--DESCRIPTIONS FOR TABLES
+
+--  TABLE user              all the user data is store here except user preferences
+--	ID                      primary key of this table
+--	email                   user's email used for login and signup
+--	password                this is used for the user to login
+--	username                used to identify users
+--	area                    default area for user's posts
+--	role                    this gives privileges for users (0=admin, 1=registered user)
+
+--  TABLE food_fact         all the food facts are stored here
+--	ID                      primary key of this table
+--	name                    the name of a food fact
 --	type                    defines if food fact is a diet or allergy (0=allergy, 1=diet)
 
 --  TABLE post              all the user created posts are stored here

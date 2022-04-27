@@ -44,22 +44,28 @@
         <label for="signup-password-again">Re-enter password:</label>
         <input id="signup-password-again" type="password" name="re-enter-password" placeholder="Password" minlength="8" required>
 
-        <div id="food-facts">
-          <!--Allergens-->
-          <ul id="allergens">
-          </ul>
-          <!--Diets-->
-          <ul id="diets">
-          </ul>
+        <label for="area">Your general location:</label>
+        <select name="area" id="area">
+          <!--Areas, js generated-->
+        </select>
 
+        <div id="food-facts">
+          <div id="allergens">
+            <!--Allergens, js generated-->
+          </div>
+
+          <div id="diets">
+            <!--Diets, js generated-->
+          </div>
         </div>
-        <button type="submit" id="signup-button">Sign up</button>
+        <button type="submit">Sign up</button>
         <p id="signup-error-message"></p>
       </form>
     </div>
     </div>
 
-    <script src="../lists/feedPreferences.js"></script>
+    <script src="../lists/areas.js"></script>
+    <script src="../javascript/checkBoxGen.js"></script>
     <script src="../javascript/login-and-signup.js"></script>
   </main>
 

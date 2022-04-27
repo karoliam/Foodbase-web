@@ -18,4 +18,3 @@ createPost.addEventListener('submit', async (evt) => {
   alert(json.message);
   location.href = '../html/feed.html';
 });
-
