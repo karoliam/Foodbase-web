@@ -26,7 +26,7 @@ const login = (req, res, next) => {
   })(req, res, next);
 };
 
-const userCreate_post = async (req, res, next) => {
+const userCreate_post = async (req, res) => {
 
   // Extract the validation errors from a request.
   const errors = validationResult(req);
@@ -36,14 +36,12 @@ const userCreate_post = async (req, res, next) => {
     res.send(errors.array());
   } else {
     // bcrypted password
-    const cryptedPass = await bcryptjs.hash(req.body.user.password, 15);
+    const cryptedPass = await bcryptjs.hash(req.body.password, 15);
 
-    let user = req.body.user;
+    let user = req.body;
     user.password = cryptedPass;
 
-    const user_preferences = req.body.preferences
-
-    const result = await userModel.createUser(user, user_preferences, res);
+    const result = await userModel.createUser(user, res);
     if (result.insertId) {
       res.json({ message: 'User added!'});
     } else {

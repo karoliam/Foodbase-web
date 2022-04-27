@@ -47,7 +47,11 @@ const createUser = async (user, res) => {
 
     //Remove all but user preferences
     let userPreferences = user;
-    userPreferences.remove(name);
+    delete userPreferences.username;
+    delete userPreferences.email;
+    delete userPreferences.password;
+    delete userPreferences.area;
+
 
     // Add all user preference names into an array
     let preferencesInArray = [];
@@ -57,16 +61,14 @@ const createUser = async (user, res) => {
 
     // All food_facts from the db
     const foodFacts = await foodFactModel.getAllFoodFacts();
-    console.log('foodfacts', foodFacts);
 
     // For every preference name that exists in name array data we add the ID to the Database
     for (const i in foodFacts) {
       if (preferencesInArray.includes(foodFacts[i].name)) {
         // Number to be inserted as the food_fact_ID
         const prefNumber = foodFacts[i].ID;
-        const [rows1] = await promisePool.query('INSERT INTO user_preferences(user_ID, food_fact_ID) VALUES (?,?)',
+        const [prefRows] = await promisePool.query('INSERT INTO user_preferences(user_ID, food_fact_ID) VALUES (?,?)',
             [rows.insertId, prefNumber]);
-        console.log("preference created with id:",rows1.insertId);
       }
     }
 

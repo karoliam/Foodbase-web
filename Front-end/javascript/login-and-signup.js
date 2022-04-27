@@ -64,16 +64,14 @@ signupForm.addEventListener('submit', async (evt) => {
     signupError.innerHTML = "Password fields do not match";
     return;
   }
-  // Serialize the form data
-  const serializedSignupForm = serializeForm(signupForm);
-  console.log(serializedSignupForm);
+  // Make a FormData object from the signupForm
+  const formedSignupForm = new FormData(signupForm);
+  delete formedSignupForm.delete('re-enter-password');
   // Create the options for posting the data
   const fetchOptions = {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(serializedSignupForm),
+    headers: {},
+    body: formedSignupForm,
   };
   const response = await fetch(url + '/auth/signup', fetchOptions);
   const signupJsonResponse = await response.json();
@@ -101,59 +99,4 @@ function generateAreas(selectElement) {
     selectElement.appendChild(label);
     selectElement.appendChild(option);
   }
-}
-
-// Serialization
-function serializeForm (formToBeSerialized) {
-  // The user data and preferences-data will be added to signupFormData object
-  let signupFormData = {
-    user: {
-
-    },
-    preferences: {
-
-    },
-  };
-
-  for (let i = 0; i<formToBeSerialized.children.length; i++) {
-    const dataItem = formToBeSerialized.children[i];
-
-    // To be able to identify the most important user data
-    const stringValueIdentifiers = ['username', 'password', 'email', 'area'];
-
-    // Add the user data to the user object
-    if (stringValueIdentifiers.includes(dataItem.name)) {
-      const formDataUnit = dataItem.name;
-      const formDataUnitContent = dataItem.value;
-      signupFormData.user[`${formDataUnit}`] = `${formDataUnitContent}`;
-    }
-
-    // Add the foodFacts
-    if (dataItem.id === 'food-facts') {
-      // We dig out the checkbox 'checked' -value from both the allergen and diet lists
-
-      // Allergens
-      for (let i = 0; i<dataItem.firstElementChild.children.length; i++) {
-        const allergen = dataItem.firstElementChild.children[i].children[0];
-        // If it is checked we add the allergen name to the preferences object
-        if (allergen.checked === true) {
-          const formDataUnit = allergen.name;
-          const formDataUnitContent = true;
-          signupFormData.preferences[`${formDataUnit}`] = `${formDataUnitContent}`;
-        }
-      }
-
-      //diets
-      for (let i = 0; i<dataItem.lastElementChild.children.length; i++) {
-        const diet = dataItem.lastElementChild.children[i].children[0];
-        // If it is checked we add the diet name to the preferences object
-        if (diet.checked === true) {
-          const formDataUnit = diet.name;
-          const formDataUnitContent = true;
-          signupFormData.preferences[`${formDataUnit}`] = `${formDataUnitContent}`;
-        }
-      }
-    }
-  }
-  return signupFormData;
 }
