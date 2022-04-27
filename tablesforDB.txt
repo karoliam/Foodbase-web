@@ -17,6 +17,7 @@ CREATE TABLE user (
 CREATE TABLE food_fact (
 	ID Int NOT NULL AUTO_INCREMENT,
 	name VARCHAR(45),
+	display_name VARCHAR(45),
 	type Int,
 	PRIMARY KEY (ID)
 );
@@ -51,22 +52,19 @@ CREATE TABLE user_preferences (
 	FOREIGN KEY (food_fact_ID) REFERENCES food_fact(ID)
 );
 
-INSERT INTO food_fact(name,type)
-VALUES("gluten",0),
-("fish",0),
-("crustacean",0),
-("egg",0),
-("lactose",0),
-("milk",0),
-("soybean",0),
-("nut",0),
-("apple",0),
-("citrus_fruit",0),
-("sesame_seed",0),
-("vegan",1),
-("sugar_free",1),
-("meat_free",1),
-("low_fat",1);
+INSERT INTO food_fact(name,display_name,type)
+VALUES("gluten","Gluten-free",0),
+("fish","Fish-free",0),
+("egg","Egg-free",0),
+("lactose","Lactose-free",0),
+("milk","Milk-free",0),
+("soybean","Soybean-free",0),
+("nut","Nut-free",0),
+("sesame_seed","Sesame seed-free",0),
+("vegan","Vegan",1),
+("sugar","Sugar free",1),
+("meat","Meat free",1),
+("low_fat","Low fat",1);
 
 --VET (valid end time) not yet implemented
 --description DEFAULT is set to empty string

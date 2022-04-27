@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const userRoute = require('./routes/userRoute');
 const postRoute = require('./routes/postRoute');
+const foodFactRoute = require('./routes/foodFactRoute');
 const authorizationRoute = require('./routes/authorizationRoute');
 const passport = require('./utilities/pass');
 const app = express();
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
   }
 });
 app.use('/post', postRoute);
+app.use('/food', foodFactRoute);
 
 // Authenticated routes
-app.use('/user', passport.authenticate('jwt', {session: false}),userRoute);
+app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
