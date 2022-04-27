@@ -70,6 +70,11 @@ const modifyPost = async (postInfo, prefs, testID, res) => {
 // delete post by req.params.id
 const deletePostByID = async (id, res) => {
     try {
+        // delete post related food fact notes from DB
+        const [rows1] = await promisePool.query('DELETE FROM post_to_food_fact WHERE post_ID=?', [id])
+        console.log('items deleted from post_to_food_fact:', rows1.affectedRows);
+
+        // delete the actual post data from DB
         const [rows] = await promisePool.query('DELETE FROM post WHERE ID = ?', [id]);
         console.log('post model delete', rows);
         return rows.affectedRows === 1;
