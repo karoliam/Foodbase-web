@@ -1,7 +1,7 @@
 'use strict';
 /*remember to change the port number eventually*/
 const url = 'https://localhost:3000';
-const createPost = document.getElementsByClassName('create-post');
+const createPost = document.getElementsByClassName('createPost');
 
 createPost.addEventListener('submit', async (evt) => {
   evt.preventDefault();

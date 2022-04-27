@@ -37,7 +37,6 @@ const post_posting = async (req, res) => {
     return res.status(400).json ({ message: `validation error:`,
       errors: errors });
   }
-
   const post = req.body;
   post.owner = req.user_id;
   console.log('post uploaded', post);

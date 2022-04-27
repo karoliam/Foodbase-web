@@ -2,29 +2,42 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>NoTitleNeeded</title>
+    <title>Login and signup</title>
+    <link rel="stylesheet" href="../css/feed.css">
+    <link rel="stylesheet" href="../css/login-and-signup.css">
+    <!-- Amatic SC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
   </head>
 
   <body>
-  <!--Just copy and paste the forms and needed scripts to the main html file, and/or add classes for styling-->
-    <div id="login-div-just-for-clarity-during-development" style="margin-bottom: 2em">
+  <main>
+    <header>
+      <nav>
+        <a class="home" href="feed.html">Foodbase</a>
+      </nav>
+    </header>
+    <!--Just copy and paste the forms and needed scripts to the main html file, and/or add classes for styling-->
+    <div id="login-signup">
       <!--Login form-->
+      <h2>Login</h2>
       <form method="post" id="login-form">
         <label for="login-email">Email:</label>
         <input id="login-email" type="text" name="username" placeholder="Email" required>
         <label for="login-password">Password:</label>
         <input id="login-password" type="password" name="password" placeholder="Password" minlength="8" required>
-        <button type="submit">Login</button>
+        <button type="submit" id="login-button">Login</button>
         <p id="login-error-message"></p>
       </form>
-    </div>
 
-    <div id="signup-div-just-for-clarity-during-development" style="width: 175px;">
+    <div id="signup-div-just-for-clarity-during-development">
       <!--Signup form-->
+      <h2>Sign up</h2>
       <form method="post" id="signup-form">
-        <label for="signup-username">Username for your account:</label>
+        <label for="signup-username">Username:</label>
         <input id="signup-username" type="text" name="username" placeholder="Username" required>
-        <label for="signup-email">Your email address:</label>
+        <label for="signup-email">E-mail address:</label>
         <input id="signup-email" type="email" name="email" placeholder="Email" required>
         <label for="signup-password">Password:</label>
         <input id="signup-password" type="password" name="password" placeholder="Password" minlength="8" required>
@@ -40,12 +53,15 @@
           </ul>
 
         </div>
-        <button type="submit">Sign up</button>
+        <button type="submit" id="signup-button">Sign up</button>
         <p id="signup-error-message"></p>
       </form>
+    </div>
     </div>
 
     <script src="../lists/feedPreferences.js"></script>
     <script src="../javascript/login-and-signup.js"></script>
+  </main>
+
   </body>
 </html>

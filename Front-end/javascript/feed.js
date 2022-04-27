@@ -4,18 +4,16 @@ const postFeed = document.createElement('ul');
 function showSearch() {
   document.querySelector('.search-bar').style.display = 'block';
 }
+const article = document.createElement('article');
 
 const allPosts = (posts) => {
   postFeed.innerHTML = '';
   posts.forEach((post) => {
       const main = document.querySelector('main');
-      const article = document.createElement('article');
-      const header = document.createElement('header');
       const h6 = document.createElement('h6');
       const figure = document.createElement('figure');
       const img = document.createElement('img');
       const figcaption = document.createElement('figcaption');
-      const p = document.createElement('p');
       const imageLink = document.createElement('a');
       const detailDiv = document.createElement('div');
       const locationP = document.createElement('p');
@@ -27,7 +25,7 @@ const allPosts = (posts) => {
       const flagLink = document.createElement('a');
       const flagIcon = document.createElement('i');
       const onePost = document.createElement('li');
-      const tag = document.createElement('p');
+
 
     locationIcon.className = "fa-solid fa-location-dot";
     h6.textContent = post.name;
@@ -84,10 +82,7 @@ const allPosts = (posts) => {
     onePost.appendChild(figure);
     postFeed.classList.add('post-feed');
     postFeed.appendChild(onePost);
-
-    article.appendChild(header);
     article.appendChild(postFeed);
-    article.appendChild(p);
     main.appendChild(article);
 
   })

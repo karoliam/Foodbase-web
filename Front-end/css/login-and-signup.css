@@ -1,0 +1,56 @@
+body {
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+}
+
+#login-form, #signup-form  {
+    display: flex;
+    flex-direction: column;
+    background-color: #f3ecec;
+    border-radius: 20px;
+    padding: 40px;
+}
+
+#login-button, #signup-button {
+    margin: 50px auto;
+    width: 500px;
+    border-radius: 20px;
+    border-style: none;
+    background-color: rgb(145, 187, 186);
+}
+
+#login-button:hover {
+    background-color: #de9a01;
+}
+
+
+
+#signup-button:hover {
+    background-color: #de9a01;
+}
+
+
+#login-form input, #signup-form input {
+    border-radius: 20px;
+    border-style: none;
+    padding: 20px;
+    margin: 10px;
+    background-color: white;
+}
+
+#food-facts {
+    display: flex;
+    flex-direction: column;
+}
+
+#food-facts input {
+    width: 50px;
+    height: 50px;
+}
+
+#login-signup {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}

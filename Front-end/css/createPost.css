@@ -2,7 +2,7 @@ h4 {
     margin-top: 0em;
     font-size: 0.8em;
 }
-.create-post {
+.createPost {
     display: flex;
     flex-direction: column;
     margin-top: 100px;
