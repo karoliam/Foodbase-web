@@ -23,7 +23,6 @@ router.route('/')
 .get(postController.post_list_get)
 .post(upload.single('picture'),
     body('area', 'Area must contain minimum 2 characters').isLength({min: 2}),
-    body('expiration', 'Not a valid date').isDate(),
     body('title', 'Title must contain minimum 2 characters').isLength({min:2}),
     body('description', 'Description must contain minimum 2 characters').isLength({min:2}),
     postController.post_posting)

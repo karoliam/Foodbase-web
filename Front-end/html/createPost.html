@@ -7,13 +7,17 @@
     <link rel="stylesheet" href="../css/profile.css">
     <link rel="stylesheet" href="../css/createPost.css">
     <script src="https://kit.fontawesome.com/ee9ba64db8.js" crossorigin="anonymous"></script>
+    <!-- Amatic SC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
 
 </head>
 <body>
 <main>
     <header>
         <nav>
-            <a class="home" href="feed.html">Name</a>
+            <a class="home" href="feed.html">Foodbase</a>
             <ul>
                 <li class="message"><a href="messages.html"><i class="fa-solid fa-envelope"></i></a></li>
                 <li class="profile"><a href="profile.html"><i class="fa-solid fa-user"></i></a></li>
@@ -23,12 +27,10 @@
     </header>
 
     <article>
-        <form action="https://localhost:3000/post" method="post" class="create-post" enctype="multipart/form-data">
+        <form action="https://localhost:3000/post" method="post" class="createPost" enctype="multipart/form-data">
             <div class="text-input">
                 <label for="area">Area:</label>
                 <input type="text" id="area" name="area" value="Kera" required>
-                <label for="expiration">Expiration date of the post:</label>
-                <input type="date" id="expiration" name="expiration" required>
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" placeholder="Title" required>
                 <label for="description">Description:</label>
@@ -44,12 +46,11 @@
                 <label for="lactose-free">Lactose-free<input type="checkbox" id="lactose-free" name="lactose-free"></label>
                 <label for="vegetarian">Vegetarian<input type="checkbox" id="vegetarian" name="vegetarian"></label>
                 <button type="submit" id="save-edit">Create a post!</button>
+
             </div>
         </form>
     </article>
 </main>
-<script src="Back-end/utilities/resize.js"></script>
 <script src="../javascript/createPost.js"></script>
-<script src="../javascript/serialize.js"></script>
 </body>
 </html>
