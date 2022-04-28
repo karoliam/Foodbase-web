@@ -17,12 +17,14 @@ h4 {
     height: 100px;
     border-radius: 20px;
     padding: 10px;
-    margin:auto;
+    margin: 10px auto;
     border-style: none;
     resize: none;
     overflow: scroll;
     flex: 1;
 }
+
+
 label {
     margin-left: 40px;
 }
@@ -31,7 +33,7 @@ label {
 #save-edit {
     font-size: 30px;
     background-color: rgb(255, 220, 0);
-    margin-top: 100px;
+    margin: 50px 0px 0px 30px;
     width: 300px;
     height: 100px;
     border-style: none;
@@ -52,8 +54,26 @@ select option {
     font-size: 20px;
 }
 
-.checkbox {
+#food-facts {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+
+
+#allergens {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0px 35px 35px 35px;
+
+}
+
+#diets {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0px 35px 35px 35px;
+    margin-top: -0.5em;
 }

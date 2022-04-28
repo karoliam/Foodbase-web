@@ -29,17 +29,18 @@
     <article>
         <form action="https://localhost:3000/post" method="post" id="createPost" enctype="multipart/form-data">
             <div id="text-input">
-                <label for="area">Area:</label>
+                <label for="area"><h6>Area:</h6></label>
                 <select name="area" id="area">
                     <!--Areas, js generated-->
                 </select>
-                <label for="title">Title:</label>
+                <label for="title"><h6>Title</h6></label>
                 <input type="text" id="title" name="title" placeholder="Title" required>
-                <label for="description">Description:</label>
+                <label for="description"><h6>Description:</h6></label>
                 <textarea id="description" name="description" placeholder="Write a description" rows="4" cols="32" required></textarea>
-                <label for="picture">Select a picture:</label>
+                <label for="picture"><h6>Select a picture:</h6></label>
                 <input type="file" id="picture" name="picture">
             </div>
+            <label for="food-facts"><h6>Is your product...</h6></label>
             <div id="food-facts">
                 <div id="allergens">
                     <!--Allergens, js generated-->

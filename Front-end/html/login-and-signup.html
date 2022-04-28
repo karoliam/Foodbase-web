@@ -35,20 +35,20 @@
       <!--Signup form-->
       <h2>Sign up</h2>
       <form method="post" id="signup-form">
-        <label for="signup-username">Username:</label>
+        <label for="signup-username"><h6>Username:</h6></label>
         <input id="signup-username" type="text" name="username" placeholder="Username" required>
-        <label for="signup-email">E-mail address:</label>
+        <label for="signup-email"><h6>E-mail address:</h6></label>
         <input id="signup-email" type="email" name="email" placeholder="Email" required>
-        <label for="signup-password">Password:</label>
+        <label for="signup-password"><h6>Password:</h6></label>
         <input id="signup-password" type="password" name="password" placeholder="Password" minlength="8" required>
-        <label for="signup-password-again">Re-enter password:</label>
+        <label for="signup-password-again"><h6>Re-enter password:</h6></label>
         <input id="signup-password-again" type="password" name="re-enter-password" placeholder="Password" minlength="8" required>
 
-        <label for="area">Your general location:</label>
+        <label for="area"><h6>Your general location:</h6></label>
         <select name="area" id="area">
           <!--Areas, js generated-->
         </select>
-
+        <label for="food-facts"><h6>Feed preferences:</h6></label>
         <div id="food-facts">
           <div id="allergens">
             <!--Allergens, js generated-->
@@ -58,7 +58,7 @@
             <!--Diets, js generated-->
           </div>
         </div>
-        <button type="submit">Sign up</button>
+        <button type="submit" id="signup-button">Sign up</button>
         <p id="signup-error-message"></p>
       </form>
     </div>

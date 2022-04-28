@@ -20,16 +20,17 @@ body {
     background-color: rgb(145, 187, 186);
 }
 
-#login-button:hover {
+
+
+#login-button:hover, #signup-button:hover {
     background-color: #de9a01;
 }
 
 
 
-#signup-button:hover {
-    background-color: #de9a01;
+#login-button:active, #signup-button:active {
+    background-color: #a48895;
 }
-
 
 #login-form input, #signup-form input {
     border-radius: 20px;
@@ -39,10 +40,7 @@ body {
     background-color: white;
 }
 
-#food-facts {
-    display: flex;
-    flex-direction: column;
-}
+
 
 #food-facts input {
     width: 50px;
@@ -53,4 +51,41 @@ body {
     display: flex;
     flex-direction: column;
     margin: auto;
+}
+
+select {
+    font-size: 50px;
+    width: 710px;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px auto;
+    border-style: none;
+    resize: none;
+    overflow: scroll;
+    flex: 1;
+}
+
+
+#food-facts {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+
+#allergens {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0px 35px 35px 35px;
+
+}
+
+#diets {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0px 35px 35px 35px;
+    margin-top: -0.5em;
 }
