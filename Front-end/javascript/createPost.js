@@ -1,6 +1,6 @@
 'use strict';
 
-const createPost = document.getElementsByClassName('createPost');
+const createPost = document.getElementById('createPost');
 
 createPost.addEventListener('submit', async (evt) => {
   evt.preventDefault();

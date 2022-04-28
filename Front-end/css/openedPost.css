@@ -1,33 +1,42 @@
-#message {
+#contact-form {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.details {
+    margin-top: -0.5em;
+}
+
+#contact {
     border-radius: 20px;
-    margin: 40px auto;
     font-size: 40px;
     color: #657a77;
     resize: none;
     border-color: rgb(204, 174, 133);
 }
-#submit {
-    margin: auto;
-    border-radius: 30px;
+#send-button {
+    margin: 20px;
+    border-radius: 20px;
     border-style: none;
-    padding: 20px;
+    padding: 15px;
     background-color: rgb(255, 220, 0);
-    font-size: 40px;
+    font-size: 30px;
 }
-#submit:hover {
+#send-button:hover {
     background-color: rgb(204, 174, 133);
 }
-#contact-form {
+
+.contact-label {
+    font-size: 30px;
+}
+
+#textarea-button {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
-#contact {
-    font-size: 50px;
-    margin: 20px auto;
-}
-
-.details {
-    margin-top: -0.5em;
+figure {
+    background-color: #d5d2ce !important;
 }

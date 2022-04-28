@@ -1,30 +1,25 @@
 'use strict';
 
 const postFeed = document.createElement('ul');
-function showSearch() {
-  document.querySelector('.search-bar').style.display = 'block';
-}
 const article = document.createElement('article');
 
-const allPosts = (posts) => {
+const allPosts = (post) => {
   postFeed.innerHTML = '';
-  posts.forEach((post) => {
-      const main = document.querySelector('main');
-      const h6 = document.createElement('h6');
-      const figure = document.createElement('figure');
-      const img = document.createElement('img');
-      const figcaption = document.createElement('figcaption');
-      const imageLink = document.createElement('a');
-      const detailDiv = document.createElement('div');
-      const locationP = document.createElement('p');
-      const postDate = document.createElement('p');
-      const postTime = document.createElement('p');
-      const locationIcon = document.createElement('i');
-      const username = document.createElement('p');
-      const innerFigcap = document.createElement('p');
-      const flagLink = document.createElement('a');
-      const flagIcon = document.createElement('i');
-      const onePost = document.createElement('li');
+    const main = document.querySelector('main');
+    const h6 = document.createElement('h6');
+    const figure = document.createElement('figure');
+    const img = document.createElement('img');
+    const figcaption = document.createElement('figcaption');
+    const detailDiv = document.createElement('div');
+    const locationP = document.createElement('p');
+    const postDate = document.createElement('p');
+    const postTime = document.createElement('p');
+    const locationIcon = document.createElement('i');
+    const username = document.createElement('p');
+    const innerFigcap = document.createElement('p');
+    const flagLink = document.createElement('a');
+    const flagIcon = document.createElement('i');
+    const onePost = document.createElement('li');
 
 
     locationIcon.className = "fa-solid fa-location-dot";
@@ -36,8 +31,6 @@ const allPosts = (posts) => {
     img.classList.add('post-image');
 
     figcaption.classList.add('description');
-    imageLink.href = `openedPost.html?id=${post.ID}`;
-    imageLink.classList.add('post-image-link');
 
     //time and date into readable form
     const time = new Date(post.time_stamp).toLocaleTimeString('fi-FI',
@@ -72,8 +65,7 @@ const allPosts = (posts) => {
 //adding figcaption, image and title to figure
     figure.appendChild(figcaption);
     figure.appendChild(h6);
-    imageLink.appendChild(img);
-    figure.appendChild(imageLink);
+    figure.appendChild(img);
 
 //adding details and figcaption to figure, header, figure and p to article and finally article to main
     figure.appendChild(detailDiv);
@@ -84,8 +76,6 @@ const allPosts = (posts) => {
     postFeed.appendChild(onePost);
     article.appendChild(postFeed);
     main.appendChild(article);
-
-  })
 };
 
 
@@ -96,9 +86,13 @@ const getPost = async () => {
         Authorization: 'Bearer ' + sessionStorage.getItem('token'),
       },
     };
-    const response = await fetch(url + '/post', fetchOptions);
-    const posts = await response.json();
-    allPosts(posts);
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const id = urlParams.get('id');
+    console.log('tässä on id ', id);
+    const response = await fetch(url + `/post/openedPost/${id}`, fetchOptions);
+    const post = await response.json();
+    allPosts(post);
   } catch (e) {
     console.log(e.message);
   }
