@@ -5,7 +5,6 @@ const promisePool = pool.promise();
 const getAllPosts = async () => {
     try {
         const [rows] = await promisePool.query('SELECT post.*, user.username FROM post LEFT JOIN user ON post.owner_ID = user.ID;');
-        console.log('leipää:', rows)
         return rows;
     } catch (e) {
         console.error('error', e.message);
@@ -23,12 +22,12 @@ const getPostByID = async (id, res) => {
     }
 };
 // create new post
-const addPost = async (postInfo, prefs, ownerID, res) => {
+const addPost = async (postInfo, prefs, res) => {
     try {
 
         // insert the base post data to DB
         const [rows] = await promisePool.query('INSERT INTO post(filename, description, name, owner_ID, area) VALUES (?,?,?,?,?)',
-            [postInfo.filename, postInfo.description, postInfo.title, ownerID, postInfo.area]);
+            [postInfo.filename, postInfo.description, postInfo.title, postInfo.ownerID, postInfo.area]);
         console.log('post model insert', rows);
 
         // insert post related food fact data to DB

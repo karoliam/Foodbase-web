@@ -33,11 +33,9 @@ const post_posting = async (req, res) => {
     return res.status(400).json ({ message: `validation error:`,
       errors: errors });
   }
-  console.log('request put body', req.body);
+  console.log('request post body:', req.body);
   const postInfo = {};
   const prefIDS = [];
-  // TODO we need to get the user ID somehow from the frontend
-  const ownerID = null;
 
   // base info for post goes to postInfo and are removed from req.body
   postInfo.area = req.body.area;
@@ -46,6 +44,8 @@ const post_posting = async (req, res) => {
   delete req.body.title;
   postInfo.description = req.body.description;
   delete req.body.description;
+  postInfo.ownerID = req.body.ownerID;
+  delete req.body.ownerID;
 
   // Image filename
   if (typeof req.file !== 'undefined') {
@@ -73,8 +73,8 @@ const post_posting = async (req, res) => {
   console.log('req path', req.file.path);
   console.log('filename' , postInfo.filename);
   await makeThumbnail(req.file.path, postInfo.filename);
-  const id = await postModel.addPost(postInfo, prefIDS, ownerID, res);
-  res.json({message: `post created with ${id}.`});
+  const id = await postModel.addPost(postInfo, prefIDS, res);
+  res.json({ message: `post created with ${id}.` });
 };
 
 // modify posts with this
@@ -82,9 +82,8 @@ const post_update_put = async (req, res, next) => {
   console.log('request put body', req.body);
   const postInfo = {};
   const prefIDS = [];
-  // TODO currently we don't get the modified post's ID in req
+  // TODO post ID unknown
   const testID = 1;
-  
   // base info for post goes to postInfo and are removed from req.body
   postInfo.area = req.body.area;
   delete req.body.area;
@@ -92,7 +91,7 @@ const post_update_put = async (req, res, next) => {
   delete req.body.title;
   postInfo.description = req.body.description;
   delete req.body.description;
-  
+
   // Image filename
   if (typeof req.file !== 'undefined') {
     postInfo.filename = req.file.filename;

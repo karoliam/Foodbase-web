@@ -5,6 +5,8 @@ const editPost = document.querySelector('#editPostForm');
 editPost.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const formData = new FormData(editPost);
+    const loginObj=JSON.parse(sessionStorage.getItem('user'));
+    formData.append("ownerID", `${loginObj.ID}`)
     const posting = {
         method: 'PUT',
         headers: {
