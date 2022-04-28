@@ -1,6 +1,14 @@
 'use strict';
 
-const createPost = document.querySelector('#createPostForm');
+const createPost = document.getElementById('createPost');
+const area = document.querySelector('#area');
+const allergensUL = document.querySelector('#allergens');
+const dietsUL = document.querySelector('#diets');
+
+// Generate the area dropdown options
+generateAreaList(area);
+
+
 
 createPost.addEventListener('submit', async (evt) => {
   evt.preventDefault();

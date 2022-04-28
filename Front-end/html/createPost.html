@@ -28,9 +28,11 @@
 
     <article>
         <form action="https://localhost:3000/post" method="post" id="createPost" enctype="multipart/form-data">
-            <div class="text-input">
+            <div id="text-input">
                 <label for="area">Area:</label>
-                <input type="text" id="area" name="area" value="Kera" required>
+                <select name="area" id="area">
+                    <!--Areas, js generated-->
+                </select>
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" placeholder="Title" required>
                 <label for="description">Description:</label>
@@ -38,6 +40,8 @@
                 <label for="picture">Select a picture:</label>
                 <input type="file" id="picture" name="picture">
             </div>
+
+
             <div class="checkbox">
                 <label for="vegan">Vegan <input type="checkbox" id="vegan" name="vegan"></label>
                 <label for="gluten-free">Gluten-free<input type="checkbox" id="gluten-free" name="gluten-free"></label>
@@ -46,11 +50,14 @@
                 <label for="lactose-free">Lactose-free<input type="checkbox" id="lactose-free" name="lactose-free"></label>
                 <label for="vegetarian">Vegetarian<input type="checkbox" id="vegetarian" name="vegetarian"></label>
                 <button type="submit" id="save-edit">Create a post!</button>
-
             </div>
+
         </form>
     </article>
 </main>
+
+<script src="../javascript/areaListGen.js"></script>
+<script src="../javascript/checkBoxGen.js"></script>
 <script src="../javascript/url.js"></script>
 <script src="../javascript/createPost.js"></script>
 </body>
