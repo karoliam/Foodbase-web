@@ -98,7 +98,7 @@ const areaList = [
 ]
 
 // Generating the area options
-const generateAreaList = (selectElement) => {
+const generateAreaList = async (selectElement) => {
   //Add every location to the selectElement with a label
   for (let i = 0; i<areaList.length; i++) {
     // Create option element

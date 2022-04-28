@@ -45,7 +45,7 @@ loginForm.addEventListener('submit', async (evt) => {
 // Generating the form inputs
 
 // Generate the area dropdown options
-generateAreas(area);
+generateAreaList(area);
 // Generate List of allergens
 generateCheckBoxList(allergensUL,0);
 // generate List of diets
