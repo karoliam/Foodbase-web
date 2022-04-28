@@ -4,7 +4,8 @@ const promisePool = pool.promise();
 
 const getAllPosts = async () => {
     try {
-        const [rows] = await promisePool.query('SELECT * FROM post ORDER BY time_stamp DESC');
+        const [rows] = await promisePool.query('SELECT post.*, user.username FROM post LEFT JOIN user ON post.owner_ID = user.ID;');
+        console.log('leipää:', rows)
         return rows;
     } catch (e) {
         console.error('error', e.message);
@@ -13,7 +14,7 @@ const getAllPosts = async () => {
 // GET post by number that is passed to id
 const getPostByID = async (id, res) => {
     try {
-        const [rows] = await promisePool.query('SELECT * FROM post WHERE ID = ?', [id]);
+        const [rows] = await promisePool.query('SELECT post.*, user.username FROM post LEFT JOIN user ON post.owner_ID = user.ID WHERE post.ID = ?', [id]);
         return rows[0];
     } catch (e) {
         console.error('post, post model getPostByID error', e.message);
