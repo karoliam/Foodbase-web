@@ -1,6 +1,7 @@
 'use strict';
 
-const locations = [
+//list of areas
+const areaList = [
   'Alppiharju',
   'Bodom',
   'Espoon keskus',
@@ -95,3 +96,21 @@ const locations = [
   'Westend',
   'Östersundom',
 ]
+
+// Generating the area options
+const generateAreaList = (selectElement) => {
+  //Add every location to the selectElement with a label
+  for (let i = 0; i<areaList.length; i++) {
+    // Create option element
+    const option = document.createElement('option');
+    option.id = areaList[i];
+    option.value = areaList[i];
+    option.innerText = areaList[i];
+    // Create label for option
+    const label = document.createElement('label');
+    label.htmlFor = option.id;
+    //Append to the selectElement
+    selectElement.appendChild(label);
+    selectElement.appendChild(option);
+  }
+}

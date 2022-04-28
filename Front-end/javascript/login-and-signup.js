@@ -72,26 +72,3 @@ signupForm.addEventListener('submit', async (evt) => {
   const signupJsonResponse = await response.json();
   alert(signupJsonResponse.message);
 });
-
-//---------------Functions------------------------------------------------------
-
-// Generating the area options
-function generateAreas(selectElement) {
-  //list of areas
-  const areaList = locations;
-
-  //Add every location to the selectElement with a label
-  for (let i = 0; i<areaList.length; i++) {
-    // Create option element
-    const option = document.createElement('option');
-    option.id = areaList[i];
-    option.value = areaList[i];
-    option.innerText = areaList[i];
-    // Create label for option
-    const label = document.createElement('label');
-    label.htmlFor = option.id;
-    //Append to the selectElement
-    selectElement.appendChild(label);
-    selectElement.appendChild(option);
-  }
-}

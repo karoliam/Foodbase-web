@@ -1,17 +1,14 @@
 'use strict';
 
-const createPost = document.querySelector('#createPostForm');
+const createPost = document.getElementById('createPost');
 
 createPost.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const formData = new FormData(createPost);
-    const loginObj=JSON.parse(sessionStorage.getItem('user'));
-    formData.append("ownerID", `${loginObj.ID}`)
-    const posting = {
+  const posting = {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-
       },
     body: formData,
   };
