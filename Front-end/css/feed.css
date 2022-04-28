@@ -80,7 +80,6 @@ figure {
 
 .fa-flag {
     font-size: 30px;
-    margin-left: 10px;
 }
 .fa-flag:hover {
     color: #526461;
@@ -174,6 +173,20 @@ ul li {
 #feed-title {
     margin: 40px 0px 60px 0px;
 }
-.create-post {
+#create-post {
     margin-bottom: 0em;
 }
+
+
+.fa-envelope:hover {
+    color: #526461;
+}
+
+.icon-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px;
+}
+

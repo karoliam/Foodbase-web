@@ -16,7 +16,6 @@ const validateFileFormat = (req, file, cb) => {
   }
 };
 
-
 const upload = multer({ dest: 'uploads/', validateFileFormat});
 
 router.route('/')
@@ -33,8 +32,12 @@ router.route('/')
     postController.post_update_put);
 
 
+router.route('/openedPost/:id')
+    .get(postController.get_post_by_id)
+
 router.route('/:id')
 .get(postController.get_post_by_id)
 .delete(postController.delete_post_by_id);
+
 
 module.exports = router;
