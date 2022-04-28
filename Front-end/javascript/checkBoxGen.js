@@ -20,8 +20,8 @@ const generateCheckBoxList = async (appendList, wantedType) => {
       newPreferenceLabel.textContent = feedPreferenceList[i].display_name;
 
       //Append the input with label to the list of feedPreferences
-      appendList.appendChild(newPreference);
       appendList.appendChild(newPreferenceLabel);
+      appendList.appendChild(newPreference);
     }
   }
 }
