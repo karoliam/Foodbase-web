@@ -5,8 +5,13 @@ const area = document.querySelector('#area');
 const allergensUL = document.querySelector('#allergens');
 const dietsUL = document.querySelector('#diets');
 
+
+
 // Generate the area dropdown options
 generateAreaList(area);
+generateCheckBoxList(allergensUL,0);
+// generate List of diets
+generateCheckBoxList(dietsUL,1);
 
 
 
