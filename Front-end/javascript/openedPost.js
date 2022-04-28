@@ -53,7 +53,7 @@ const allPosts = (post) => {
 
 //stuff inside of the white box (username, description and flag)
     username.classList.add('username');
-    username.textContent = 'horse_girl_94'
+    username.textContent = post.username;
     innerFigcap.textContent = post.description;
     innerFigcap.classList.add('descriptionText');
     figcaption.appendChild(username);
