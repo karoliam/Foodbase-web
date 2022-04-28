@@ -15,5 +15,5 @@ editPost.addEventListener('submit', async (evt) => {
     const response = await fetch(url + '/post', posting);
     const json = await response.json();
     alert(json.message);
-    // location.href = '../html/feed.html';
+    location.href = '../html/feed.html';
 });

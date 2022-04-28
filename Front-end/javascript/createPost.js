@@ -1,10 +1,12 @@
 'use strict';
 
-const createPost = document.getElementById('createPost');
+const createPost = document.querySelector('#createPostForm');
 
 createPost.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const formData = new FormData(createPost);
+  const userData=JSON.parse(sessionStorage.getItem('user'));
+  formData.append("ownerID",`${userData.ID}`)
   const posting = {
       method: 'POST',
       headers: {
