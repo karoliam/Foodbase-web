@@ -9,7 +9,7 @@ const foodFactModel = require("../models/foodFactModel");
 
 const post_list_get = async (req, res) => {
   const posts = await postModel.getAllPosts(res);
-  console.log('post_list_get', posts);
+  console.log('post_list_get length:', posts.length);
   res.json(posts);
 };
 
