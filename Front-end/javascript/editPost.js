@@ -1,6 +1,5 @@
 'use strict';
-/*remember to change the port number eventually*/
-const url = 'https://localhost:3000';
+
 const editPost = document.querySelector('#editPostForm');
 
 editPost.addEventListener('submit', async (evt) => {

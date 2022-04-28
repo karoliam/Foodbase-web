@@ -1,11 +1,9 @@
 'use strict';
 
-const foodUrl = 'https://localhost:3000';
-
 // Generating the checkbox lists
 const generateCheckBoxList = async (appendList, wantedType) => {
   // Fetch the list of feedPreferences
-  const response = await fetch(foodUrl + '/food/');
+  const response = await fetch(url + '/food/');
   const feedPreferenceList = await response.json();
 
   for (let i = 0; i<feedPreferenceList.length; i++) {

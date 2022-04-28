@@ -1,5 +1,4 @@
 'use strict';
-const url = 'https://localhost:3000';
 
 // selecting login and signup forms and their necessary children
 const loginForm = document.querySelector('#login-form');
@@ -18,16 +17,12 @@ loginForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
 
   //First serialize the form
-  const serializedLoginForm = serializeForm(loginForm);
-  //Stringify the user object
-  const stringifiedForm = JSON.stringify(serializedLoginForm.user);
+  const formedLoginForm = new FormData(loginForm);
 
   const fetchOptions = {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: stringifiedForm,
+    headers: {},
+    body: formedLoginForm,
   };
 
   // Waiting for server response. Saving token if response ok
