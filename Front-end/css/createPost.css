@@ -2,17 +2,16 @@ h4 {
     margin-top: 0em;
     font-size: 0.8em;
 }
-.createPost {
+#createPost {
     display: flex;
     flex-direction: column;
     margin-top: 100px;
 }
-.text-input {
+#text-input {
     display: flex;
     flex-direction: column;
 }
-.text-input input{
-    display: flex;
+#text-input input, select, textarea{
     font-size: 40px;
     width: 720px;
     height: 100px;
@@ -20,20 +19,14 @@ h4 {
     padding: 10px;
     margin:auto;
     border-style: none;
+    resize: none;
+    overflow: scroll;
+    flex: 1;
 }
 label {
     margin-left: 40px;
 }
-.checkbox {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 60px;
-}
 
-.checkbox label {
-    font-size: 40px;
-}
 
 #save-edit {
     font-size: 30px;
@@ -49,22 +42,18 @@ label {
     background-color: #de9a01;
 }
 
-#description {
-    font-size: 40px;
-    resize: none;
-    border-radius: 20px;
-    border-style: none;
-    width: 720px;
-    margin: auto;
-}
-
 form {
     background-color: rgba(229, 198, 198, 0.5);
     padding: 40px 0px 40px 0px;
     border-radius: 20px;
 }
 
-.checkbox input {
-    width: 30px;
-    height:30px;
+select option {
+    font-size: 20px;
+}
+
+.checkbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
