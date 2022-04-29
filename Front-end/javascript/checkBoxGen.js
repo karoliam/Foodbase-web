@@ -13,12 +13,11 @@ const generateCheckBoxList = async (appendList, wantedType) => {
       const newPreference= document.createElement('input');
       newPreference.id = feedPreferenceList[i].name;
       newPreference.type = "checkbox";
-      newPreference.name = feedPreferenceList[i].name;
+      newPreference.name = feedPreferenceList[i].ID;
       //Create label for input
       const newPreferenceLabel = document.createElement('label');
       newPreferenceLabel.htmlFor = `${newPreference.id}`;
       newPreferenceLabel.textContent = feedPreferenceList[i].display_name;
-
       //Append the input with label to the list of feedPreferences
       appendList.appendChild(newPreferenceLabel);
       appendList.appendChild(newPreference);
