@@ -25,19 +25,8 @@ loginForm.addEventListener('submit', async (evt) => {
     body: formedLoginForm,
   };
 
-  // Waiting for server response. Saving token if response ok
-  const response = await fetch(url + '/auth/login', fetchOptions);
-  const loginJsonResponse = await response.json();
-
-  //If the response doesn't contain the user or token
-  if (!loginJsonResponse.user || !loginJsonResponse.token) {
-    loginError.innerHTML = loginJsonResponse.message ;
-  } else {
-    // save the token
-    sessionStorage.setItem('token', loginJsonResponse.token);
-    sessionStorage.setItem('user', JSON.stringify(loginJsonResponse.user));
-    location.href = '../html/feed.html';
-  }
+  //  Log the user in and redirect
+  await logUserIn(fetchOptions);
 });
 
 //---------------Signup form----------------------------------------------------
@@ -61,7 +50,7 @@ signupForm.addEventListener('submit', async (evt) => {
   }
   // Make a FormData object from the signupForm
   const formedSignupForm = new FormData(signupForm);
-  delete formedSignupForm.delete('re-enter-password');
+  formedSignupForm.delete('re-enter-password');
   // Create the options for posting the data
   const fetchOptions = {
     method: 'POST',
@@ -70,5 +59,37 @@ signupForm.addEventListener('submit', async (evt) => {
   };
   const response = await fetch(url + '/auth/signup', fetchOptions);
   const signupJsonResponse = await response.json();
-  alert(signupJsonResponse.message);
+
+  // Log the user in and return them to feed
+  if (signupJsonResponse.createSuccessful === true) {
+    formedSignupForm.delete('username');
+    const email = formedSignupForm.get('email');
+    formedSignupForm.set('username', email);
+    const newFetchOptions = {
+      method: 'POST',
+      headers: {},
+      body: formedSignupForm,
+    };
+    await logUserIn(newFetchOptions);
+  } else {
+    alert(signupJsonResponse.error);
+  }
 });
+
+//----------------------------Functions-----------------------------------------
+
+const logUserIn = async (fetchOpt) => {
+  // Waiting for server response. Saving token if response ok
+  const response = await fetch(url + '/auth/login', fetchOpt);
+  const loginJsonResponse = await response.json();
+
+//If the response doesn't contain the user or token
+  if (!loginJsonResponse.user || !loginJsonResponse.token) {
+    loginError.innerHTML = loginJsonResponse.message ;
+  } else {
+    // save the token
+    sessionStorage.setItem('token', loginJsonResponse.token);
+    sessionStorage.setItem('user', JSON.stringify(loginJsonResponse.user));
+    location.href = '../html/feed.html';
+  }
+}

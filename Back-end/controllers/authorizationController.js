@@ -43,9 +43,9 @@ const userCreate_post = async (req, res) => {
 
     const result = await userModel.createUser(user, res);
     if (result.insertId) {
-      res.json({ message: 'User added!'});
+      res.json({createSuccessful: true});
     } else {
-      res.status(400).json({error: 'register error'});
+      res.json({error: 'Login error: Contact website administrators'});
     }
   }
 };
