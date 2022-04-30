@@ -31,6 +31,8 @@ router.route('/')
     body('description', 'Description must contain minimum 2 characters').isLength({min:2}),
     postController.post_update_put);
 
+router.route('/yourPosts/:id')
+    .get(postController.post_list_get_your_posts);
 
 router.route('/openedPost/:id')
     .get(postController.get_post_by_id)
