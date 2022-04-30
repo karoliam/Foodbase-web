@@ -90,6 +90,7 @@ const logUserIn = async (fetchOpt) => {
     // save the token
     sessionStorage.setItem('token', loginJsonResponse.token);
     sessionStorage.setItem('user', JSON.stringify(loginJsonResponse.user));
+    sessionStorage.setItem('preferences', JSON.stringify(loginJsonResponse.preferences));
     location.href = '../html/feed.html';
   }
 }

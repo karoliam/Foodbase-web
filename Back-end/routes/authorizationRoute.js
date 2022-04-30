@@ -11,9 +11,9 @@ router.route('/login')
 
 router.route('/signup')
     .post(multer().none(),
-      body('email', 'email is not valid').isEmail(),
-      body('password', 'at least 8 characters long').isLength({min:8}),
-      check('username').escape(),
+      body('email', 'email is not valid').isEmail().isLength({max:40}),
+      body('old_password', 'at least 8 characters long').isLength({min:8}),
+      check('username').escape().isLength({max:40}),
       userCreate_post);
 
 module.exports = router;

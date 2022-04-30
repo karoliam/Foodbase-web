@@ -2,6 +2,7 @@
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const userModel = require('../models/userModel');
+const foodFactModel = require('../models/foodFactModel');
 const bcryptjs = require('bcryptjs');
 const {validationResult} = require("express-validator");
 
@@ -15,12 +16,13 @@ const login = (req, res, next) => {
       });
     }
     //If no errors
-    req.login(user, {session: false}, (error) => {
+    req.login(user, {session: false}, async (error) => {
       if (error)  {
         res.send(error);
       }
       const token = jwt.sign(user, process.env.JWT_SECRET);
-      return res.json({user, token});
+      const preferences = await foodFactModel.getUserFoodFacts(user.ID);
+      return res.json({user, token, preferences});
     });
 
   })(req, res, next);

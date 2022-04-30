@@ -8,10 +8,10 @@ const feedPreferences = document.querySelector('#feed-preferences');
 
 // Add the elements to an array
 const fillElements = [
-    username,
-    email,
-    area,
-    feedPreferences,
+  username,
+  email,
+  area,
+  feedPreferences,
 ]
 
 // Grab user and preferences from session storage

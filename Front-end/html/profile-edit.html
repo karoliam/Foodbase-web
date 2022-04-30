@@ -29,19 +29,30 @@
         <a href="yourPosts.html">Your posts</a>
     </div>
     <article>
-        <form action="" class="userinfo-edit">
-            <label for="uname">Username:</label>
-            <input type="text" id="uname" name="uname" value="horse_girl_94" maxlength="40" required>
+        <form id="userinfo-edit">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" maxlength="40" required>
             <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" value="horse_girl_94@example.com" readonly>
+            <input type="email" id="email" name="email" readonly>
             <label for="area-edit">Area:</label>
             <input type="text" id="area-edit" name="area" value="Kera" required>
-            <label for="pword">Password:</label>
-            <input type="password" id="pword" name="pword" value="******" required>
-            <input type="submit" id="save-edit" value="Save changes">
+            <input type="submit" id="save-profile-edit" value="Save changes">
+        </form>
+
+        <form id="password-edit">
+            <h4>Password change:</h4>
+            <label for="old-password">Old password:</label>
+            <input type="password" id="old-password" name="old_password" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <label for="re-enter-password">Password:</label>
+            <input type="password" id="re-enter-password" name="re-enter-password" required>
+            <input type="submit" id="save-password-edit" value="Save changes">
         </form>
 
     </article>
 </main>
+<script src="../javascript/url.js"></script>
+<script src="../javascript/profile-edit.js"></script>
 </body>
 </html>

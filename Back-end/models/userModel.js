@@ -43,13 +43,13 @@ const getUserById = async (id, res) => {
 const createUser = async (user, res) => {
   try {
     const [rows] = await promisePool.query('INSERT INTO user(username, email, password, area) VALUES (?,?,?,?)',
-        [user.username,user.email,user.password,user.area]);
+        [user.username,user.email,user.old_password,user.area]);
 
     //Remove all but user preferences
     let userPreferences = user;
     delete userPreferences.username;
     delete userPreferences.email;
-    delete userPreferences.password;
+    delete userPreferences.old_password;
     delete userPreferences.area;
 
     // For every preference name (=ID) we add the ID to the Database
@@ -71,13 +71,13 @@ const updateUser = async (user, newUser, res) => {
     if (user.role === 0) {
       //admin can update which user they ever want to.
       const [rows] = await promisePool.query('UPDATE user SET username = ?, password = ?, role = ? WHERE id=?',
-          [newUser.name,newUser.password,newUser.role, newUser.user_id]);
+          [newUser.name,newUser.old_password,newUser.role, newUser.user_id]);
       console.log('user model admin update: ', rows);
       return rows.affectedRows === 1;
     } else {
       //normal users can update only their own user except for role
       const [rows] = await promisePool.query('UPDATE user SET username = ?, password = ? WHERE id=? AND user_id=?',
-          [newUser.name,newUser.password, newUser.user_id, user.user_id]);
+          [newUser.name,newUser.old_password, newUser.user_id, user.user_id]);
       console.log('user model normal update: ', rows);
       return rows.affectedRows === 1;
     }
