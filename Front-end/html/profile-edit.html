@@ -54,19 +54,21 @@
         <form id="password-edit">
             <h4>Password change:</h4>
             <label for="old-password">Old password:</label>
-            <input type="password" id="old-password" name="old_password" required>
+            <input type="password" id="old-password" name="old_password" minlength="8" required>
             <label for="password">New password:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" minlength="8" required>
             <label for="re-enter-password">Re-enter new password:</label>
-            <input type="password" id="re-enter-password" name="re-enter-password" required>
+            <input type="password" id="re-enter-password" name="re-enter-password" minlength="8" required>
+            <p id="password-error"></p>
             <input type="submit" id="save-password-edit" value="Change password">
         </form>
 
     </article>
 </main>
-<script src="../javascript/url.js"></script>
-<script src="../javascript/areaListGen.js"></script>
-<script src="../javascript/checkBoxGen.js"></script>
+<script src="../jsUtils/url.js"></script>
+<script src="../jsUtils/areaListGen.js"></script>
+<script src="../jsUtils/checkBoxGen.js"></script>
+<script src="../jsUtils/login.js"></script>
 <script src="../javascript/profile-edit.js"></script>
 </body>
 </html>

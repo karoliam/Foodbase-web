@@ -2,7 +2,6 @@
 
 const pool = require('../database/db');
 const promisePool = pool.promise();
-const foodFactModel = require('../models/foodFactModel');
 
 //user authentication
 const getUserLogin = async (params) => {
@@ -23,7 +22,6 @@ const getAllUsers = async () => {
     return rows;
   } catch (e) {
     console.error('userModel getAllUsers error', e.message);
-    return;
   }
 };
 
@@ -35,7 +33,6 @@ const getUserById = async (id, res) => {
   } catch (e) {
     console.error('userModel getUserById error', e.message);
     res.status(500).json({message: 'something went wrong'});
-    return;
   }
 };
 
@@ -43,13 +40,13 @@ const getUserById = async (id, res) => {
 const createUser = async (user, res) => {
   try {
     const [rows] = await promisePool.query('INSERT INTO user(username, email, password, area) VALUES (?,?,?,?)',
-        [user.username,user.email,user.old_password,user.area]);
+        [user.username,user.email,user.password,user.area]);
 
     //Remove all but user preferences
     let userPreferences = user;
     delete userPreferences.username;
     delete userPreferences.email;
-    delete userPreferences.old_password;
+    delete userPreferences.password;
     delete userPreferences.area;
 
     // For every preference name (=ID) we add the ID to the Database
@@ -57,6 +54,7 @@ const createUser = async (user, res) => {
       const [prefRows] = await promisePool.query('INSERT INTO user_preferences(user_ID, food_fact_ID) VALUES (?,?)',
           [rows.insertId, pref]);
     }
+    // TODO: Remove this dangerous log before release
     console.log('user model insert: ', rows);
     return rows;
   } catch (e) {
@@ -65,16 +63,34 @@ const createUser = async (user, res) => {
   }
 };
 
-//For updating all kinds of users
-const updateUser = async (user, newUser, res) => {
+//For updating users
+const updateUser = async (newUser, res) => {
   try {
-    //Users can update only their own user except for role
-    const [rows] = await promisePool.query('UPDATE user SET username = ?, password = ? WHERE id=? AND user_id=?',
-        [newUser.name,newUser.old_password, newUser.user_id, user.user_id]);
-    console.log('user model normal update: ', rows);
+    //Users can update only their own username, area
+    const [rows] = await promisePool.query('UPDATE user SET username = ?, area = ? WHERE ID=? AND email=?',
+        [newUser.username, newUser.area, newUser.ID, newUser.email]);
+    // TODO: Remove this dangerous log before release
+    console.log('user model update: ', rows);
     return rows.affectedRows === 1;
   } catch (e) {
     console.error('userModel updateUser error', e.message);
+    res.status(500).json({message: 'something went wrong'});
+  }
+};
+
+//For updating user password
+const updateUserPassword = async (newUser, res) => {
+  try {
+    //Update the user's password. Just in case check that the email also matches
+    // TODO: Remove this dangerous log before release
+    console.log('newUser at usermodel', newUser);
+    const [rows] = await promisePool.query('UPDATE user SET password = ? WHERE ID=? AND email=?',
+        [newUser.password, newUser.ID, newUser.email]);
+    // TODO: Remove this dangerous log before release
+    console.log('user model password update: ', rows);
+    return rows.affectedRows === 1;
+  } catch (e) {
+    console.error('userModel updateUserPassword error', e.message);
     res.status(500).json({message: 'something went wrong'});
   }
 };
@@ -104,9 +120,11 @@ const deleteUser = async (user, id, res) => {
   } catch (e) {
     console.error('userModel deleteUser error', e.message);
     res.status(500).json({message: 'something went wrong src: userModel deleteUser'});
-    return;
   }
 };
+
+//For getting the user preferences
+
 const getUserPreferencesByID = async (id,res) => {
   try {
     const [rows] = await promisePool.query('SELECT * FROM user_preferences WHERE ID = ?', [id]);
@@ -114,7 +132,6 @@ const getUserPreferencesByID = async (id,res) => {
   } catch (e) {
     console.error('userModel getUserPreferencesByID error', e.message);
     res.status(500).json({ message: 'something went wrong src: userModel getUserPreferencesByID' });
-    return;
   }
 };
 
@@ -123,6 +140,7 @@ module.exports = {
   getUserById,
   createUser,
   updateUser,
+  updateUserPassword,
   deleteUser,
   getUserLogin,
   getUserPreferencesByID,

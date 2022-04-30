@@ -26,7 +26,7 @@ loginForm.addEventListener('submit', async (evt) => {
   };
 
   //  Log the user in and redirect
-  await logUserIn(fetchOptions);
+  await logUserIn(fetchOptions, '../html/feed.html');
 });
 
 //---------------Signup form----------------------------------------------------
@@ -45,8 +45,10 @@ signupForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   //First check if the user has entered the password in both inputs similarly
   if (!(signupPassword.value === signupPasswordAgain.value)) {
-    signupError.innerHTML = "Password fields do not match";
+    signupError.innerHTML = 'Password fields do not match';
     return;
+  } else {
+    signupError.innerHTML = '';
   }
   // Make a FormData object from the signupForm
   const formedSignupForm = new FormData(signupForm);
@@ -70,7 +72,7 @@ signupForm.addEventListener('submit', async (evt) => {
       headers: {},
       body: formedSignupForm,
     };
-    await logUserIn(newFetchOptions);
+    await logUserIn(newFetchOptions, '../html/feed.html');
   } else {
     alert(signupJsonResponse.error);
   }
@@ -78,19 +80,3 @@ signupForm.addEventListener('submit', async (evt) => {
 
 //----------------------------Functions-----------------------------------------
 
-const logUserIn = async (fetchOpt) => {
-  // Waiting for server response. Saving token if response ok
-  const response = await fetch(url + '/auth/login', fetchOpt);
-  const loginJsonResponse = await response.json();
-
-//If the response doesn't contain the user or token
-  if (!loginJsonResponse.user || !loginJsonResponse.token) {
-    loginError.innerHTML = loginJsonResponse.message ;
-  } else {
-    // save the token
-    sessionStorage.setItem('token', loginJsonResponse.token);
-    sessionStorage.setItem('user', JSON.stringify(loginJsonResponse.user));
-    sessionStorage.setItem('preferences', JSON.stringify(loginJsonResponse.preferences));
-    location.href = '../html/feed.html';
-  }
-}
