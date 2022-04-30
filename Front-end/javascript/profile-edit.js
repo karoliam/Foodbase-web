@@ -19,12 +19,7 @@ username.value = `${sessionUser.username}`;
 // Email
 email.value = `${sessionUser.email}`;
 // Area
-const generateArea = async () => {
-  await generateAreaList(area);
-  area.selected = `${sessionUser.area}`;
-}
-generateArea();
-
+generateAreaListWithPreselect(area, sessionUser.area);
 // FeedPreferences
 // Generate lists of the names (not display_names) of the preferences and generate the boxes
 let allergenPreferenceNames = [];
