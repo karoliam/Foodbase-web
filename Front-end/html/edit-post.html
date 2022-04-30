@@ -28,8 +28,12 @@
     <article>
         <form id="editPostForm" method="post" class="edit-post" enctype="multipart/form-data">
             <div class="text-input">
-                <label for="area">Area:</label>
-                <input type="text" id="area" name="area" value="Kera" required>
+                <label for="area"><h6>Area:</h6></label>
+                <select name="area" id="area">
+                    <!--Areas, js generated-->
+                </select>
+<!--                <label for="area">Area:</label>-->
+<!--                <input type="text" id="area" name="area" value="Kera" required>-->
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" placeholder="Title" required>
                 <label for="description">Description:</label>
@@ -37,19 +41,31 @@
                 <label for="picture">Select a picture:</label>
                 <input type="file" id="picture" name="picture">
             </div>
+            <label for="food-facts"><h6>Is your product...</h6></label>
+            <div id="food-facts">
+                <div id="allergens">
+                    <!--Allergens, js generated-->
+                </div>
 
-            <div id="food-facts" class="checkbox">
-                <label for="vegan">Vegan <input type="checkbox" id="vegan" name="vegan"></label>
-                <label for="gluten">Gluten-free<input type="checkbox" id="gluten" name="gluten"></label>
-                <label for="sugar-free">Sugar-free <input type="checkbox" id="sugar-free" name="sugar-free"></label>
-                <label for="nut-free">Nut-free<input type="checkbox" id="nut-free" name="nut-free"></label>
-                <label for="lactose-free">Lactose-free<input type="checkbox" id="lactose-free" name="lactose-free"></label>
-                <label for="vegetarian">Vegetarian<input type="checkbox" id="vegetarian" name="vegetarian"></label>
-                <button type="submit" id="save-edit">Create a post!</button>
+                <div id="diets">
+                    <!--Diets, js generated-->
+                </div>
             </div>
+            <button type="submit" id="save-edit">Edit post!</button>
+<!--            <div id="food-facts" class="checkbox">-->
+<!--                <label for="vegan">Vegan <input type="checkbox" id="vegan" name="vegan"></label>-->
+<!--                <label for="gluten">Gluten-free<input type="checkbox" id="gluten" name="gluten"></label>-->
+<!--                <label for="sugar-free">Sugar-free <input type="checkbox" id="sugar-free" name="sugar-free"></label>-->
+<!--                <label for="nut-free">Nut-free<input type="checkbox" id="nut-free" name="nut-free"></label>-->
+<!--                <label for="lactose-free">Lactose-free<input type="checkbox" id="lactose-free" name="lactose-free"></label>-->
+<!--                <label for="vegetarian">Vegetarian<input type="checkbox" id="vegetarian" name="vegetarian"></label>-->
+<!--                <button type="submit" id="save-edit">Create a post!</button>-->
+<!--            </div>-->
         </form>
     </article>
 </main>
+<script src="../jsUtils/areaListGen.js"></script>
+<script src="../jsUtils/checkBoxGen.js"></script>
 <script src="../jsUtils/url.js"></script>
 <script src="../javascript/editPost.js"></script>
 </body>

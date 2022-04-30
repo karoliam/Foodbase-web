@@ -79,11 +79,12 @@ const post_posting = async (req, res) => {
 
 // modify posts with this
 const post_update_put = async (req, res, next) => {
+  console.log(req);
   console.log('request put body', req.body);
   const postInfo = {};
   const prefIDS = [];
   // TODO post ID unknown
-  const testID = 1;
+  const testID = req.body.ID;
   // base info for post goes to postInfo and are removed from req.body
   postInfo.area = req.body.area;
   delete req.body.area;
@@ -93,10 +94,11 @@ const post_update_put = async (req, res, next) => {
   delete req.body.description;
 
   // Image filename
+  const oldData = await postModel.getPostByID(testID, res);
   if (typeof req.file !== 'undefined') {
     postInfo.filename = req.file.filename;
-  } else {
-    postInfo.filename = null;
+  } else if (oldData.filename !== null){
+    postInfo.filename = oldData.filename;
   }
   
   // after deleting other post info theres only preferences left in req.body
@@ -116,6 +118,9 @@ const post_update_put = async (req, res, next) => {
   }
 
   // send post related data to postModel for DB changes
+  if (typeof req.file !== 'undefined') {
+    await makeThumbnail(req.file.path, postInfo.filename);
+  }
   const result = await postModel.modifyPost(postInfo,prefIDS,testID,res)
   res.json({message: `post edited succesfully: ${result}`});
 };
