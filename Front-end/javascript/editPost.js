@@ -3,9 +3,9 @@
 const editPost = document.getElementById('editPostForm');
 const allergensUL = document.querySelector('#allergens');
 const dietsUL = document.querySelector('#diets');
-
+const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 // Generate the area dropdown options
-generateAreaList(area);
+generateAreaListWithPreselect(area, sessionUser.area);
 generateCheckBoxList(allergensUL,0);
 // generate List of diets
 generateCheckBoxList(dietsUL,1);
