@@ -44,17 +44,30 @@ generateCheckBoxListForProfileEdit(dietsDiv, 1, dietPreferenceNames);
 profileForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
 
-  // Make a FormData object from the signupForm
-  const formedSignupForm = new FormData(signupForm);
-  formedSignupForm.delete('re-enter-password');
-  // Create the options for posting the data
+  // Make a FormData object from the profileForm
+  const formedProfileForm = new FormData(profileForm);
+
+  // Add the user's ID to the payload
+  const currentID = sessionUser.ID;
+  formedProfileForm.set('ID', currentID);
+
+  // Create the options for putting the profile data
   const fetchOptions = {
-    method: 'POST',
-    headers: {},
-    body: formedSignupForm,
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+    },
+    body: formedProfileForm,
   };
-  const response = await fetch(url + '/auth/signup', fetchOptions);
-  const signupJsonResponse = await response.json();
+  const response = await fetch(url + '/user/profile', fetchOptions);
+  const profileUpdateResponseJson = await response.json();
+
+  // Prompt the user to log in again (if all went well)
+  if (profileUpdateResponseJson.profileUpdated === true) {
+    alert(`${profileUpdateResponseJson.message} Please log in again to see changes!`);
+    return;
+  }
+  alert(`${profileUpdateResponseJson.message}`);
 })
 
 //---------------------Password-edit-form--------------------------------------
@@ -72,7 +85,7 @@ passwdForm.addEventListener('submit', async (evt) => {
   } else {
     passwordError.innerHTML = '';
   }
-  // Make a FormData object from the signupForm
+  // Make a FormData object from the passwordForm
   const formedPasswdForm = new FormData(passwdForm);
 
   // Remove redundant data
@@ -96,7 +109,7 @@ passwdForm.addEventListener('submit', async (evt) => {
   const response = await fetch(url + '/user/password', fetchOptions);
   const passwordUpdateResponseJson = await response.json();
 
-  // Log the user in and return them to feed (if all went well)
+  // Relog the user in (if all went well)
   if (passwordUpdateResponseJson.passwordUpdated === true) {
     formedPasswdForm.set('username', currentMail);
     const newFetchOptions = {
@@ -105,8 +118,6 @@ passwdForm.addEventListener('submit', async (evt) => {
       body: formedPasswdForm,
     };
     await logUserIn(newFetchOptions, 0);
-    alert(passwordUpdateResponseJson.message);
-  } else {
-    alert(passwordUpdateResponseJson.message);
   }
+  alert(passwordUpdateResponseJson.message);
 })
