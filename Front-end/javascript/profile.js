@@ -2,17 +2,9 @@
 
 // Select the elements
 const username = document.querySelector('#username');
-const email = document.querySelector('#e-mail');
+const email = document.querySelector('#email');
 const area = document.querySelector('#area');
 const feedPreferences = document.querySelector('#feed-preferences');
-
-// Add the elements to an array
-const fillElements = [
-    username,
-    email,
-    area,
-    feedPreferences,
-]
 
 // Grab user and preferences from session storage
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));

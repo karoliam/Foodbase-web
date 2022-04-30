@@ -2,52 +2,48 @@
 
 // Select the elements
 const username = document.querySelector('#username');
-const email = document.querySelector('#e-mail');
+const email = document.querySelector('#email');
 const area = document.querySelector('#area');
-const feedPreferences = document.querySelector('#feed-preferences');
+const allergensDiv = document.querySelector('#allergens');
+const dietsDiv = document.querySelector('#diets');
 
-// Add the elements to an array
-const fillElements = [
-  username,
-  email,
-  area,
-  feedPreferences,
-]
 
 // Grab user and preferences from session storage
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 const sessionPreferences = JSON.parse(sessionStorage.getItem('preferences'));
 
-// Generate the data and populate the elements
+//---------------Generate the data and populate the elements--------------------
 
 // Username
-let pUser = document.createElement('p');
-pUser.innerText = `Username: ${sessionUser.username}`;
-pUser.id = 'username-text';
-username.appendChild(pUser);
-
+username.value = `${sessionUser.username}`;
 // Email
-const pEmail = document.createElement('p');
-pEmail.innerText = `E-mail: ${sessionUser.email}`;
-pEmail.id = 'email-text';
-email.appendChild(pEmail);
-
+email.value = `${sessionUser.email}`;
 // Area
-const pArea = document.createElement('p');
-pArea.innerText = `Area: ${sessionUser.area}`;
-pArea.id = 'area-text';
-area.appendChild(pArea);
+const generateArea = async () => {
+  await generateAreaList(area);
+  area.selected = `${sessionUser.area}`;
+}
+generateArea();
 
 // FeedPreferences
-// Add header
-const preferencesHeader = document.createElement('h6');
-preferencesHeader.innerText = 'Feed preferences:';
-preferencesHeader.id = 'preferences-header';
-feedPreferences.appendChild(preferencesHeader);
-// Add preferences
+// Generate lists of the names (not display_names) of the preferences and generate the boxes
+let allergenPreferenceNames = [];
 for (const pref in sessionPreferences) {
-  const pPreference = document.createElement('p');
-  pPreference.innerText = `${sessionPreferences[pref].display_name}`;
-  pPreference.id = `${sessionPreferences[pref].name}`;
-  feedPreferences.appendChild(pPreference);
+  if (sessionPreferences[pref].type === 0) {
+    allergenPreferenceNames += `${sessionPreferences[pref].name}`;
+  }
 }
+generateCheckBoxListForProfileEdit(allergensDiv, 0, allergenPreferenceNames);
+let dietPreferenceNames = [];
+for (const pref in sessionPreferences) {
+  if (sessionPreferences[pref].type === 1) {
+    dietPreferenceNames += `${sessionPreferences[pref].name}`;
+  }
+}
+generateCheckBoxListForProfileEdit(dietsDiv, 1, dietPreferenceNames);
+
+//---------------------Userinfo-edit-form--------------------------------------
+
+
+
+//---------------------Password-edit-form--------------------------------------

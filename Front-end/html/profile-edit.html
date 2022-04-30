@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Edit profile</title>
     <link rel="stylesheet" href="../css/feed.css">
-    <link rel="stylesheet" href="../css/profile.css">
     <link rel="stylesheet" href="../css/editProfile.css">
     <script src="https://kit.fontawesome.com/ee9ba64db8.js" crossorigin="anonymous"></script>
     <!-- Amatic SC -->
@@ -30,12 +29,25 @@
     </div>
     <article>
         <form id="userinfo-edit">
+            <h4>Profile edit:</h4>
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" maxlength="40" required>
             <label for="email">E-mail:</label>
             <input type="email" id="email" name="email" readonly>
-            <label for="area-edit">Area:</label>
-            <input type="text" id="area-edit" name="area" value="Kera" required>
+            <label for="area"><h6>Area:</h6></label>
+            <select name="area" id="area">
+                <!--Areas, js generated-->
+            </select>
+            <label for="food-facts"><h6>Feed preferences:</h6></label>
+            <div id="food-facts">
+                <div id="allergens">
+                    <!--Allergens, js generated-->
+                </div>
+
+                <div id="diets">
+                    <!--Diets, js generated-->
+                </div>
+            </div>
             <input type="submit" id="save-profile-edit" value="Save changes">
         </form>
 
@@ -43,16 +55,18 @@
             <h4>Password change:</h4>
             <label for="old-password">Old password:</label>
             <input type="password" id="old-password" name="old_password" required>
-            <label for="password">Password:</label>
+            <label for="password">New password:</label>
             <input type="password" id="password" name="password" required>
-            <label for="re-enter-password">Password:</label>
+            <label for="re-enter-password">Re-enter new password:</label>
             <input type="password" id="re-enter-password" name="re-enter-password" required>
-            <input type="submit" id="save-password-edit" value="Save changes">
+            <input type="submit" id="save-password-edit" value="Change password">
         </form>
 
     </article>
 </main>
 <script src="../javascript/url.js"></script>
+<script src="../javascript/areaListGen.js"></script>
+<script src="../javascript/checkBoxGen.js"></script>
 <script src="../javascript/profile-edit.js"></script>
 </body>
 </html>
