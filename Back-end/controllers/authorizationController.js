@@ -38,7 +38,7 @@ const userCreate_post = async (req, res) => {
     res.send(errors.array());
   } else {
     // bcrypted password
-    const cryptedPass = await bcryptjs.hash(req.body.password, 15);
+    const cryptedPass = await bcryptjs.hash(req.body.password, 13);
 
     let user = req.body;
     user.password = cryptedPass;

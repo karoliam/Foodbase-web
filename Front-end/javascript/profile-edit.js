@@ -6,7 +6,8 @@ const email = document.querySelector('#email');
 const area = document.querySelector('#area');
 const allergensDiv = document.querySelector('#allergens');
 const dietsDiv = document.querySelector('#diets');
-
+const profileForm = document.querySelector('#userinfo-edit');
+const passwdForm = document.querySelector('#password-edit');
 
 // Grab user and preferences from session storage
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
@@ -39,6 +40,73 @@ generateCheckBoxListForProfileEdit(dietsDiv, 1, dietPreferenceNames);
 
 //---------------------Userinfo-edit-form--------------------------------------
 
+// On submit
+profileForm.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
 
+  // Make a FormData object from the signupForm
+  const formedSignupForm = new FormData(signupForm);
+  formedSignupForm.delete('re-enter-password');
+  // Create the options for posting the data
+  const fetchOptions = {
+    method: 'POST',
+    headers: {},
+    body: formedSignupForm,
+  };
+  const response = await fetch(url + '/auth/signup', fetchOptions);
+  const signupJsonResponse = await response.json();
+})
 
 //---------------------Password-edit-form--------------------------------------
+const password = document.querySelector('#password');
+const passwordAgain = document.querySelector('#re-enter-password');
+const passwordError = document.querySelector('#password-error');
+
+// On submit
+passwdForm.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  //First check if the user has entered the password in both inputs similarly
+  if (!(password.value === passwordAgain.value)) {
+    passwordError.innerHTML = 'Password fields do not match';
+    return;
+  } else {
+    passwordError.innerHTML = '';
+  }
+  // Make a FormData object from the signupForm
+  const formedPasswdForm = new FormData(passwdForm);
+
+  // Remove redundant data
+  formedPasswdForm.delete('re-enter-password');
+  formedPasswdForm.delete('username');
+
+  // Add the user's email and ID to the payload
+  const currentMail = sessionUser.email;
+  const currentID = sessionUser.ID;
+  formedPasswdForm.set('email', currentMail);
+  formedPasswdForm.set('ID', currentID);
+
+  // Create the options for putting the data
+  const fetchOptions = {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+    },
+    body: formedPasswdForm,
+  };
+  const response = await fetch(url + '/user/password', fetchOptions);
+  const passwordUpdateResponseJson = await response.json();
+
+  // Log the user in and return them to feed (if all went well)
+  if (passwordUpdateResponseJson.passwordUpdated === true) {
+    formedPasswdForm.set('username', currentMail);
+    const newFetchOptions = {
+      method: 'POST',
+      headers: {},
+      body: formedPasswdForm,
+    };
+    await logUserIn(newFetchOptions, 0);
+    alert(passwordUpdateResponseJson.message);
+  } else {
+    alert(passwordUpdateResponseJson.message);
+  }
+})
