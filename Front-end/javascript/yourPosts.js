@@ -12,6 +12,11 @@ const allPosts = (posts) => {
         const main = document.querySelector('main');
         const h6 = document.createElement('h6');
         const figure = document.createElement('figure');
+        const label = document.createElement('label');
+        const editLink = document.createElement('a');
+        const editIcon = document.createElement('i');
+        const deleteLink = document.createElement('a');
+        const deleteIcon = document.createElement('i');
         const img = document.createElement('img');
         const figcaption = document.createElement('figcaption');
         const imageLink = document.createElement('a');
@@ -26,14 +31,22 @@ const allPosts = (posts) => {
         const flagIcon = document.createElement('i');
         const onePost = document.createElement('li');
 
+        //edit and delete icons are forming here
+        editLink.href = `edit-post.html?id=${post.ID}`;
+        editIcon.className = 'fa-solid fa-pen-to-square';
+        //currently delete just redirects to edit post
+        deleteLink.href = `edit-post.html?id=${post.ID}`;
+        deleteIcon.className = 'fa-solid fa-trash-can';
+        label.setAttribute('for', 'post-image');
 
-        locationIcon.className = "fa-solid fa-location-dot";
+        locationIcon.className = 'fa-solid fa-location-dot';
         h6.textContent = post.name;
         h6.classList.add('post-title');
 
         img.src = url + '/thumbnails/' + post.filename;
         img.alt = post.name;
         img.classList.add('post-image');
+
 
         figcaption.classList.add('description');
         imageLink.href = `openedPost.html?id=${post.ID}`;
@@ -71,7 +84,12 @@ const allPosts = (posts) => {
 
 //adding figcaption, image and title to figure
         figure.appendChild(figcaption);
-        figure.appendChild(h6);
+        figure.appendChild(label);
+        label.appendChild(h6);
+        label.appendChild(editLink);
+        label.appendChild(deleteLink);
+        editLink.appendChild(editIcon);
+        editLink.appendChild(deleteIcon);
         imageLink.appendChild(img);
         figure.appendChild(imageLink);
 
