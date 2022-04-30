@@ -13,7 +13,6 @@ router.get('/token', userController.checkToken);
 router.route('/profile')
 .put(multer().none(),
     body('email', 'email is not valid').isEmail().isLength({max:40}),
-    body('password', 'at least 8 characters long').isLength({min:8}),
     check('username').escape().isLength({max:40}),
     user_profile_put);
 
