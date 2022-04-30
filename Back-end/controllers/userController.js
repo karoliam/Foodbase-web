@@ -29,13 +29,18 @@ const user_profile_put = async (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    console.log('profile update error', errors);
+    console.log('Profile update error', errors);
     res.send(errors.array());
   } else {
+    // TODO: Remove this dangerous log before release
     console.log('user controller profile update body', req.body);
+
     const newUser = req.body;
-    const updated = await userModel.updateUser(req.user, newUser, res);
-    res.json({message: `user updated: ${updated}.`});
+
+    const profileUpdate = await userModel.updateUser(newUser,res);
+    if (profileUpdate) {
+      res.json({message: `Profile updated!`, profileUpdated: true});
+    }
   }
 }
 

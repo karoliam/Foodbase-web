@@ -8,7 +8,7 @@ const logUserIn = async (fetchOpt, redirectLocation) => {
 
 //If the response doesn't contain the user or token
   if (!loginJsonResponse.user || !loginJsonResponse.token) {
-    loginError.innerHTML = loginJsonResponse.message ;
+    alert('Error logging the user in!');
   } else {
     // save the token
     sessionStorage.setItem('token', loginJsonResponse.token);
