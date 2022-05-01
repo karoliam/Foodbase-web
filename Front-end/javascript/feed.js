@@ -40,6 +40,7 @@ const allPosts = (posts) => {
       const main = document.querySelector('main');
 
       //create elements
+      const figure = document.createElement('figure');
       const h6 = document.createElement('h6');
       const img = document.createElement('img');
       const figcaption = document.createElement('figcaption');
