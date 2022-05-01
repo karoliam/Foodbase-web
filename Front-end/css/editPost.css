@@ -1,29 +1,33 @@
 h4 {
     margin-top: 0em;
-    font-size: 0.8em;
+    font-size: 0.6em;
+}
+
+h6 {
+    font-size: 0.35em;
 }
 .createPost {
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
 }
 .text-input {
     display: flex;
     flex-direction: column;
 }
+select {
+    border-style: none;
+    border-radius: 20px;
+    font-size: 0.4em;
+    padding: 10px;
+}
 .text-input input{
     display: flex;
-    font-size: 40px;
-    width: 720px;
-    height: 100px;
+    font-size: 0.4em;
     border-radius: 20px;
     padding: 10px;
-    margin:auto;
     border-style: none;
 }
-label {
-    margin-left: 40px;
-}
+
 .checkbox {
     display: flex;
     flex-direction: row;
@@ -36,11 +40,9 @@ label {
 }
 
 #save-edit {
-    font-size: 30px;
-    background-color: #ffae00;
-    margin-top: 100px;
-    width: 300px;
-    height: 100px;
+    font-size: 0.4em;
+    background-color: rgb(107, 133, 132);
+    padding: 10px;
     border-style: none;
     border-radius: 20px;
 }
@@ -50,17 +52,17 @@ label {
 }
 
 #description {
-    font-size: 40px;
+    font-size: 0.4em;
     resize: none;
     border-radius: 20px;
     border-style: none;
-    width: 720px;
-    margin: auto;
+    width: 100%;
+    padding: 10px;
 }
 
 form {
     background-color: rgba(146, 169, 168, 0.53);
-    padding: 40px 0px 40px 0px;
+    padding: 40px 16px 40px 16px;
     border-radius: 20px;
 }
 
@@ -76,19 +78,3 @@ form {
 }
 
 
-
-#allergens {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 0px 35px 35px 35px;
-
-}
-
-#diets {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 0px 35px 35px 35px;
-    margin-top: -0.5em;
-}
