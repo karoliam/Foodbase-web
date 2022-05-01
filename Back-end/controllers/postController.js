@@ -79,11 +79,12 @@ const post_posting = async (req, res) => {
 
 // modify posts with this
 const post_update_put = async (req, res, next) => {
+  console.log(req);
   console.log('request put body', req.body);
   const postInfo = {};
   const prefIDS = [];
   // TODO post ID unknown
-  const testID = 1;
+  const testID = req.body.ID;
   // base info for post goes to postInfo and are removed from req.body
   postInfo.area = req.body.area;
   delete req.body.area;
@@ -93,10 +94,11 @@ const post_update_put = async (req, res, next) => {
   delete req.body.description;
 
   // Image filename
+  const oldData = await postModel.getPostByID(testID, res);
   if (typeof req.file !== 'undefined') {
     postInfo.filename = req.file.filename;
-  } else {
-    postInfo.filename = null;
+  } else if (oldData.filename !== null){
+    postInfo.filename = oldData.filename;
   }
   
   // after deleting other post info theres only preferences left in req.body
@@ -116,16 +118,25 @@ const post_update_put = async (req, res, next) => {
   }
 
   // send post related data to postModel for DB changes
+  if (typeof req.file !== 'undefined') {
+    await makeThumbnail(req.file.path, postInfo.filename);
+  }
   const result = await postModel.modifyPost(postInfo,prefIDS,testID,res)
   res.json({message: `post edited succesfully: ${result}`});
 };
-
+// literally just delete a post by ID
 const delete_post_by_id = async (req, res) => {
   console.log('post controller delete by id', req.params.id);
   const user = req.user;
   const del = await postModel.deletePostByID(req.params.id, res, user);
   res.json({message: `post deleted ${del}`});
 };
+// get all posts for specific user ID in req.params.id
+const post_list_get_your_posts = async (req, res) => {
+  const posts = await postModel.getPostsByUserID(req.params.id, res);
+  console.log('post_list_get_your_posts length:', posts.length);
+  res.json(posts);
+}
 
 module.exports = {
   post_list_get,
@@ -133,4 +144,5 @@ module.exports = {
   post_posting,
   post_update_put,
   delete_post_by_id,
+  post_list_get_your_posts,
 };

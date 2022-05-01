@@ -1,5 +1,28 @@
 'use strict';
 
+// TODO: Messaging. Currently only checks that user is logged in.
+const sessionUser = JSON.parse(sessionStorage.getItem('user'));
+const messageTextarea = document.querySelector('#contact');
+const messageSubmitButton = document.querySelector('#send-button');
+
+messageTextarea.addEventListener('input', evt => {
+  // Check that sessionUser is found
+  if (!sessionUser) {
+    location.href = "../html/anonymousUser.html";
+  }
+})
+
+messageSubmitButton.addEventListener('click', evt => {
+  // Check that sessionUser is found
+  if (!sessionUser) {
+    location.href = "../html/anonymousUser.html";
+  } else {
+    // TODO: The messaging functionality
+  }
+})
+
+
+// Post generation
 const postFeed = document.createElement('div');
 const article = document.createElement('article');
 
@@ -77,7 +100,6 @@ const allPosts = (post) => {
     article.appendChild(postFeed);
     main.appendChild(article);
 };
-
 
 const getPost = async () => {
   try {

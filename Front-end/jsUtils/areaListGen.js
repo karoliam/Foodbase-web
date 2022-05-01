@@ -114,3 +114,24 @@ const generateAreaList = async (selectElement) => {
     selectElement.appendChild(option);
   }
 }
+
+// Generating the area options with the correct option preselected
+const generateAreaListWithPreselect = async (selectElement, toBeSelectedId) => {
+  //Add every location to the selectElement with a label
+  for (let i = 0; i<areaList.length; i++) {
+    // Create option element
+    const option = document.createElement('option');
+    option.id = areaList[i];
+    option.value = areaList[i];
+    option.innerText = areaList[i];
+    if (areaList[i] === toBeSelectedId) {
+      option.selected = true;
+    }
+    // Create label for option
+    const label = document.createElement('label');
+    label.htmlFor = option.id;
+    //Append to the selectElement
+    selectElement.appendChild(label);
+    selectElement.appendChild(option);
+  }
+}

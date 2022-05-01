@@ -68,3 +68,27 @@ form {
     width: 30px;
     height:30px;
 }
+
+#food-facts {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+
+#allergens {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0px 35px 35px 35px;
+
+}
+
+#diets {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0px 35px 35px 35px;
+    margin-top: -0.5em;
+}

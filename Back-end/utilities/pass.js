@@ -9,8 +9,8 @@ const { getUserLogin } = require('../models/userModel');
 
 // local strategy for username password login
 passport.use(new Strategy(
-    async (email, password, done) => {
-        const params = [email];
+    async (username, password, done) => {
+        const params = [username];
         try {
             const [user] = await getUserLogin(params);
             // TODO: Remove this log before final release
