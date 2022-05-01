@@ -28,19 +28,20 @@ const addPost = async (postInfo, prefs, res) => {
         // insert the base post data to DB
         const [rows] = await promisePool.query('INSERT INTO post(filename, description, name, owner_ID, area) VALUES (?,?,?,?,?)',
             [postInfo.filename, postInfo.description, postInfo.title, postInfo.ownerID, postInfo.area]);
+        // TODO: Remove this dangerous log before release
         console.log('post model insert', rows);
 
         // insert post related food fact data to DB
         for (const prefID in prefs) {
             const [rows1] = await promisePool.query('INSERT INTO post_to_food_fact(post_ID, food_fact_ID) VALUES (?,?)',
-                [rows.insertId, prefs[prefID]]);
+                [rows.insertId, prefID]);
+            // TODO: Remove this dangerous log before release
             console.log("post food_fact note created with id:",rows1.insertId)
         }
         return rows.insertId;
     } catch (e) {
         console.error('post model addPost error', e.message);
-        res.status(500).json({ message: 'something went wrong src: postModel addPost'});
-        return;
+        res.status(500).json({ message: 'something went wrong'});
     }
 };
 // modify existing post

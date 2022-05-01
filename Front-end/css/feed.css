@@ -134,6 +134,7 @@ figure {
 }
 .fa-magnifying-glass:hover {
     color: #6b8581;
+    cursor: pointer;
 }
 .search-button .fa-magnifying-glass:active {
     color: pink;

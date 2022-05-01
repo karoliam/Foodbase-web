@@ -33,9 +33,9 @@ const post_posting = async (req, res) => {
     return res.status(400).json ({ message: `validation error:`,
       errors: errors });
   }
+  // TODO:
   console.log('request post body:', req.body);
   const postInfo = {};
-  const prefIDS = [];
 
   // base info for post goes to postInfo and are removed from req.body
   postInfo.area = req.body.area;
@@ -55,26 +55,16 @@ const post_posting = async (req, res) => {
   }
 
   // after deleting other post info theres only preferences left in req.body
-  const prefs = req.body;
-
-  // get food facts from DB
-  const foodFacts = await foodFactModel.getAllFoodFacts();
-
-  // compare preferences from req.body food_names to get the ID
-  for (const prefItem in prefs) {
-    for (let i = 0; i < foodFacts.length; i++) {
-      if (prefItem == foodFacts[i].name) {
-        console.log('foodFactsin id:', foodFacts[i].ID);
-        prefIDS.push(foodFacts[i].ID);
-      }
-    }
-  }
+  const foodFacts = req.body;
 
   console.log('req path', req.file.path);
   console.log('filename' , postInfo.filename);
   await makeThumbnail(req.file.path, postInfo.filename);
-  const id = await postModel.addPost(postInfo, prefIDS, res);
-  res.json({ message: `post created with ${id}.` });
+  const id = await postModel.addPost(postInfo, foodFacts, res);
+  if (id === undefined) {
+    return res.json({ message: `Post creation failed!` });
+  }
+  res.json({ message: `Post created!` });
 };
 
 // modify posts with this
