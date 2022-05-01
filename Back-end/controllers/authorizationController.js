@@ -21,7 +21,7 @@ const login = (req, res, next) => {
         res.send(error);
       }
       const token = jwt.sign(user, process.env.JWT_SECRET);
-      const preferences = await foodFactModel.getUserFoodFacts(user.ID);
+      const preferences = await userModel.getUserFoodFacts(user.ID);
       return res.json({user, token, preferences});
     });
 
@@ -40,10 +40,23 @@ const userCreate_post = async (req, res) => {
     // bcrypted password
     const cryptedPass = await bcryptjs.hash(req.body.password, 13);
 
-    let user = req.body;
+    const user = {};
+    const prefIDS = [];
+    user.username = req.body.username;
+    delete req.body.username;
+    user.email = req.body.email;
+    delete req.body.email;
     user.password = cryptedPass;
+    delete req.body.password;
+    user.area = req.body.area;
+    delete req.body.area;
 
-    const result = await userModel.createUser(user, res);
+    // after deleting other post info theres only preferences left in req.body
+    for (const prefsKey in req.body) {
+      prefIDS.push(parseInt(prefsKey));
+    }
+
+    const result = await userModel.createUser(user, prefIDS, res);
     if (result.insertId) {
       res.json({createSuccessful: true});
     } else {

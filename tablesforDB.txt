@@ -41,12 +41,9 @@ CREATE TABLE post_preferences (
 );
 
 CREATE TABLE user_preferences (
-	ID Int NOT NULL AUTO_INCREMENT,
-	user_ID Int,
-	food_fact_ID Int,
-	PRIMARY KEY (ID),
-	FOREIGN KEY (user_ID) REFERENCES user(ID),
-	FOREIGN KEY (food_fact_ID) REFERENCES food_fact(ID)
+	user_ID int NOT NULL,
+	food_fact_ID int NOT NULL,
+	CONSTRAINT PK_user_preferences PRIMARY KEY (user_ID, food_fact_ID)
 );
 
 INSERT INTO food_fact(name,display_name,type)
@@ -74,7 +71,7 @@ SHOW TABLES;
 DESCRIBE user;
 DESCRIBE food_fact;
 DESCRIBE post;
-DESCRIBE post_to_food_fact;
+DESCRIBE post_preferences;
 DESCRIBE user_preferences;
 
 --DESCRIPTIONS FOR TABLES
@@ -103,12 +100,10 @@ DESCRIBE user_preferences;
 --	area                    refers to the location of the item in the  post
 
 
---  TABLE post_to_food_fact all the post's food facts are stored here
---	ID                      primary key of this table
---	post_ID                 refers to the related post by ID
---	food_fact_ID            refers to the related food fact by ID
+--  TABLE post_preferences  all the post's food facts are stored here
+--	post_ID                 refers to the related post by ID (PK)
+--	food_fact_ID            refers to the related food fact by ID (PK)
 
 --  TABLE user_preferences  all the user's food fact preferences are stored here
---	ID                      primary key of this table
---	user_ID                 refers to the related user of this preference
---	food_fact_ID            refers to the related food fact of this preference
+--	user_ID                 refers to the related user of this preference (PK)
+--	food_fact_ID            refers to the related food fact of this preference (PK)

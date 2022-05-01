@@ -35,18 +35,6 @@ const getFoodFactIDByName = async (name,res) => {
     }
 };
 
-// GET food_facts based on user ID
-const getUserFoodFacts = async (ID) => {
-    try {
-        const [rows] = await promisePool.query(
-            'SELECT * FROM food_fact WHERE ID IN(SELECT food_fact_ID FROM user_preferences WHERE user_ID = ?)',
-            [ID]);
-        return rows;
-    } catch (e) {
-        console.error('error', e.message);
-    }
-};
-
 // GET food_facts based on post ID
 const getPostFoodFacts = async (ID) => {
     try {
@@ -64,6 +52,5 @@ module.exports = {
     getAllFoodFacts,
     getFoodFactByID,
     getFoodFactIDByName,
-    getUserFoodFacts,
     getPostFoodFacts,
 };

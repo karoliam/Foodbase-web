@@ -34,10 +34,26 @@ const user_profile_put = async (req, res) => {
   } else {
     // TODO: Remove this dangerous log before release
     console.log('user controller profile update body', req.body);
+    const newUser = {};
+    const prefIDS = [];
 
-    const newUser = req.body;
+    // base info for user goes to newUser and are removed from req.body
+    newUser.username = req.body.username;
+    delete req.body.username;
+    newUser.area = req.body.area;
+    delete req.body.area;
+    newUser.ID = req.body.ID;
+    delete req.body.ID;
+    newUser.email = req.body.email;
+    delete req.body.email;
 
-    const profileUpdate = await userModel.updateUser(newUser,res);
+    console.log("There should be strnums & on here: ",req.body)
+    // after deleting other post info theres only preferences left in req.body
+    for (const prefsKey in req.body) {
+      prefIDS.push(parseInt(prefsKey));
+    }
+
+    const profileUpdate = await userModel.updateUser(newUser, prefIDS, res);
     if (profileUpdate) {
       res.json({message: `Profile updated!`, profileUpdated: true});
     }

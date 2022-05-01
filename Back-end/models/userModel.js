@@ -37,23 +37,19 @@ const getUserById = async (id, res) => {
 };
 
 //For creating new users
-const createUser = async (user, res) => {
+const createUser = async (user, prefs, res) => {
   try {
+    // insert base user data to DB
     const [rows] = await promisePool.query('INSERT INTO user(username, email, password, area) VALUES (?,?,?,?)',
         [user.username,user.email,user.password,user.area]);
 
-    //Remove all but user preferences
-    let userPreferences = user;
-    delete userPreferences.username;
-    delete userPreferences.email;
-    delete userPreferences.password;
-    delete userPreferences.area;
-
-    // For every preference name (=ID) we add the ID to the Database
-    for (const pref in userPreferences) {
-      const [prefRows] = await promisePool.query('INSERT INTO user_preferences(user_ID, food_fact_ID) VALUES (?,?)',
-          [rows.insertId, pref]);
+    let prefsToInsert = [];
+    for (let i = 0; i < prefs.length; i++) {
+      prefsToInsert.push([rows.insertId, prefs[i]])
     }
+    // For every preference name (=ID) we add the ID to the Database
+      const [prefRows] = await promisePool.query('INSERT INTO user_preferences(user_ID, food_fact_ID) VALUES ?',
+          [prefsToInsert]);
     // TODO: Remove this dangerous log before release
     console.log('user model insert: ', rows);
     return rows;
@@ -64,8 +60,47 @@ const createUser = async (user, res) => {
 };
 
 //For updating users
-const updateUser = async (newUser, res) => {
-  try {
+const updateUser = async (newUser, newPrefs, res) => {
+    // TODO this fine piece of work has to be ctrl + c and ctrl + v to every relevant function
+    try {
+      let prefsToDelete = [];
+      let prefsToInsert = [];
+      const oldPrefs = [];
+      // check the preferences in DB with post ID
+      const oldRows = await getUserPrefsByID(newUser.ID, res);
+      for (const rowKey in oldRows) {
+        oldPrefs.push(oldRows[rowKey].food_fact_ID);
+      }
+      // no loop if no preferences existed in DB
+      if (oldPrefs.length !== 0) { for (let i = 0; i < newPrefs.length; i++) {
+        // check for new preferences to add, we can't add duplicates
+        if (!oldPrefs.includes(newPrefs[i])) { prefsToInsert.push([newUser.ID, newPrefs[i]]); }
+      }
+      } else { for (let i = 0; i < newPrefs.length; i++) {
+        prefsToInsert.push([newUser.ID, newPrefs[i]]);
+      }
+      }
+      // no loop if no preferences were ticked in edit form
+      if (newPrefs.length !== 0) { for (let i = 0; i < oldPrefs.length; i++) {
+        // check what preferences don't exist in the new set
+        if (!newPrefs.includes(oldPrefs[i])) { prefsToDelete.push(oldPrefs[i]); }
+      }
+      } else { prefsToDelete = prefsToDelete.concat(oldPrefs); }
+      console.log("juhaneita :",prefsToInsert)
+      console.log("juhaneita :",prefsToDelete)
+      // if no preferences exist in DB there's nothing to delete
+      if (prefsToDelete.length !== 0) {
+        const [delRows] = await promisePool.query('DELETE FROM user_preferences WHERE user_ID =? AND food_fact_ID IN ?',
+            [newUser.ID, [prefsToDelete]]);
+        console.log("post foodfact notes deleted: ", delRows.affectedRows)
+      }
+      // if no preferences were ticked in Form there is nothing to add
+      if (prefsToInsert.length !== 0) {
+        const [addRows] = await promisePool.query('INSERT INTO user_preferences(user_ID, food_fact_ID) VALUES ?',
+            [prefsToInsert]);
+        console.log("new post foodfact notes added: ", addRows.affectedRows);
+      }
+      // TODO I'm just a helpful todo marker for Vili's copy pasting
     //Users can update only their own username, area
     const [rows] = await promisePool.query('UPDATE user SET username = ?, area = ? WHERE ID=? AND email=?',
         [newUser.username, newUser.area, newUser.ID, newUser.email]);
@@ -135,6 +170,30 @@ const getUserPreferencesByID = async (id,res) => {
   }
 };
 
+// GET food_facts based on user ID
+const getUserPrefsByID = async (id, res) => {
+  try {
+    const [rows] = await promisePool.query('SELECT DISTINCT food_fact_ID FROM user_preferences WHERE user_ID=?', [id]);
+    return rows;
+  } catch (e) {
+    console.error('userModel getUserPrefsByID error', e.message);
+    res.status(500).json({ message: 'something went wrong src: userModel getUserPrefsByID' });
+    return;
+  }
+};
+
+// GET food_facts based on user ID
+const getUserFoodFacts = async (ID) => {
+  try {
+    const [rows] = await promisePool.query(
+        'SELECT * FROM food_fact WHERE ID IN(SELECT food_fact_ID FROM user_preferences WHERE user_ID = ?)',
+        [ID]);
+    return rows;
+  } catch (e) {
+    console.error('error', e.message);
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -144,4 +203,6 @@ module.exports = {
   deleteUser,
   getUserLogin,
   getUserPreferencesByID,
+  getUserPrefsByID,
+  getUserFoodFacts,
 }
