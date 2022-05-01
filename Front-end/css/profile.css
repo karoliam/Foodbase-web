@@ -11,9 +11,13 @@
 .profile-links a:hover {
     color: rgb(80, 98, 97);
     font-size: 51px;
+    cursor: pointer;
 }
 .profile-links a:active {
     color: #6b8581;
+}
+#logout-link {
+    color: rgb(81, 164, 159);
 }
 
 .profile-list {
