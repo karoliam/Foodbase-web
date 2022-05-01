@@ -1,9 +1,21 @@
 'use strict';
 
-const postFeed = document.createElement('div');
+// Search functionality
+const allergensDiv = document.querySelector('#allergens');
+const dietsDiv = document.querySelector('#diets');
+const searchBar = document.querySelector('#search-bar')
+const sessionPreferences = JSON.parse(sessionStorage.getItem('preferences'));
+
+
+generateCheckBoxListWithPreCheck(allergensDiv, 0, sessionPreferences);
+generateCheckBoxListWithPreCheck(dietsDiv, 1, sessionPreferences);
+
 function showSearch() {
-  document.querySelector('.search-bar').style.display = 'block';
+  searchBar.style.display = 'block';
 }
+
+// Post creation
+const postFeed = document.createElement('div');
 const article = document.createElement('article');
 
 const allPosts = (posts) => {

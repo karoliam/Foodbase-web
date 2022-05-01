@@ -26,10 +26,28 @@ const generateCheckBoxList = async (appendElement, wantedType) => {
 }
 
 // Generating the checkbox lists
-const generateCheckBoxListForProfileEdit = async (appendElement, wantedType, preCheckList) => {
+const generateCheckBoxListWithPreCheck = async (appendElement, wantedType, sessionPrefs) => {
   // Fetch the list of feedPreferences
   const response = await fetch(url + '/food/');
   const feedPreferenceList = await response.json();
+
+  // Generate lists of the names (not display_names) to be prechecked
+  let preCheckNames = [];
+  // For allergens
+  if (wantedType === 0) {
+    for (const pref in sessionPrefs) {
+      if (sessionPrefs[pref].type === 0) {
+        preCheckNames += `${sessionPrefs[pref].name}`;
+      }
+    }
+  }else {
+    // For diets
+    for (const pref in sessionPrefs) {
+      if (sessionPrefs[pref].type === 1) {
+        preCheckNames += `${sessionPrefs[pref].name}`;
+      }
+    }
+  }
 
   for (let i = 0; i<feedPreferenceList.length; i++) {
     // Generate only the preferences of wanted type
@@ -39,8 +57,8 @@ const generateCheckBoxListForProfileEdit = async (appendElement, wantedType, pre
       newPreference.id = feedPreferenceList[i].name;
       newPreference.type = "checkbox";
       newPreference.name = feedPreferenceList[i].ID;
-      //Check if in preCheckList
-      if (preCheckList.includes(newPreference.id)) {
+      //Check if in the list of preCheckNames
+      if (preCheckNames.includes(newPreference.id)) {
         newPreference.checked = true;
       }
       //Create label for input

@@ -25,25 +25,30 @@
   </nav>
 </header>
 
-    <div class="search-bar">
+    <form id="search-bar">
       <input type="text" id="search" placeholder="Search..." value="">
       <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
-      <form action="" class="search-checkbox">
-        <input type="checkbox" id="vegan" name="vegan" value="Vegan">
-        <label for="vegan">Vegan</label>
-        <input type="checkbox" id="gluten-free" name="gluten-free" value="gluten-free">
-        <label for="gluten-free">Gluten-free</label><br>
-        <input type="checkbox" id="sugar-free" name="sugar-free" value="sugar-free">
-        <label for="sugar-free">Sugar-free</label>
-        <input type="checkbox" id="nut-free" name="nut-free" value="nut-free">
-        <label for="nut-free">Nut-free</label>
-      </form>
-    </div>
+      <details id="fact-details">
+        <summary>Feed preferences:</summary>
+        <div id="food-facts">
+          <div id="allergens">
+            <!--Allergens, js generated-->
+          </div>
+
+          <div id="diets">
+            <!--Diets, js generated-->
+          </div>
+        </div>
+      </details>
+
+
+    </form>
   <a class="createPost" href="createPost.html"><i class="fa-solid fa-circle-plus"></i></a>
   <!-- Javascript generates feed here -->
 
 </main>
 <script src="../jsUtils/url.js"></script>
+<script src="../jsUtils/checkBoxGen.js"></script>
 <script src="../javascript/feed.js"></script>
 </body>
 

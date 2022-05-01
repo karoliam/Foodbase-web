@@ -113,7 +113,7 @@ figure {
     justify-content: space-between;
 }
 
-.search-bar {
+#search-bar {
     display: none;
     margin-bottom: 50px;
 }
@@ -139,8 +139,22 @@ figure {
     color: pink;
 }
 
-.search-checkbox label {
-    font-size: 0.4em;
+#fact-details summary {
+    font-size: 0.6em;
+}
+#food-facts {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.27em;
+}
+#food-facts div {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 100%;
+}
+#food-facts div label {
+    width: 40%;
 }
 
 .details {
