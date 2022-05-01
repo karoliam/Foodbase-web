@@ -142,17 +142,21 @@ figure {
 #fact-details summary {
     font-size: 0.6em;
 }
-#food-facts {
-    display: flex;
-    flex-wrap: wrap;
-    font-size: 0.27em;
-}
+
 #food-facts div {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
     width: 100%;
 }
+
+#food-facts {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.27em;
+}
+
+
 #food-facts div label {
     width: 40%;
 }

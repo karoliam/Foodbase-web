@@ -28,7 +28,7 @@
     background-color: rgb(253, 249, 247);
     border-radius: 20px;
     padding: 10px;
-    font-size: 0.5em;
+    font-size: 0.4em;
 }
 nav ul li {
     font-size: 1em;
@@ -41,11 +41,12 @@ li {
 
 .edit-button {
     border-style: none;
-    background-color: #ffae00;
-    font-size: 0.4em;
+    background-color: rgb(145, 187, 186);
+    font-size: 1em;
     border-radius: 20px;
     padding: 10px;
     margin-top: 30px;
+    width: 100%;
 
 }
 .edit-button:hover {
@@ -54,9 +55,9 @@ li {
 
 .delete-button {
     border-style: none;
-    background-color: rgb(208, 88, 88);
+    background-color: rgb(222, 192, 208);
     border-radius: 20px;
-    font-size: 0.5em;
+    font-size: 1em;
     padding: 10px;
     margin-top: 30px;
 }
@@ -69,3 +70,4 @@ li {
     flex-direction: row;
     justify-content: space-between;
 }
+
