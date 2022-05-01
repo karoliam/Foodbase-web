@@ -10,6 +10,6 @@ router.route('/')
 
 router.route('/:id')
 .get(param('id').isInt(),
-    foodFactController.ge)
+    foodFactController.post_to_food_fact_get_by_Id)
 
 module.exports = router;
