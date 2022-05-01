@@ -2,8 +2,6 @@
 
 // selecting login and signup forms and their necessary children
 const loginForm = document.querySelector('#login-form');
-const loginError = document.querySelector('#login-error-message');
-
 const signupForm = document.querySelector('#signup-form');
 const signupPassword = document.querySelector('#signup-password');
 const signupPasswordAgain = document.querySelector('#signup-password-again');
