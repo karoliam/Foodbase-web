@@ -34,13 +34,10 @@ CREATE TABLE post (
 	FOREIGN KEY (owner_ID) REFERENCES user(ID)
 );
 
-CREATE TABLE post_to_food_fact (
-	ID Int NOT NULL AUTO_INCREMENT,
-	post_ID Int,
-	food_fact_ID Int,
-	PRIMARY KEY (ID),
-	FOREIGN KEY (post_ID) REFERENCES post(ID),
-	FOREIGN KEY (food_fact_ID) REFERENCES food_fact(ID)
+CREATE TABLE post_preferences (
+	post_ID int NOT NULL,
+	food_fact_ID int NOT NULL,
+	CONSTRAINT PK_post_preferences PRIMARY KEY (post_ID, food_fact_ID)
 );
 
 CREATE TABLE user_preferences (

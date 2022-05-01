@@ -1,20 +1,27 @@
-body {
+#login-form  {
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
-}
-
-#login-form, #signup-form  {
-    display: flex;
-    flex-direction: column;
-    background-color: #f3ecec;
+    background-color: #f8e9e9;
+    font-size: 0.4em;
     border-radius: 20px;
     padding: 40px;
 }
 
+#signup-form {
+    display: flex;
+    flex-direction: column;
+    background-color: #f8e9e9;
+    font-size: 0.3em;
+    border-radius: 20px;
+    padding: 40px;
+}
+
+h2 {
+    font-size: 0.7em;
+}
+
 #login-button, #signup-button {
     margin: 50px auto;
-    width: 500px;
     border-radius: 20px;
     border-style: none;
     background-color: rgb(145, 187, 186);
@@ -42,26 +49,22 @@ body {
 
 
 
-#food-facts input {
-    width: 50px;
-    height: 50px;
-}
 
 #login-signup {
     display: flex;
     flex-direction: column;
     margin: auto;
 }
+#area {
+    font-size: 1em;
+}
 
 select {
-    font-size: 50px;
-    width: 710px;
     border-radius: 20px;
     padding: 10px;
     margin: 10px auto;
     border-style: none;
     resize: none;
-    overflow: scroll;
     flex: 1;
 }
 
@@ -78,7 +81,7 @@ select {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    padding: 0px 35px 35px 35px;
+    font-size: 1em;
 
 }
 
@@ -86,6 +89,9 @@ select {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    padding: 0px 35px 35px 35px;
-    margin-top: -0.5em;
+    font-size: 1em;
 }
+
+label {
+}
+

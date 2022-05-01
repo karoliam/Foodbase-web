@@ -6,6 +6,7 @@ const {makeThumbnail} = require('../utilities/resize');
 const bcryptjs = require("bcryptjs");
 const userModel = require("../models/userModel");
 const foodFactModel = require("../models/foodFactModel");
+const {toInt} = require("validator");
 
 const post_list_get = async (req, res) => {
   const posts = await postModel.getAllPosts(res);
@@ -33,9 +34,9 @@ const post_posting = async (req, res) => {
     return res.status(400).json ({ message: `validation error:`,
       errors: errors });
   }
-  // TODO:
   console.log('request post body:', req.body);
   const postInfo = {};
+  const prefIDS = [];
 
   // base info for post goes to postInfo and are removed from req.body
   postInfo.area = req.body.area;
@@ -55,26 +56,23 @@ const post_posting = async (req, res) => {
   }
 
   // after deleting other post info theres only preferences left in req.body
-  const foodFacts = req.body;
+  for (const prefsKey in req.body) {
+    prefIDS.push(parseInt(prefsKey));
+  }
 
   console.log('req path', req.file.path);
   console.log('filename' , postInfo.filename);
   await makeThumbnail(req.file.path, postInfo.filename);
-  const id = await postModel.addPost(postInfo, foodFacts, res);
-  if (id === undefined) {
-    return res.json({ message: `Post creation failed!` });
-  }
-  res.json({ message: `Post created!` });
+  const id = await postModel.addPost(postInfo, prefIDS, res);
+  res.json({ message: `post created with ${id}.` });
 };
 
 // modify posts with this
 const post_update_put = async (req, res, next) => {
-  console.log(req);
   console.log('request put body', req.body);
   const postInfo = {};
   const prefIDS = [];
-  // TODO post ID unknown
-  const testID = req.body.ID;
+
   // base info for post goes to postInfo and are removed from req.body
   postInfo.area = req.body.area;
   delete req.body.area;
@@ -82,36 +80,26 @@ const post_update_put = async (req, res, next) => {
   delete req.body.title;
   postInfo.description = req.body.description;
   delete req.body.description;
+  postInfo.ID = req.body.ID;
+  delete req.body.ID;
 
   // Image filename
-  const oldData = await postModel.getPostByID(testID, res);
+  const oldData = await postModel.getPostByID(postInfo.ID, res);
   if (typeof req.file !== 'undefined') {
     postInfo.filename = req.file.filename;
   } else if (oldData.filename !== null){
     postInfo.filename = oldData.filename;
   }
-  
+  console.log("There should be strnums & on here: ",req.body)
   // after deleting other post info theres only preferences left in req.body
-  const prefs = req.body;
-
-  // get food facts from DB
-  const foodFacts = await foodFactModel.getAllFoodFacts();
-
-  // compare preferences from req.body food_names to get the ID
-  for (const prefItem in prefs) {
-    for (let i = 0; i < foodFacts.length; i++) {
-      if (prefItem == foodFacts[i].name) {
-        console.log('foodFactsin id:', foodFacts[i].ID);
-        prefIDS.push(foodFacts[i].ID);
-      }
-    }
+  for (const prefsKey in req.body) {
+    prefIDS.push(parseInt(prefsKey));
   }
-
-  // send post related data to postModel for DB changes
   if (typeof req.file !== 'undefined') {
     await makeThumbnail(req.file.path, postInfo.filename);
   }
-  const result = await postModel.modifyPost(postInfo,prefIDS,testID,res)
+  // send post related data to postModel for DB changes
+  const result = await postModel.modifyPost(postInfo,prefIDS,res)
   res.json({message: `post edited succesfully: ${result}`});
 };
 // literally just delete a post by ID
