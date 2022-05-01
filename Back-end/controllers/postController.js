@@ -56,19 +56,8 @@ const post_posting = async (req, res) => {
   }
 
   // after deleting other post info theres only preferences left in req.body
-  const prefs = req.body;
-
-  // get food facts from DB
-  const foodFacts = await foodFactModel.getAllFoodFacts();
-
-  // compare preferences from req.body food_names to get the ID
-  for (const prefItem in prefs) {
-    for (let i = 0; i < foodFacts.length; i++) {
-      if (prefItem == foodFacts[i].name) {
-        console.log('foodFactsin id:', foodFacts[i].ID);
-        prefIDS.push(foodFacts[i].ID);
-      }
-    }
+  for (const prefsKey in req.body) {
+    prefIDS.push(parseInt(prefsKey));
   }
 
   console.log('req path', req.file.path);

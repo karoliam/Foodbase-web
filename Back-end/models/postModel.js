@@ -24,18 +24,21 @@ const getPostByID = async (id, res) => {
 // create new post
 const addPost = async (postInfo, prefs, res) => {
     try {
-
         // insert the base post data to DB
         const [rows] = await promisePool.query('INSERT INTO post(filename, description, name, owner_ID, area) VALUES (?,?,?,?,?)',
             [postInfo.filename, postInfo.description, postInfo.title, postInfo.ownerID, postInfo.area]);
         console.log('post model insert', rows);
 
-        // insert post related food fact data to DB
-        for (const prefID in prefs) {
-            const [rows1] = await promisePool.query('INSERT INTO post_to_food_fact(post_ID, food_fact_ID) VALUES (?,?)',
-                [rows.insertId, prefs[prefID]]);
-            console.log("post food_fact note created with id:",rows1.insertId)
+        // create post_ID & food_fact_ID value pairs for preferences
+        let prefsToInsert = [];
+        for (let i = 0; i < prefs.length; i++) {
+            prefsToInsert.push([rows.insertId, prefs[i]]);
         }
+
+        // insert post related food fact data to DB
+            const [rows1] = await promisePool.query('INSERT INTO post_preferences(post_ID, food_fact_ID) VALUES ?',
+                [prefsToInsert]);
+            console.log("post_preferences notes created with post_id:",rows1.affectedRows)
         return rows.insertId;
     } catch (e) {
         console.error('post model addPost error', e.message);
@@ -71,14 +74,14 @@ const modifyPost = async (postInfo, newPrefs, res) => {
                 }
             } else { prefsToDelete = prefsToDelete.concat(oldPrefs); }
             // if no preferences exist in DB there's nothing to delete
-            if (oldPrefs.length !== 0) {
-            const [delRows] = await promisePool.query('DELETE FROM post_to_food_fact WHERE post_ID =? AND food_fact_ID =?',
-                [postInfo.ID,prefsToDelete]);
+            if (prefsToDelete.length !== 0) {
+            const [delRows] = await promisePool.query('DELETE FROM post_preferences WHERE post_ID =? AND food_fact_ID IN ?',
+                [postInfo.ID, [prefsToDelete]]);
                 console.log("post foodfact notes deleted: ", delRows.affectedRows)
             }
             // if no preferences were ticked in Form there is nothing to add
-            if (newPrefs.length !== 0) {
-                    const [addRows] = await promisePool.query('INSERT INTO post_to_food_fact(post_ID, food_fact_ID) VALUES ?',
+            if (prefsToInsert.length !== 0) {
+                    const [addRows] = await promisePool.query('INSERT INTO post_preferences(post_ID, food_fact_ID) VALUES ?',
                         [prefsToInsert]);
                     console.log("new post foodfact notes added: ", addRows.affectedRows);
             }
@@ -98,8 +101,8 @@ const modifyPost = async (postInfo, newPrefs, res) => {
 const deletePostByID = async (id, res) => {
     try {
         // delete post related food fact notes from DB
-        const [rows1] = await promisePool.query('DELETE FROM post_to_food_fact WHERE post_ID=?', [id])
-        console.log('items deleted from post_to_food_fact:', rows1.affectedRows);
+        const [rows1] = await promisePool.query('DELETE FROM post_preferences WHERE post_ID=?', [id])
+        console.log('items deleted from post_preferences:', rows1.affectedRows);
 
         // delete the actual post data from DB
         const [rows] = await promisePool.query('DELETE FROM post WHERE ID = ?', [id]);
@@ -127,7 +130,7 @@ const getPostsByUserID = async (id, res) => {
 // get post prefs food_fact IDs by post ID
 const getPostPrefsByID = async (id, res) => {
     try {
-        const [rows] = await promisePool.query('SELECT DISTINCT food_fact_ID FROM post_to_food_fact WHERE post_ID=?', [id]);
+        const [rows] = await promisePool.query('SELECT DISTINCT food_fact_ID FROM post_preferences WHERE post_ID=?', [id]);
         return rows;
     } catch (e) {
         console.error('postModel getPostPrefsByID error', e.message);
