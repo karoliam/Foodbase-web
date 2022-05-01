@@ -44,22 +44,49 @@ const addPost = async (postInfo, prefs, res) => {
     }
 };
 // modify existing post
-const modifyPost = async (postInfo, prefs, testID, res) => {
+const modifyPost = async (postInfo, newPrefs, res) => {
+    // TODO this fine piece of work has to be ctrl + c and ctrl + v to every relevant function
     try {
-        // delete old preferences from DB
-        const [rows1] = await promisePool.query('DELETE FROM post_to_food_fact WHERE post_ID =?', [testID]);
-        console.log('old preferences deleted from DB:', rows1.affectedRows)
+        let prefsToDelete = [];
+        let prefsToInsert = [];
+        const oldPrefs = [];
+        // check the preferences in DB with post ID
+        const oldRows = await getPostPrefsByID(postInfo.ID, res);
+        for (const rowKey in oldRows) {
+            oldPrefs.push(oldRows[rowKey].food_fact_ID);
+        }
+            // no loop if no preferences existed in DB
+            if (oldPrefs.length !== 0) { for (let i = 0; i < newPrefs.length; i++) {
+                // check for new preferences to add, we can't add duplicates
+                    if (!oldPrefs.includes(newPrefs[i])) { prefsToInsert.push([postInfo.ID, newPrefs[i]]); }
+                }
+            } else { for (let i = 0; i < newPrefs.length; i++) {
+                        prefsToInsert.push([postInfo.ID, newPrefs[i]]);
+                    }
+            }
+            // no loop if no preferences were ticked in edit form
+            if (newPrefs.length !== 0) { for (let i = 0; i < oldPrefs.length; i++) {
+                    // check what preferences don't exist in the new set
+                    if (!newPrefs.includes(oldPrefs[i])) { prefsToDelete.push(oldPrefs[i]); }
+                }
+            } else { prefsToDelete = prefsToDelete.concat(oldPrefs); }
+            // if no preferences exist in DB there's nothing to delete
+            if (oldPrefs.length !== 0) {
+            const [delRows] = await promisePool.query('DELETE FROM post_to_food_fact WHERE post_ID =? AND food_fact_ID =?',
+                [postInfo.ID,prefsToDelete]);
+                console.log("post foodfact notes deleted: ", delRows.affectedRows)
+            }
+            // if no preferences were ticked in Form there is nothing to add
+            if (newPrefs.length !== 0) {
+                    const [addRows] = await promisePool.query('INSERT INTO post_to_food_fact(post_ID, food_fact_ID) VALUES ?',
+                        [prefsToInsert]);
+                    console.log("new post foodfact notes added: ", addRows.affectedRows);
+            }
+            // TODO I'm just a helpful todo marker for Vili's copy pasting
         // update post's main data to DB
         const [rows] = await promisePool.query('UPDATE post SET filename=?, description=?, name=?, area=? WHERE ID = ?',
-            [postInfo.filename, postInfo.description, postInfo.title, postInfo.area, testID]);
-        console.log('post model update post info:', rows);
-        console.log(prefs)
-        // insert new post food facts to DB
-        for (const prefID in prefs) {
-            const [rows2] = await promisePool.query('INSERT INTO post_to_food_fact(post_ID, food_fact_ID) VALUES (?,?)',
-        [testID, prefs[prefID]]);
-            console.log("post food_fact note created with id:",rows2.insertId)
-        }
+            [postInfo.filename, postInfo.description, postInfo.title, postInfo.area, postInfo.ID]);
+        console.log('postModel updated post info:', rows);
         return rows.affectedRows === 1;
     } catch (e) {
         console.error('post model modifyPost error', e.message);
@@ -97,6 +124,17 @@ const getPostsByUserID = async (id, res) => {
         return;
     }
 };
+// get post prefs food_fact IDs by post ID
+const getPostPrefsByID = async (id, res) => {
+    try {
+        const [rows] = await promisePool.query('SELECT DISTINCT food_fact_ID FROM post_to_food_fact WHERE post_ID=?', [id]);
+        return rows;
+    } catch (e) {
+        console.error('postModel getPostPrefsByID error', e.message);
+        res.status(500).json({ message: 'something went wrong src: postModel getPostPrefsByID' });
+        return;
+    }
+}
 
 module.exports = {
     getAllPosts,
@@ -105,4 +143,5 @@ module.exports = {
     modifyPost,
     deletePostByID,
     getPostsByUserID,
+    getPostPrefsByID,
 };
