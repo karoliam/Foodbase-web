@@ -37,11 +37,11 @@ h5, p {
     justify-content: center;
 }
 .item-received-button {
-    font-size: 50px;
+    font-size: 0.3em;
     border-radius: 20px;
     background-color: #ffae00;
     border-style: none;
-    padding: 20px;
+    padding: 10px;
 }
 
 .item-received-button:hover {

@@ -2,14 +2,19 @@ figure {
     display: flex;
     flex-direction: column;
     width: 100%;
+    padding: 5px;
 }
-figure label:first-child {
-    margin-left: auto;
+figure label {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: baseline;
+    margin-left: 30px;
 }
 
-.fa-pen-to-square .fa-trash-can {
-    font-size: 55px;
+#editLink {
+    font-size: 0.6em;
 }
+
 .fa-pen-to-square:hover {
     color: rgb(255, 174, 0);
 }
@@ -21,13 +26,13 @@ figure label:first-child {
     margin-left: 30px;
 }
 .profile-links {
-    margin-bottom: 50px;
+    font-size: 1.5em;
 }
 
-.username {
-    font-size: 0.6em;
+#your-posts-link {
+    color: rgb(45, 70, 70);
 }
 
-.description {
-    font-size: 0.4em;
+.descriptionText {
+    font-size: 0.25em !important;
 }

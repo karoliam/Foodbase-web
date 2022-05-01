@@ -1,6 +1,6 @@
 'use strict';
 
-const postFeed = document.createElement('ul');
+const postFeed = document.createElement('div');
 function showSearch() {
     document.querySelector('.search-bar').style.display = 'block';
 }
@@ -29,10 +29,11 @@ const allPosts = (posts) => {
         const innerFigcap = document.createElement('p');
         const flagLink = document.createElement('a');
         const flagIcon = document.createElement('i');
-        const onePost = document.createElement('li');
+        const onePost = document.createElement('div');
 
         //edit and delete icons are forming here
         editLink.href = `edit-post.html?id=${post.ID}`;
+        editLink.id = 'editLink'
         editIcon.className = 'fa-solid fa-pen-to-square';
         //currently delete just redirects to edit post
         deleteLink.href = `edit-post.html?id=${post.ID}`;

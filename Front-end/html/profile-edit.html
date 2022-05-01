@@ -25,15 +25,14 @@
         </nav>
     </header>
     <div class="profile-links">
-        <a href="profile.html">Profile</a>
-        <a href="yourPosts.html">Your posts</a>
+        <a href="profile.html" id="profile-link">Profile</a>
+        <a href="yourPosts.html" id="your-posts-link">Your posts</a>
     </div>
     <article>
         <form id="userinfo-edit">
-            <h4>Profile edit:</h4>
-            <label for="username">Username:</label>
+            <label for="username"><h6>Username:</h6></label>
             <input type="text" id="username" name="username" maxlength="40" required>
-            <label for="email">E-mail:</label>
+            <label for="email"><h6>E-mail:</h6></label>
             <input type="email" id="email" name="email" readonly>
             <label for="area"><h6>Area:</h6></label>
             <select name="area" id="area">
@@ -49,19 +48,19 @@
                     <!--Diets, js generated-->
                 </div>
             </div>
-            <input type="submit" id="save-profile-edit" value="Save changes">
+            <button type="submit" id="save-profile-edit">Save changes</button>
         </form>
 
         <form id="password-edit">
-            <h4>Password change:</h4>
-            <label for="old-password">Old password:</label>
+            <h4>Change password</h4>
+            <label for="old-password"><h6>Old password:</h6></label>
             <input type="password" id="old-password" name="old_password" minlength="8" required>
-            <label for="password">New password:</label>
+            <label for="password"><h6>New password:</h6></label>
             <input type="password" id="password" name="password" minlength="8" required>
-            <label for="re-enter-password">Re-enter new password:</label>
+            <label for="re-enter-password"><h6>Re-enter new password:</h6></label>
             <input type="password" id="re-enter-password" name="re-enter-password" minlength="8" required>
             <p id="password-error"></p>
-            <input type="submit" id="save-password-edit" value="Change password">
+            <button type="submit" id="save-password-edit">Save password</button>
         </form>
 
     </article>

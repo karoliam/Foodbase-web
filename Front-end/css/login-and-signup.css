@@ -1,7 +1,7 @@
 #login-form  {
     display: flex;
     flex-direction: column;
-    background-color: #f8e9e9;
+    background-color: rgba(229, 198, 198, 0.5);
     font-size: 0.4em;
     border-radius: 20px;
     padding: 40px;
@@ -10,8 +10,8 @@
 #signup-form {
     display: flex;
     flex-direction: column;
-    background-color: #f8e9e9;
-    font-size: 0.3em;
+    background-color: rgba(229, 198, 198, 0.5);
+    font-size: 0.4em;
     border-radius: 20px;
     padding: 40px;
 }
@@ -24,10 +24,14 @@ h2 {
     margin: 50px auto;
     border-radius: 20px;
     border-style: none;
+    padding: 10px;
+    width: 50%;
     background-color: rgb(145, 187, 186);
 }
 
-
+#area {
+    width: 100%;
+}
 
 #login-button:hover, #signup-button:hover {
     background-color: #de9a01;
@@ -39,16 +43,23 @@ h2 {
     background-color: #a48895;
 }
 
-#login-form input, #signup-form input {
+#login-form input {
     border-radius: 20px;
     border-style: none;
     padding: 20px;
     margin: 10px;
     background-color: white;
+    font-size: 1.25em;
 }
 
-
-
+#signup-form input {
+    border-radius: 20px;
+    border-style: none;
+    padding: 20px;
+    margin: 10px;
+    background-color: white;
+    font-size: 1em;
+}
 
 #login-signup {
     display: flex;
@@ -68,30 +79,20 @@ select {
     flex: 1;
 }
 
-
 #food-facts {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: left;
+    font-size: 0.6em;
 }
 
-
-
-#allergens {
+#food-facts div {
     display: flex;
-    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
     flex-wrap: wrap;
-    font-size: 1em;
-
 }
 
-#diets {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    font-size: 1em;
+#food-facts div label {
+    width: 40%;
 }
-
-label {
-}
-
