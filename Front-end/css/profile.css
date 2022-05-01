@@ -1,16 +1,17 @@
 .profile-links {
     display: flex;
     justify-content: space-evenly;
+    margin-top: 5%;
 }
 .profile-links a {
-    font-size: 50px;
+    font-size: 0.5em;
     text-decoration: underline;
     color: rgb(107, 133, 132);
     transition: font-size 300ms;
 }
 .profile-links a:hover {
     color: rgb(80, 98, 97);
-    font-size: 51px;
+    font-size: 0.4em;
 }
 .profile-links a:active {
     color: #6b8581;
@@ -23,49 +24,36 @@
     background-color: rgb(253, 249, 247);
     border-radius: 20px;
     padding: 10px;
+    font-size: 0.5em;
 }
-ul li {
-    font-size: 50px;
+nav ul li {
+    font-size: 1em;
     padding: 20px;
 }
 
-label {
-    font-size: 45px;
-}
-input {
-    width: 30px;
-    height:30px;
-}
-
-form  {
-    margin-bottom: 30px;
+li {
+    padding-bottom: 20px;
 }
 
 .edit-button {
     border-style: none;
     background-color: #ffae00;
+    font-size: 0.4em;
     border-radius: 20px;
-    font-size: 40px;
-    padding: 20px;
+    padding: 10px;
     margin-top: 30px;
-    width: 120px;
-    height: 90px;
+
 }
 .edit-button:hover {
     background-color: #de9a01;
-}
-
-#username-edit {
-    width: 200px;
-    height: 40px;
 }
 
 .delete-button {
     border-style: none;
     background-color: rgb(208, 88, 88);
     border-radius: 20px;
-    font-size: 40px;
-    padding: 20px;
+    font-size: 0.5em;
+    padding: 10px;
     margin-top: 30px;
 }
 .delete-button:hover {

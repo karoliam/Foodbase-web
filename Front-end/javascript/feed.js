@@ -1,6 +1,6 @@
 'use strict';
 
-const postFeed = document.createElement('ul');
+const postFeed = document.createElement('div');
 function showSearch() {
   document.querySelector('.search-bar').style.display = 'block';
 }
@@ -24,7 +24,7 @@ const allPosts = (posts) => {
       const innerFigcap = document.createElement('p');
       const flagLink = document.createElement('a');
       const flagIcon = document.createElement('i');
-      const onePost = document.createElement('li');
+      const onePost = document.createElement('div');
 
 
     locationIcon.className = "fa-solid fa-location-dot";

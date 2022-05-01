@@ -1,6 +1,6 @@
 'use strict';
 
-const postFeed = document.createElement('ul');
+const postFeed = document.createElement('div');
 const article = document.createElement('article');
 
 const allPosts = (post) => {
@@ -19,7 +19,7 @@ const allPosts = (post) => {
     const innerFigcap = document.createElement('p');
     const flagLink = document.createElement('a');
     const flagIcon = document.createElement('i');
-    const onePost = document.createElement('li');
+    const onePost = document.createElement('div');
 
 
     locationIcon.className = "fa-solid fa-location-dot";

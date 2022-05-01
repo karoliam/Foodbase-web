@@ -1,6 +1,6 @@
 
 h4 {
-    font-size: 60px;
+    font-size: 0.6em;
 }
 
 .username-time {
@@ -12,7 +12,7 @@ h4 {
     margin-right: 30px;
 }
 h5, p {
-    font-size: 40px;
+    font-size: 0.3em;
     margin-left: 30px;
 }
 
@@ -24,6 +24,8 @@ h5, p {
     overflow: hidden;
     border-radius: 20px;
     border-top-style: groove;
+    width: 50vh;
+    height: 31vh;
 
 }
 
@@ -49,4 +51,21 @@ h5, p {
 
 .item-received-button:active {
     background-color: pink;
+}
+@media screen and (min-width: 375px) {
+    .home {
+        font-size: 0.6em;
+    }
+
+    nav {
+        width: 46vh;
+        height: 14vh;
+    }
+    h4 {
+        font-size: 0.4em;
+    }
+    .message-thread {
+        width: 45vh;
+        height: 27vh;
+    }
 }

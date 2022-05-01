@@ -13,22 +13,23 @@
     font-size: 40px;
     color: #657a77;
     resize: none;
+    width: 100%;
     border-color: rgb(204, 174, 133);
 }
 #send-button {
-    margin: 20px;
+    margin-top: 5%;
     border-radius: 20px;
     border-style: none;
     padding: 15px;
     background-color: rgb(255, 220, 0);
-    font-size: 30px;
+    font-size: 0.5em;
 }
 #send-button:hover {
     background-color: rgb(204, 174, 133);
 }
 
 .contact-label {
-    font-size: 30px;
+    font-size: 0.6em;
 }
 
 #textarea-button {
@@ -39,4 +40,16 @@
 
 figure {
     background-color: #d5d2ce !important;
+}
+
+.post-title {
+    font-size: 0.4em !important;
+}
+
+.message {
+    font-size: 1em !important;
+}
+
+nav ul li {
+    font-size: 1em !important;
 }

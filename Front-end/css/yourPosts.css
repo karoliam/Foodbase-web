@@ -1,6 +1,7 @@
 figure {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 figure label:first-child {
     margin-left: auto;
@@ -23,6 +24,10 @@ figure label:first-child {
     margin-bottom: 50px;
 }
 
-.details {
-    margin-top: -0.5em;
+.username {
+    font-size: 0.6em;
+}
+
+.description {
+    font-size: 0.4em;
 }
