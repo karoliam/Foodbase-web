@@ -53,7 +53,6 @@ a {
     height: auto;
 }
 .description {
-    background-color: rgb(236, 236, 236);
     border-radius: 10px;
     padding: 0 2% 0px 2%;
     width: 88%;
@@ -202,8 +201,28 @@ ul li {
     display: none;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1000px) {
 
+    .post-feed {
+        display: grid;
+        grid-template-columns: auto auto;
+
+    /*    display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;*/
+    }
+    .post {
+        width: 60%;
+    }
+    .descriptionText {
+        height: 20vh;
+        overflow-y: scroll;
+        scroll-margin: 20px;
+        border: rgba(107, 133, 132, 0.55) solid;
+        border-radius: 10px 0 0 10px;
+        padding: 10px;
+
+    }
     .nav-search-button, .createPost-nav, #new-post-text {
         display: inline;
     }
