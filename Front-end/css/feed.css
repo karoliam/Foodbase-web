@@ -30,28 +30,21 @@ nav ul {
 }
 nav ul li {
     padding: 0 0 0 40px;
-    transition: font-size 300ms;
     margin: 0;
 }
-nav ul li:hover {
-    font-size: 1.1em;
-}
+
 
 a {
     text-decoration: none;
     font-size: 1em;
-    transition: font-size 300ms;
 }
 
 .home {
     font-size: 1em;
     color: rgb(154, 106, 129);
-    transition: font-size 300ms;
     font-family: 'Amatic SC', cursive;
 }
-.home:hover {
-    font-size: 1.1em;
-}
+
 .post-image {
     margin: auto;
     border-radius: 40px;
@@ -205,33 +198,110 @@ ul li {
     font-size: 0.3em;
 }
 
-/*@media screen and (min-width: 375px) {*/
-/*    .home {*/
-/*        font-size: 0.6em;*/
-/*    }*/
+.createPost-nav, .nav-search-button, #messages-text, #profile-text, #new-post-text, #search-text-bar{
+    display: none;
+}
 
-/*    nav {*/
-/*        width: 54vh;*/
-/*        height: 14vh;*/
-/*    }*/
-/*    nav ul li {*/
-/*        padding: 0 0 0 40px;*/
-/*    }*/
-/*    #feed-title {*/
-/*        font-size: 0.4em;*/
-/*        margin: 28px 0 0 0;*/
-/*    }*/
-/*    .post-title {*/
-/*        font-size: 0.3em;*/
-/*    }*/
-/*    .post-image {*/
-/*        width: 300px;*/
-/*        height: 300px;*/
-/*    }*/
-/*    .location, .date, .time {*/
-/*        font-size: 0.2em;*/
-/*    }*/
-/*    .description {*/
+@media screen and (min-width: 800px) {
 
-/*    }*/
-/*}*/
+    .nav-search-button, .createPost-nav, #new-post-text {
+        display: inline;
+    }
+    .home {
+        font-size: 1.2em;
+        margin-left: 8px;
+        transition: font-size 300ms;
+    }
+    .home:hover {
+        font-size: 1.3em;
+    }
+    #search-text-bar {
+        display: block;
+        border: none;
+        border-bottom: 1px solid rgb(164, 136, 149);
+        font-size: 0.3em;
+        margin-top: 40px;
+        padding: 10px;
+        border-radius: 5px;
+        transition: font-size 1s;
+        background-color: rgba(246, 242, 236, 0.46);
+    }
+    #search-text-bar:hover {
+        font-size: 0.35em;
+    }
+    #search, .fa-magnifying-glass {
+        visibility: hidden;
+    }
+    .nav-search-button {
+        font-size: 0.3em;
+        border-radius: 10px;
+        border-style: none;
+        background-color: rgba(145, 187, 186, 0.35);
+        padding: 8px;
+    }
+    .nav-search-button:hover {
+        background-color: rgb(222, 154, 1);
+    }
+    .nav-search-button:active {
+        background-color: rgb(164, 136, 149);
+    }
+
+    .search-input-and-button {
+        display: flex;
+    }
+    nav ul li {
+        margin: 8px;
+    }
+
+    nav ul {
+        padding: 32px;
+    }
+    #messages-text, #new-post-text {
+        display: block;
+        font-size: 0.2em;
+        margin: -13px 0 0 -14px;
+        text-decoration: underline;
+    }
+    #profile-text {
+        display: block;
+        font-size: 0.2em;
+        margin: -13px 0 0 -8px;
+        text-decoration: underline;
+    }
+    .message, .profile {
+        transition: font-size 300ms;
+    }
+    .message:hover, .profile:hover {
+        font-size: 1.3em;
+    }
+    .createPost {
+        visibility: hidden;
+    }
+    .createPost-nav {
+        visibility: visible;
+        font-size: 0.4em;
+    }
+
+    #new-post-text {
+        display: block;
+        font-size: 0.5em;
+        margin: -13px 0 0 -13px;
+        text-decoration: underline;
+    }
+    #search-bar {
+        display: flex;
+        font-size: 1em;
+        margin: 24px 0 0 0;
+    }
+    #food-facts div label {
+        margin-right: -47px;
+    }
+    .username {
+        font-size: 0.2em;
+    }
+    .descriptionText {
+        font-size: 0.2em;
+    }
+
+
+}
