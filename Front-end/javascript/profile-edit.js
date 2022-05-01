@@ -22,21 +22,9 @@ email.value = `${sessionUser.email}`;
 // Area
 generateAreaListWithPreselect(area, sessionUser.area);
 // FeedPreferences
-// Generate lists of the names (not display_names) of the preferences and generate the boxes
-let allergenPreferenceNames = [];
-for (const pref in sessionPreferences) {
-  if (sessionPreferences[pref].type === 0) {
-    allergenPreferenceNames += `${sessionPreferences[pref].name}`;
-  }
-}
-generateCheckBoxListForProfileEdit(allergensDiv, 0, allergenPreferenceNames);
-let dietPreferenceNames = [];
-for (const pref in sessionPreferences) {
-  if (sessionPreferences[pref].type === 1) {
-    dietPreferenceNames += `${sessionPreferences[pref].name}`;
-  }
-}
-generateCheckBoxListForProfileEdit(dietsDiv, 1, dietPreferenceNames);
+// Generate the boxes
+generateCheckBoxListWithPreCheck(allergensDiv, 0, sessionPreferences);
+generateCheckBoxListWithPreCheck(dietsDiv, 1, sessionPreferences);
 
 //---------------------Userinfo-edit-form--------------------------------------
 
