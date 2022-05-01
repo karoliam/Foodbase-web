@@ -24,8 +24,7 @@ h5, p {
     overflow: hidden;
     border-radius: 20px;
     border-top-style: groove;
-    width: 50vh;
-    height: 31vh;
+
 
 }
 
@@ -52,7 +51,7 @@ h5, p {
 .item-received-button:active {
     background-color: pink;
 }
-@media screen and (min-width: 375px) {
+/*@media screen and (min-width: 375px) {
     .home {
         font-size: 0.6em;
     }
@@ -68,4 +67,4 @@ h5, p {
         width: 45vh;
         height: 27vh;
     }
-}
+}*/
