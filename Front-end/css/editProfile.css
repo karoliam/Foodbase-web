@@ -3,7 +3,7 @@
     justify-content: space-evenly;
 }
 .profile-links a {
-    font-size: 50px;
+    font-size: 0.7em;
     text-decoration: underline;
     color: rgb(107, 133, 132);
     transition: font-size 300ms;
@@ -16,36 +16,20 @@
     color: #6b8581;
 }
 
-.userinfo-edit {
+#userinfo-edit {
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
+    font-size: 0.7em;
+    margin-top: 48px;
 }
-.userinfo-edit input{
+#userinfo-edit input{
     display: flex;
-    font-size: 40px;
-    width: 700px;
-    height: 80px;
+    font-size: 0.9em;
     border-radius: 20px;
     padding: 10px;
     border-style: none;
 }
-div input {
-    width: 50px;
-    height: 50px;
-}
-#save-edit {
-    width: 240px;
-    border-style: none;
-    border-radius: 20px;
-    background-color: #ffae00;
-    margin-top: 50px;
-}
 
-#save-edit:hover {
-    background-color: #de9a01;
-
-}
 
 #email {
     color: rgb(150, 171, 170);
@@ -54,3 +38,60 @@ div input {
 
 
 
+#food-facts {
+    font-size: 0.7em;
+    margin-bottom: 48px;
+}
+
+#save-profile-edit {
+    border-radius: 20px;
+    border-style: none;
+    background-color: rgb(145, 187, 186);
+    width: 50%;
+    font-size: 1em;
+    padding: 5px;
+}
+
+#save-profile-edit:hover {
+    background-color: rgb(222,154,1);
+}
+
+#area {
+    border-radius: 20px;
+    border-style: none;
+    font-size: 0.9em;
+    padding: 10px;
+}
+
+#password-edit {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.6em;
+}
+#password-edit input {
+    border-style: none;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#save-password-edit {
+    border-radius: 20px;
+    border-style: none;
+    background-color:  rgb(145, 187, 186);
+    width: 50%;
+    font-size: 1.1em;
+    padding: 5px;
+    margin-bottom: 48px;
+}
+
+h4 {
+    color: rgb(154, 106, 129);
+}
+
+h6 {
+    font-size: 0.9em;
+}
+
+#profile-link {
+    color:rgb(45, 70, 70);
+}

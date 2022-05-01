@@ -26,6 +26,7 @@ nav ul {
     flex-direction: row;
     list-style-type: none;
     margin: 0;
+    cursor: pointer;
 }
 nav ul li {
     padding: 0 0 0 40px;
@@ -187,10 +188,6 @@ ul li {
     font-size: 1em !important;
 }
 
-
-.fa-envelope:hover {
-    color: #526461;
-}
 
 .icon-container {
     display: flex;
