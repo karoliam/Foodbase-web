@@ -50,7 +50,7 @@ li {
 
 }
 .edit-button:hover {
-    background-color: #de9a01;
+    background-color: rgb(222, 154, 1)
 }
 
 .delete-button {
