@@ -15,7 +15,7 @@ p {
 #login-or-signup-button {
     border-style: none;
     border-radius: 20px;
-    padding: 20px;
+    padding: 10px;
     background-color: rgb(107, 133, 132);
     font-size: 0.7em;
 }
@@ -27,4 +27,15 @@ p {
 #login-or-signup-button:active {
     background-color: rgb(255, 212, 188);
 
+}
+
+@media screen and (min-width: 1000px) {
+    #not-logged-in-text {
+        width: 50%;
+        margin: auto;
+        font-size: 1em;
+    }
+    #login-or-signup-button {
+        font-size: 0.5em;
+    }
 }
