@@ -8,7 +8,7 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, editable) => {
     //------header--------------------------------------------------------------
     const headingH6 = document.createElement('h6');
     headingH6.textContent = post.name;
-    headingH6.classList.add('post-title');
+    headingH6.className = 'post-title';
 
     //------imgLinkLabel (with edit and delete links)---------------------------
 
@@ -49,22 +49,22 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, editable) => {
     //------imageLink and its content (image)-----------------------------------
     const imageLink = document.createElement('a');
     imageLink.href = `openedPost.html?id=${post.ID}`;
-    imageLink.classList.add('post-image-link');
+    imageLink.className = 'post-image-link';
 
     //set image attributes and append to imageLink
     const img = document.createElement('img');
     img.src = url + '/thumbnails/' + post.filename;
     img.alt = post.name;
-    img.classList.add('post-image');
+    img.className = 'post-image';
     imageLink.appendChild(img);
 
     //------detailsDiv (under the picture)--------------------------------------
     const detailsDiv = document.createElement('div');
-    detailsDiv.classList.add('details');
+    detailsDiv.className = 'details';
 
     //location and its content (locationIcon)
     const locationP = document.createElement('p');
-    locationP.classList.add('location');
+    locationP.className = 'location';
     locationP.textContent = post.area;
 
     //locationIcon
@@ -94,44 +94,50 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, editable) => {
 
     //------figCaption----------------------------------------------------------
     const figcaption = document.createElement('figcaption');
-    figcaption.classList.add('description');
+    figcaption.className = 'description';
 
     //username
     const username = document.createElement('p');
-    username.classList.add('username');
+    username.className = 'username';
     username.textContent = post.username;
-
 
     //inner description for the figure
     const innerFigDescription = document.createElement('p');
     innerFigDescription.textContent = post.description;
-    innerFigDescription.classList.add('descriptionText');
-
-
+    innerFigDescription.className = 'descriptionText';
 
     //foodFacts
-    // let foodFacts = post;
-    // foodFacts.shift();
-    // for (const fact in foodFacts) {
-    //   //
-    // }
+    const foodFacts = document.createElement('div');
+    foodFacts.className = 'post-food-fact-div'
 
-    // <i className="fa-solid fa-check"></i>
+    //For every foodFact generate an element and add it to a list
+    const postPreferences = post.preferences;
+    for (const pref in postPreferences) {
+      const foodFact = document.createElement('p');
+      foodFact.innerText = postPreferences[pref].display_name;
+      foodFact.className = 'post-food-fact';
+      const checkIcon = document.createElement('i');
+      checkIcon.className = 'fa-solid fa-check';
+      //append checkIcon to foodFact and add to foodFacts
+      foodFact.appendChild(checkIcon);
+      foodFacts.appendChild(foodFact);
+    }
 
     //flagLink and its content (flagLink)
     const flagLink = document.createElement('a');
     const flagIcon = document.createElement('i');
-    flagIcon.className = "fa-solid fa-flag";
+    flagIcon.className = 'fa-solid fa-flag';
     flagLink.appendChild(flagIcon);
 
     //append elements to figCaption
     figcaption.appendChild(username);
     figcaption.appendChild(innerFigDescription);
+    figcaption.appendChild(foodFacts)
     figcaption.appendChild(flagLink);
 
-    //------onePost to contain the generated post-------------------------------
+    //------onePost (contains the generated post)-------------------------------
     const onePost = document.createElement('div');
-    onePost.classList.add('post');
+    onePost.className = 'post';
 
     //figure
     const figure = document.createElement('figure');
@@ -151,7 +157,7 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, editable) => {
     figure.appendChild(figcaption);
     onePost.appendChild(figure);
 
-    //------add post to feed----------------------------------------------------
+    //------add onePost to feed----------------------------------------------------
     feedElement.appendChild(onePost);
   })
 }

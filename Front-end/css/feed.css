@@ -54,7 +54,7 @@ a {
 }
 .description {
     border-radius: 10px;
-    padding: 0 2% 0px 2%;
+    padding: 0 2% 0 2%;
     width: 88%;
     margin: auto;
     word-wrap: break-word;
@@ -152,6 +152,13 @@ figure {
 
 
 #food-facts div label {
+    width: 40%;
+}
+.post-food-fact-div {
+    display: flex;
+}
+.post-food-fact {
+    font-size: 0.25em;
     width: 40%;
 }
 

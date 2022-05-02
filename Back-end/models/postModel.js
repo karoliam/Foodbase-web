@@ -14,7 +14,7 @@ const getAllPosts = async () => {
             const [prefRows] = await promisePool.query('SELECT food_fact.* FROM food_fact LEFT JOIN post_preferences ON food_fact.ID = post_preferences.food_fact_ID WHERE post_ID =?',[rowsJson[rowsJsonKey].ID]);
             if (prefRows.length > 0) {
                 for (const prefRowsKey in prefRows) {
-                    rowsJson[prefRowsKey].preferences.push(JSON.stringify(prefRows[prefRowsKey]));
+                    rowsJson[rowsJsonKey].preferences.push(prefRows[prefRowsKey]);
                 }
             }
         }
@@ -44,7 +44,7 @@ const getPostByID = async (id, res) => {
         // add preferences to the JSONy object
         rowsJson[`post0`].preferences = [];
         for (const prefRowsKey in prefRows) {
-            rowsJson[`post0`].preferences.push(JSON.stringify(prefRows[prefRowsKey]));
+            rowsJson[`post0`].preferences.push(prefRows[prefRowsKey]);
         }
         // turn it all back to Array
         const rowsArr = []
