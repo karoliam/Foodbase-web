@@ -10,10 +10,10 @@
 
 #contact {
     border-radius: 20px;
-    font-size: 40px;
+    font-size: 0.6em;
+    padding: 10px;
     color: #657a77;
     resize: none;
-    width: 100%;
     border-color: rgb(204, 174, 133);
 }
 #send-button {
@@ -52,4 +52,17 @@ figure {
 
 nav ul li {
     font-size: 1em !important;
+}
+
+@media screen and (min-width: 600px) {
+    .post-feed {
+        display: flex !important;
+        flex-direction: column;
+        margin: 48px auto;
+        width: 60%;
+    }
+    #contact {
+        width: 100%;
+    }
+
 }

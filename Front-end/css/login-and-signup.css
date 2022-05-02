@@ -96,3 +96,47 @@ select {
 #food-facts div label {
     width: 40%;
 }
+ @media screen and (min-width: 600px) {
+     #login-signup {
+        width: 50%;
+         font-size: 0.9em;
+         flex-direction: row;
+     }
+     #login-form {
+         padding-bottom: 0;
+         font-size: 0.4em;
+         flex: 50%;
+         margin: 16px;
+     }
+     #signup-form {
+         padding-bottom: 0;
+         flex: 50%;
+         margin: 16px;
+     }
+     #signup-button {
+         width: 40%;
+     }
+     #login-button {
+         width: 30%;
+     }
+     h2 {
+         font-size: 0.8em;
+         margin-left: 20px;
+     }
+     #signup-form input {
+         font-size: 1.25em;
+     }
+     #food-facts {
+        margin-left: 16px;
+     }
+     #food-facts div {
+         display: grid;
+         grid-template-columns: 40% 50% 40% 50%;
+         width: 60%;
+         padding: 8px;
+         margin: auto;
+     }
+     #food-facts label {
+         margin-bottom: 8px;
+     }
+ }

@@ -176,6 +176,15 @@ ul li {
     flex-direction: column;
 }
 
+footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 48px;
+    background-color: rgba(107, 133, 132, 0.46);
+    border-radius: 0 0 10px 10px;
+    font-size: 0.4em;
+    padding: 8px;
+}
 
 .fa-circle-plus {
     font-size: 1em !important;
@@ -196,6 +205,7 @@ ul li {
 
 .post-title {
     font-size: 0.3em;
+    margin: 8px 0 0 28px;
 }
 
 .createPost-nav, .nav-search-button, #messages-text, #profile-text, #new-post-text, #search-text-bar, #logout-text{
