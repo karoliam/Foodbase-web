@@ -131,14 +131,15 @@ const modifyPost = async (postInfo, newPrefs, res) => {
     }
 };
 // delete post by any id this refers to the post ID
-const deletePostByID = async (id, res) => {
+const deletePostByID = async (id, res, user) => {
     try {
-        // delete post related food fact notes from DB
-        const [rows1] = await promisePool.query('DELETE FROM post_preferences WHERE post_ID=?', [id])
+        // delete post (that belongs to the user) related food fact notes from DB
+        const [rows1] = await promisePool.query(
+            'DELETE FROM post_preferences WHERE post_ID IN(SELECT ID FROM post WHERE ID = ? AND owner_ID = ?)', [id, user.ID]);
         console.log('items deleted from post_preferences:', rows1.affectedRows);
 
         // delete the actual post data from DB
-        const [rows] = await promisePool.query('DELETE FROM post WHERE ID = ?', [id]);
+        const [rows] = await promisePool.query('DELETE FROM post WHERE ID = ? AND owner_ID = ?', [id, user.ID]);
         console.log('post model delete', rows);
         return rows.affectedRows === 1;
     } catch (e) {

@@ -5,6 +5,7 @@ const postController = require('../controllers/postController');
 const router = express.Router();
 const multer  = require('multer');
 const {body} = require('express-validator');
+const passport = require('../utilities/pass');
 
 
 const validateFileFormat = (req, file, cb) => {
@@ -38,8 +39,8 @@ router.route('/openedPost/:id')
     .get(postController.get_post_by_id)
 
 router.route('/:id')
-.get(postController.get_post_by_id)
-.delete(postController.delete_post_by_id);
+.get(passport.authenticate('jwt', {session: false}), postController.get_post_by_id)
+.delete(passport.authenticate('jwt', {session: false}), postController.delete_post_by_id);
 
 
 module.exports = router;
