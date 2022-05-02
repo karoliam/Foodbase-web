@@ -21,7 +21,7 @@ const getPostByID = async (id, res) => {
             rows.push(prefRows[rowsKey])
         }
         console.log('user with preferences: ', rows)
-        return rows[0];
+        return rows;
     } catch (e) {
         console.error('post, post model getPostByID error', e.message);
         res.status(500).json({ message: 'something went wrong src: postModel getPost' });
