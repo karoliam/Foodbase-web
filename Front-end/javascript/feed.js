@@ -1,20 +1,28 @@
 'use strict';
 
+const logout = document.querySelector('#logout-link');
 // Search functionality
 const allergensDiv = document.querySelector('#allergens');
 const dietsDiv = document.querySelector('#diets');
 const searchBar = document.querySelector('#search-bar')
 const sessionPreferences = JSON.parse(sessionStorage.getItem('preferences'));
+const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 
 // Test if user is logged in
-if (!sessionPreferences) {
+if (!sessionUser) {
   // Generate checkbox lists without precheck
   generateCheckBoxList(allergensDiv,0);
   generateCheckBoxList(dietsDiv,1);
+  // Hide the logout button
+  logout.style.display = 'none';
 } else {
   // Generate prechecked checkbox lists
   generateCheckBoxListWithPreCheck(allergensDiv, 0, sessionPreferences);
   generateCheckBoxListWithPreCheck(dietsDiv, 1, sessionPreferences);
+  // Logout functionality
+  logout.addEventListener('click', evt => {
+    logUserOut(sessionUser);
+  })
 }
 
 // Functionality for searchBar -form

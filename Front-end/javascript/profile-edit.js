@@ -1,6 +1,7 @@
 'use strict';
 
 // Select the elements
+const logout = document.querySelector('#logout-link');
 const username = document.querySelector('#username');
 const email = document.querySelector('#email');
 const area = document.querySelector('#area');
@@ -12,6 +13,11 @@ const passwdForm = document.querySelector('#password-edit');
 // Grab user and preferences from session storage
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 const sessionPreferences = JSON.parse(sessionStorage.getItem('preferences'));
+
+// Logout functionality
+logout.addEventListener('click', evt => {
+  logUserOut(sessionUser);
+})
 
 //---------------Generate the data and populate the elements--------------------
 

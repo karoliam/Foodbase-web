@@ -18,7 +18,6 @@ const getPostByID = async (id, res) => {
     } catch (e) {
         console.error('post, post model getPostByID error', e.message);
         res.status(500).json({ message: 'something went wrong src: postModel getPost' });
-        return;
     }
 };
 // create new post
@@ -43,7 +42,6 @@ const addPost = async (postInfo, prefs, res) => {
     } catch (e) {
         console.error('post model addPost error', e.message);
         res.status(500).json({ message: 'something went wrong src: postModel addPost'});
-        return;
     }
 };
 // modify existing post
@@ -94,7 +92,6 @@ const modifyPost = async (postInfo, newPrefs, res) => {
     } catch (e) {
         console.error('post model modifyPost error', e.message);
         res.status(500).json({ message: 'something went wrong src: postModel modifyPost'});
-        return;
     }
 };
 // delete post by any id this refers to the post ID
@@ -111,7 +108,6 @@ const deletePostByID = async (id, res) => {
     } catch (e) {
         console.error('postModel deletePostByID error', e.message);
         res.status(500).json({ message: 'something went wrong src: postModel deletePostByID' });
-        return;
     }
 };
 // get posts by user ID (your posts needs this)
@@ -124,7 +120,6 @@ const getPostsByUserID = async (id, res) => {
     } catch (e) {
         console.error('postModel getPostsByUserID error', e.message);
         res.status(500).json({ message: 'something went wrong src: postModel getPostsByUserID' });
-        return;
     }
 };
 // get post prefs food_fact IDs by post ID
@@ -135,7 +130,6 @@ const getPostPrefsByID = async (id, res) => {
     } catch (e) {
         console.error('postModel getPostPrefsByID error', e.message);
         res.status(500).json({ message: 'something went wrong src: postModel getPostPrefsByID' });
-        return;
     }
 }
 

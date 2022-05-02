@@ -13,14 +13,11 @@ const sessionPreferences = JSON.parse(sessionStorage.getItem('preferences'));
 
 // Check that sessionUser is found
 if (!sessionUser) {
-  location.href = "../html/anonymousUser.html";
+  location.href = "../html/login-and-signup.html";
 } else {
   // Logout functionality
   logout.addEventListener('click', evt => {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('user');
-    sessionStorage.removeItem('preferences');
-    location.href = '../html/feed.html';
+    logUserOut(sessionUser);
   })
 
   // Generate the data and populate the elements
