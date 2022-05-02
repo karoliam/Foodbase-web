@@ -17,11 +17,8 @@
 <header>
   <nav>
     <a href="feed.html"><h1 class="home">Foodbase</h1></a>
-
-    </div>
     <ul>
-      <li><a class="createPost-nav" href="createPost.html"><i class="fa-solid fa-circle-plus"></i><span id="new-post-text">New post</span></a>
-      </li>
+      <li><a class="createPost-nav" href="createPost.html"><i class="fa-solid fa-circle-plus"></i><span id="new-post-text">New post</span></a></li>
       <li><label for="search-text-bar"></label><input type="text" id="search-text-bar"></li>
       <li><button class="nav-search-button">Search</button></li>
       <li class="search"><i class="fa-solid fa-magnifying-glass" onclick="showSearch()"></i></li>
@@ -49,7 +46,11 @@
       </details>
     </form>
   <a class="createPost" href="createPost.html"><i class="fa-solid fa-circle-plus"></i></a>
-  <!-- Javascript generates feed here -->
+  <article>
+    <div class="post-feed">
+      <!-- Javascript generates feed here -->
+    </div>
+  </article>
 
 </main>
 <script src="../jsUtils/url.js"></script>

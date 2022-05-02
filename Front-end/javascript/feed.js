@@ -38,94 +38,106 @@ function showSearch() {
 }
 
 // Post creation
-const postFeed = document.createElement('div');
-const article = document.createElement('article');
 
+//select the post-feed
+const postFeed = document.querySelector('.post-feed');
+
+//generate the list of posts
 const allPosts = (posts) => {
-  postFeed.innerHTML = '';
   posts.forEach((post) => {
-      //select main element
-      const main = document.querySelector('main');
+    //create needed elements, generate their data and add the to postFeed
 
-      //create elements
-      const figure = document.createElement('figure');
-      const h6 = document.createElement('h6');
-      const img = document.createElement('img');
-      const figcaption = document.createElement('figcaption');
-      const imageLink = document.createElement('a');
-      const detailDiv = document.createElement('div');
-      const locationP = document.createElement('p');
-      const postDate = document.createElement('p');
-      const postTime = document.createElement('p');
-      const locationIcon = document.createElement('i');
-      const username = document.createElement('p');
-      const innerFigCap = document.createElement('p');
-      const preferences = document.createElement('p');
-      const flagLink = document.createElement('a');
-      const flagIcon = document.createElement('i');
-      const onePost = document.createElement('div');
+    //------heading-------------------------------------------------------------
+    const headingH6 = document.createElement('h6');
+    headingH6.textContent = post.name;
+    headingH6.classList.add('post-title');
 
+    //------imageLink and its content (image)-----------------------------------
+    const imageLink = document.createElement('a');
+    imageLink.href = `openedPost.html?id=${post.ID}`;
+    imageLink.classList.add('post-image-link');
 
-    //heading
-    h6.textContent = post.name;
-    h6.classList.add('post-title');
-
-    //image
+    //set image attributes and append to imageLink
+    const img = document.createElement('img');
     img.src = url + '/thumbnails/' + post.filename;
     img.alt = post.name;
     img.classList.add('post-image');
+    imageLink.appendChild(img);
 
-    figcaption.classList.add('description');
-    imageLink.href = `openedPost.html?id=${post.ID}`;
-    imageLink.classList.add('post-image-link');
+    //------detailsDiv (under the picture)--------------------------------------
+    const detailsDiv = document.createElement('div');
+    detailsDiv.classList.add('details');
+
+    //location and its content (locationIcon)
+    const locationP = document.createElement('p');
+    locationP.classList.add('location');
+    locationP.textContent = post.area;
+
+    //locationIcon
+    const locationIcon = document.createElement('i');
+    locationIcon.className = "fa-solid fa-location-dot";
+    locationP.appendChild(locationIcon);
 
     //time and date into readable form
     const time = new Date(post.time_stamp).toLocaleTimeString('fi-FI',
         { timeStyle: 'short', hour12: false});
     const date = new Date(post.time_stamp).toLocaleDateString();
 
-    //details (under the picture)
-    detailDiv.classList.add('details');
-    locationIcon.className = "fa-solid fa-location-dot";
-    locationP.classList.add('location');
-    locationP.textContent = post.area;
-    postDate.textContent = date;
-    postDate.classList.add('date');
-    postTime.textContent = time;
+    //set time value
+    const postTime = document.createElement('p');
     postTime.classList.add('time');
-    figure.appendChild(detailDiv);
-    locationP.appendChild(locationIcon);
-    detailDiv.appendChild(locationP);
-    detailDiv.appendChild(postDate);
-    detailDiv.appendChild(postTime);
+    postTime.textContent = time;
 
-    //stuff inside of the white box (username, description and flag)
+    //set date value
+    const postDate = document.createElement('p');
+    postDate.classList.add('date');
+    postDate.textContent = date;
+
+    // Append elements to detailsDiv
+    detailsDiv.appendChild(locationP);
+    detailsDiv.appendChild(postDate);
+    detailsDiv.appendChild(postTime);
+
+    //------figCaption----------------------------------------------------------
+    const figcaption = document.createElement('figcaption');
+    figcaption.classList.add('description');
+
+    //username
+    const username = document.createElement('p');
     username.classList.add('username');
     username.textContent = post.username;
-    innerFigCap.textContent = post.description;
-    innerFigCap.classList.add('descriptionText');
-    figcaption.appendChild(username);
-    figcaption.appendChild(innerFigCap);
+
+
+    //inner description for the figure
+    const innerFigDescription = document.createElement('p');
+    innerFigDescription.textContent = post.description;
+    innerFigDescription.classList.add('descriptionText');
+
+    //flagLink and its content (flagLink)
+    const flagLink = document.createElement('a');
+    const flagIcon = document.createElement('i');
     flagIcon.className = "fa-solid fa-flag";
     flagLink.appendChild(flagIcon);
+
+    //append elements to figCaption
+    figcaption.appendChild(username);
+    figcaption.appendChild(innerFigDescription);
     figcaption.appendChild(flagLink);
 
-    //adding figcaption, image and title to figure
-    figure.appendChild(figcaption);
-    figure.appendChild(h6);
-    imageLink.appendChild(img);
-    figure.appendChild(imageLink);
-
-    //adding details and figcaption to figure, header, figure and p to article and finally article to main
-    figure.appendChild(detailDiv);
-    figure.appendChild(figcaption);
+    //------onePost to contain the generated post-------------------------------
+    const onePost = document.createElement('div');
     onePost.classList.add('post');
-    onePost.appendChild(figure);
-    postFeed.classList.add('post-feed');
-    postFeed.appendChild(onePost);
-    article.appendChild(postFeed);
-    main.appendChild(article);
 
+    //figure
+    const figure = document.createElement('figure');
+    figure.appendChild(headingH6);
+    figure.appendChild(imageLink);
+    figure.appendChild(detailsDiv);
+    figure.appendChild(figcaption);
+    onePost.appendChild(figure);
+
+    //------add post to feed----------------------------------------------------
+    postFeed.appendChild(onePost);
   })
 };
 
@@ -148,6 +160,5 @@ getPost();
 
 // Function for sorting out the articles
 const sortArticlesBySearchTerms = async (searchParams) => {
-
 
 }
