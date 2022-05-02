@@ -13,7 +13,14 @@ const getAllPosts = async () => {
 // GET post by number that is passed to id
 const getPostByID = async (id, res) => {
     try {
+        // get user preferences from DB
+        const [prefRows] = await promisePool.query('SELECT * FROM post_preferences WHERE post_ID =?',[id]);
+        // get user basic data from DB
         const [rows] = await promisePool.query('SELECT post.*, user.username FROM post LEFT JOIN user ON post.owner_ID = user.ID WHERE post.ID = ?', [id]);
+        for (const rowsKey in prefRows) {
+            rows.push(prefRows[rowsKey])
+        }
+        console.log('user with preferences: ', rows)
         return rows[0];
     } catch (e) {
         console.error('post, post model getPostByID error', e.message);
