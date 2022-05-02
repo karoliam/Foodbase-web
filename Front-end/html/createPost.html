@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create post</title>
     <link rel="stylesheet" href="../css/feed.css">
-    <link rel="stylesheet" href="../css/profile.css">
     <link rel="stylesheet" href="../css/createPost.css">
     <script src="https://kit.fontawesome.com/ee9ba64db8.js" crossorigin="anonymous"></script>
     <!-- Amatic SC -->
@@ -18,11 +17,14 @@
 <main>
     <header>
         <nav>
-            <a class="home" href="feed.html">Foodbase</a>
+            <a href="feed.html"><h1 class="home">Foodbase</h1></a>
+
+            </div>
             <ul>
-                <li class="message"><a href="messages.html"><i class="fa-solid fa-envelope"></i></a></li>
-                <li class="profile"><a href="profile.html"><i class="fa-solid fa-user"></i></a></li>
-                <li class="logout"><a id="logout-link"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+                <li class="search"><i class="fa-solid fa-magnifying-glass" onclick="showSearch()"></i></li>
+                <li class="message"><a href="messages.html"><i class="fa-solid fa-envelope"></i><span id="messages-text">Messages</span></a></li>
+                <li class="profile"><a href="profile.html"><i class="fa-solid fa-user"></i><span id="profile-text">Profile</span></a></li>
+                <li class="logout"><a id="logout-link"><i class="fa-solid fa-right-from-bracket"></i><span id="logout-text">Logout</span></a></li>
             </ul>
         </nav>
         <h4>Create a post</h4>
@@ -42,7 +44,7 @@
                 <label for="picture"><h6>Select a picture:</h6></label>
                 <input type="file" id="picture" name="picture">
             </div>
-            <label for="food-facts"><h6>Is your product...</h6></label>
+            <label for="food-facts" id="label-foodfacts"><h6>Is your product...</h6></label>
             <div id="food-facts">
                 <div id="allergens">
                     <!--Allergens, js generated-->

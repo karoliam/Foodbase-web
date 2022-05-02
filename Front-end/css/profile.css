@@ -74,3 +74,31 @@ li {
     color: rgb(45, 70, 70);
 }
 
+@media screen and (min-width: 600px) {
+    .profile-list {
+        width: 50%;
+        font-size: 0.3em;
+    }
+    .edit-delete {
+        justify-content: space-evenly;
+    }
+    ul {
+        margin-bottom: -16px;
+    }
+    .edit-button{
+        font-size: 1.1em;
+        width: 130%;
+    }
+    .delete-button {
+        font-size: 1.4em;
+    }
+    .profile-links {
+        font-size: 1em;
+    }
+    .message, .profile, .logout {
+        font-size: 1.25em;
+    }
+    .home {
+        margin-bottom: -24px;
+    }
+}
