@@ -7,18 +7,18 @@ const postGenerator = async (feedElement, fetchedPosts, withLink) => {
 
     //------heading-------------------------------------------------------------
     const headingH6 = document.createElement('h6');
-    headingH6.textContent = post[0].name;
+    headingH6.textContent = post.name;
     headingH6.classList.add('post-title');
 
     //------imageLink and its content (image)-----------------------------------
     const imageLink = document.createElement('a');
-    imageLink.href = `openedPost.html?id=${post[0].ID}`;
+    imageLink.href = `openedPost.html?id=${post.ID}`;
     imageLink.classList.add('post-image-link');
 
     //set image attributes and append to imageLink
     const img = document.createElement('img');
-    img.src = url + '/thumbnails/' + post[0].filename;
-    img.alt = post[0].name;
+    img.src = url + '/thumbnails/' + post.filename;
+    img.alt = post.name;
     img.classList.add('post-image');
     imageLink.appendChild(img);
 
@@ -29,7 +29,7 @@ const postGenerator = async (feedElement, fetchedPosts, withLink) => {
     //location and its content (locationIcon)
     const locationP = document.createElement('p');
     locationP.classList.add('location');
-    locationP.textContent = post[0].area;
+    locationP.textContent = post.area;
 
     //locationIcon
     const locationIcon = document.createElement('i');
@@ -37,9 +37,9 @@ const postGenerator = async (feedElement, fetchedPosts, withLink) => {
     locationP.appendChild(locationIcon);
 
     //time and date into readable form
-    const time = new Date(post[0].time_stamp).toLocaleTimeString('fi-FI',
+    const time = new Date(post.time_stamp).toLocaleTimeString('fi-FI',
         { timeStyle: 'short', hour12: false});
-    const date = new Date(post[0].time_stamp).toLocaleDateString();
+    const date = new Date(post.time_stamp).toLocaleDateString();
 
     //set time value
     const postTime = document.createElement('p');
@@ -63,20 +63,20 @@ const postGenerator = async (feedElement, fetchedPosts, withLink) => {
     //username
     const username = document.createElement('p');
     username.classList.add('username');
-    username.textContent = post[0].username;
+    username.textContent = post.username;
 
 
     //inner description for the figure
     const innerFigDescription = document.createElement('p');
-    innerFigDescription.textContent = post[0].description;
+    innerFigDescription.textContent = post.description;
     innerFigDescription.classList.add('descriptionText');
 
     //foodFacts
-    let foodFacts = post;
-    foodFacts.shift();
-    for (const fact in foodFacts) {
-      //
-    }
+    // let foodFacts = post;
+    // foodFacts.shift();
+    // for (const fact in foodFacts) {
+    //   //
+    // }
 
     // <i className="fa-solid fa-check"></i>
 
