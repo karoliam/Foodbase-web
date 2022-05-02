@@ -72,7 +72,7 @@ if (!sessionUser) {
       const response = await fetch(url + '/post', fetchOptions);
       const posts = await response.json();
       //Here we generate the posts
-      await postGenerator(postFeed, posts, true);
+      await postGenerator(postFeed, posts, true, false);
     } catch (e) {
       console.log(e.message);
     }

@@ -107,7 +107,7 @@ const delete_post_by_id = async (req, res) => {
   console.log('post controller delete by id', req.params.id);
   const user = req.user;
   const del = await postModel.deletePostByID(req.params.id, res, user);
-  res.json({message: `post deleted ${del}`});
+  res.json({message: 'Post deleted!'});
 };
 // get all posts for specific user ID in req.params.id
 const post_list_get_your_posts = async (req, res) => {

@@ -1,14 +1,50 @@
 'use strict';
 
 // Generate a list of posts or a single post according to the boolean 'single'
-const postGenerator = async (feedElement, fetchedPosts, withLink) => {
+const postGenerator = async (feedElement, fetchedPosts, withLink, editable) => {
   fetchedPosts.forEach((post) => {
     //create needed elements, generate their data and add the to postFeed
 
-    //------heading-------------------------------------------------------------
+    //------header--------------------------------------------------------------
     const headingH6 = document.createElement('h6');
     headingH6.textContent = post.name;
     headingH6.classList.add('post-title');
+
+    //------imgLinkLabel (with edit and delete links)---------------------------
+
+    //Only generate icons if the post is editable
+    const imgLabel = document.createElement('label');
+    if (editable) {
+      imgLabel.htmlFor = 'post-image';
+
+      //editLink
+      const editLink = document.createElement('a');
+      editLink.href = `edit-post.html?id=${post.ID}`;
+      editLink.id = 'editLink';
+      //icon for editLink
+      const editIcon = document.createElement('i');
+      editIcon.className = 'fa-solid fa-pen-to-square';
+      editLink.appendChild(editIcon);
+
+      //deleteLink
+      const deleteLink = document.createElement('a');
+      deleteLink.addEventListener('click', evt => {
+        //prompts the user whether they want to delete the post
+        const postDeleteConfirm = confirm('Delete the selected post?');
+        if (postDeleteConfirm) {
+          // delete the selected post
+          deletePost(post.ID);
+        }
+      })
+      //icon for deleteLink
+      const deleteIcon = document.createElement('i');
+      deleteIcon.className = 'fa-solid fa-trash-can';
+      deleteLink.appendChild(deleteIcon);
+
+      //append elements to imgLinkLabel
+      imgLabel.appendChild(editLink);
+      imgLabel.appendChild(deleteLink);
+    }
 
     //------imageLink and its content (image)-----------------------------------
     const imageLink = document.createElement('a');
@@ -71,6 +107,8 @@ const postGenerator = async (feedElement, fetchedPosts, withLink) => {
     innerFigDescription.textContent = post.description;
     innerFigDescription.classList.add('descriptionText');
 
+
+
     //foodFacts
     // let foodFacts = post;
     // foodFacts.shift();
@@ -98,10 +136,15 @@ const postGenerator = async (feedElement, fetchedPosts, withLink) => {
     //figure
     const figure = document.createElement('figure');
     figure.appendChild(headingH6);
+    if (editable) {
+      //append the editable post icons
+      figure.appendChild(imgLabel);
+    }
     if (withLink) {
+      //append the link with embedded image
       figure.appendChild(imageLink);
     } else {
-      // We don't want to link the user to the same post in some cases
+      //append only the image
       figure.appendChild(img);
     }
     figure.appendChild(detailsDiv);
@@ -112,3 +155,23 @@ const postGenerator = async (feedElement, fetchedPosts, withLink) => {
     feedElement.appendChild(onePost);
   })
 }
+
+// Post deletion function
+const deletePost = async (postID) => {
+  try {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      },
+    };
+    const response = await fetch(url + `/post/${postID}`, fetchOptions);
+    const deletePost = await response.json();
+    // TODO: Remove this log
+    console.log(deletePost.message);
+    //Reload page
+    location.href = '../html/yourPosts.html';
+  } catch (e) {
+    console.log(e.message);
+  }
+};
