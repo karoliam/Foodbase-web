@@ -16,7 +16,7 @@ main {
 
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     border-bottom: 3px solid #6b8581;
     width: 100%;
@@ -29,8 +29,7 @@ nav ul {
     cursor: pointer;
 }
 nav ul li {
-    padding: 0 0 0 40px;
-    margin: 0;
+    padding: 0 0 0 16px;
 }
 
 
@@ -40,9 +39,10 @@ a {
 }
 
 .home {
-    font-size: 1em;
+    font-size: 0.7em;
     color: rgb(154, 106, 129);
     font-family: 'Amatic SC', cursive;
+    margin-bottom: 0;
 }
 
 .post-image {
@@ -198,7 +198,7 @@ ul li {
     font-size: 0.3em;
 }
 
-.createPost-nav, .nav-search-button, #messages-text, #profile-text, #new-post-text, #search-text-bar{
+.createPost-nav, .nav-search-button, #messages-text, #profile-text, #new-post-text, #search-text-bar, #logout-text{
     display: none;
 }
 
@@ -276,7 +276,7 @@ ul li {
     nav ul {
         padding: 32px;
     }
-    #messages-text, #new-post-text {
+    #messages-text, #new-post-text, #logout-text {
         display: block;
         font-size: 0.2em;
         margin: -13px 0 0 -14px;
@@ -288,10 +288,10 @@ ul li {
         margin: -13px 0 0 -8px;
         text-decoration: underline;
     }
-    .message, .profile {
+    .message, .profile, .logout {
         transition: font-size 300ms;
     }
-    .message:hover, .profile:hover {
+    .message:hover, .profile:hover, .logout:hover {
         font-size: 1.3em;
     }
     .createPost {
@@ -321,6 +321,10 @@ ul li {
     }
     .descriptionText {
         font-size: 0.2em;
+    }
+
+    .fa-envelope:hover, .fa-user:hover, .fa-right-from-bracket:hover, .fa-circle-plus:hover {
+        color: rgb(107, 133, 132);
     }
 
 
