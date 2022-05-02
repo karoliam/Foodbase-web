@@ -19,6 +19,8 @@ select {
     border-radius: 20px;
     font-size: 0.4em;
     padding: 10px;
+    width: 100%;
+    margin: auto;
 }
 .text-input input{
     display: flex;
@@ -58,6 +60,7 @@ select {
     border-style: none;
     width: 100%;
     padding: 10px;
+    margin: auto;
 }
 
 form {
@@ -76,5 +79,45 @@ form {
     flex-direction: row;
     flex-wrap: wrap;
 }
+#food-facts div {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 100%;
+}
 
+@media screen and (min-width: 545px) and (max-width: 645px) {
+    #food-facts div {
+        display: grid;
+        flex-wrap: wrap;
+        width: 62%;
+        grid-template-columns: 50% 50% 50% 50%;
+    }
+    #food-facts {
+        margin-left: 95px;
+    }
+    #editPostForm {
+        width: 77%;
+        margin: auto;
+    }
+}
 
+@media screen and (min-width: 1000px) {
+    #editPostForm {
+        width: 50%;
+        margin: auto;
+    }
+
+    #food-facts div {
+        width: 80%;
+        font-size: 0.8em;
+    }
+
+    .text-input {
+        font-size: 0.8em;
+    }
+    select {
+        width: 100%;
+        margin: auto;
+    }
+}
