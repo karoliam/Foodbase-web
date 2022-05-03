@@ -46,11 +46,21 @@ const getPostFoodFacts = async (ID) => {
         console.error('error', e.message);
     }
 };
-
+const getPostFoodFactsByID = async (id, res, next) => {
+    try {
+        const [rows] = await promisePool.query('SELECT food_fact.* FROM food_fact LEFT JOIN post_preferences ON food_fact.ID = post_preferences.food_fact_ID WHERE post_ID =?',[id]);
+        return rows;
+    } catch (e) {
+        console.error('foodFactModel getFoodFactIDByName', e.message);
+        res.status(500).json({ message: 'something went wrong src: foodFactModel getFoodFactIDByName' });
+        next();
+    }
+}
 // exports
 module.exports = {
     getAllFoodFacts,
     getFoodFactByID,
     getFoodFactIDByName,
     getPostFoodFacts,
+    getPostFoodFactsByID,
 };
