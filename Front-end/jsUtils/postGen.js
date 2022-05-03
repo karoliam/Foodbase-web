@@ -107,21 +107,29 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, editable) => {
     innerFigDescription.className = 'descriptionText';
 
     //foodFacts
-    const foodFacts = document.createElement('div');
-    foodFacts.className = 'post-food-fact-div'
-
+    const foodFactDetails = document.createElement('details');
+    foodFactDetails.className = 'post-food-fact-details';
+    //summary for foodFact
+    const foodFactsSummary = document.createElement('summary');
+    foodFactsSummary.innerText = 'Food-facts:';
+    foodFactDetails.appendChild(foodFactsSummary);
+    //foodFactsDiv to contain the foodFacts
+    const foodFactsDiv = document.createElement('div');
+    foodFactsDiv.className = 'post-food-facts-div';
     //For every foodFact generate an element and add it to a list
     const postPreferences = post.preferences;
     for (const pref in postPreferences) {
       const foodFact = document.createElement('p');
-      foodFact.innerText = postPreferences[pref].display_name;
+      foodFact.innerText = `${postPreferences[pref].display_name}   `;
       foodFact.className = 'post-food-fact';
       const checkIcon = document.createElement('i');
       checkIcon.className = 'fa-solid fa-check';
       //append checkIcon to foodFact and add to foodFacts
       foodFact.appendChild(checkIcon);
-      foodFacts.appendChild(foodFact);
+      foodFactsDiv.appendChild(foodFact);
     }
+    //append foodFactsDiv to the details-element
+    foodFactDetails.appendChild(foodFactsDiv);
 
     //flagLink and its content (flagLink)
     const flagLink = document.createElement('a');
@@ -132,7 +140,7 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, editable) => {
     //append elements to figCaption
     figcaption.appendChild(username);
     figcaption.appendChild(innerFigDescription);
-    figcaption.appendChild(foodFacts)
+    figcaption.appendChild(foodFactDetails)
     figcaption.appendChild(flagLink);
 
     //------onePost (contains the generated post)-------------------------------

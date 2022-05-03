@@ -21,15 +21,6 @@ if (!sessionUser) {
     logUserOut();
   })
 
-  // Profile delete functionality
-  deleteButton.addEventListener('click',async (evt) => {
-    const confirmation = prompt('Are you sure you want to delete your profile?','Your password please, you don\'t need it anymore now do you...');
-    if (confirmation) {
-      //Call for the function
-      await deleteProfile(confirmation);
-    }
-  })
-
   // Generate the data and populate the elements
 
   // Username
@@ -65,16 +56,58 @@ if (!sessionUser) {
   }
 }
 
+// Profile delete form creation
+deleteButton.addEventListener('click',async (evt) => {
+  // Add a password requiring form.
+
+  // passwdInput
+  const passwdInput = document.createElement('input');
+  passwdInput.type = 'password';
+  passwdInput.id = 'passwd-input';
+  passwdInput.name = 'password';
+  passwdInput.placeholder = 'Your password';
+  passwdInput.minLength = 8;
+  passwdInput.required = true;
+  // Label for passwdInput
+  const passwdLabel = document.createElement('label');
+  passwdLabel.htmlFor = passwdInput.id;
+  passwdLabel.innerText = 'You will permanently lose everything related to your profile.';
+  // confirmationButton
+  const confirmationButton = document.createElement('button');
+  confirmationButton.id = 'confirmation-button';
+  confirmationButton.type = 'submit';
+  confirmationButton.innerText = 'Confirm profile deletion';
+  // confirmationForm
+  const confirmationForm = document.createElement('form');
+  confirmationForm.id = 'confirmation-form';
+  // Append children
+  confirmationForm.appendChild(passwdLabel);
+  confirmationForm.appendChild(passwdInput);
+  confirmationForm.appendChild(confirmationButton);
+  // On submit
+  confirmationForm.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    //Initiate profile deletion
+    await deleteProfile();
+  })
+
+  //Append the created form to the profileList
+  const profileList = document.querySelector('.profile-list');
+  profileList.appendChild(confirmationForm);
+})
+
 // Profile deletion function
-const deleteProfile = async (password) => {
+const deleteProfile = async () => {
   try {
+    const passwdInputData = document.querySelector('#passwd-input').value;
+    console.log(passwdInputData)
     const fetchOptions = {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({password: password}),
+      body: JSON.stringify({password: passwdInputData}),
     };
 
     const response = await fetch(url + `/user/${sessionUser.ID}`, fetchOptions);
