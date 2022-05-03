@@ -56,9 +56,14 @@ profileForm.addEventListener('submit', async (evt) => {
   const response = await fetch(url + '/user/profile', fetchOptions);
   const profileUpdateResponseJson = await response.json();
 
-  // Prompt the user to log in again (if all went well)
+  // Update user session data
   if (profileUpdateResponseJson.profileUpdated === true) {
-    alert(`${profileUpdateResponseJson.message} Please log in again to see changes!`);
+    //If the response doesn't contain the user or token
+    if (profileUpdateResponseJson.user && profileUpdateResponseJson.preferences) {
+      // set new user data and preferences
+      sessionStorage.setItem('user', JSON.stringify(profileUpdateResponseJson.user));
+      sessionStorage.setItem('preferences', JSON.stringify(profileUpdateResponseJson.preferences));
+    }
     return;
   }
   alert(`${profileUpdateResponseJson.message}`);

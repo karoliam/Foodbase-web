@@ -3,7 +3,7 @@
 const bcryptjs = require('bcryptjs');
 const userModel = require('../models/userModel');
 const {validationResult} = require("express-validator");
-const {getUserLogin} = require('../models/userModel');
+const {getUserLogin, getUserPreferencesByID, getUserFoodFacts} = require('../models/userModel');
 const {deleteAllPostsPreferencesByUserID, deleteAllPostsByUserID} = require('../models/postModel');
 
 
@@ -37,14 +37,14 @@ const user_profile_put = async (req, res) => {
     const prefIDS = [];
 
     // base info for user goes to newUser and are removed from req.body
-    newUser.username = req.body.username;
-    delete req.body.username;
-    newUser.area = req.body.area;
-    delete req.body.area;
     newUser.ID = req.body.ID;
     delete req.body.ID;
     newUser.email = req.body.email;
     delete req.body.email;
+    newUser.username = req.body.username;
+    delete req.body.username;
+    newUser.area = req.body.area;
+    delete req.body.area;
 
     console.log("There should be strnums & on here: ",req.body)
     // after deleting other post info theres only preferences left in req.body
@@ -86,7 +86,10 @@ const user_profile_put = async (req, res) => {
     }
     const profileUpdate = await userModel.updateUser(newUser, prefIDS, res);
     if (profileUpdate) {
-      res.json({message: `Profile updated!`, profileUpdated: true});
+      console.log('newUser', newUser);
+      // Grab user preferences and return them and the user
+      const userPreferences = await getUserFoodFacts(newUser.ID);
+      res.json({user: newUser, preferences: userPreferences, profileUpdated: true});
     }
   }
 }

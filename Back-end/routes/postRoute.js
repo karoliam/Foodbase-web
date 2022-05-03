@@ -43,6 +43,7 @@ router.route('/openedPost/:id')
 
 router.route('/:id')
     .get(passport.authenticate('jwt', {session: false}), postController.get_post_by_id)
+    .post(passport.authenticate('jwt', {session: false}), postController.post_report_post)
     .delete(passport.authenticate('jwt', {session: false}), postController.delete_post_by_id);
 
 

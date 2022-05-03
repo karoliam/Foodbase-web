@@ -21,7 +21,7 @@ const getYourPosts = async () => {
 
         //Generate your posts with no links in images
         const postFeed = document.querySelector('.post-feed');
-        postGenerator(postFeed,posts,false, true);
+        postGenerator(postFeed,posts,false, false, true);
     } catch (e) {
         console.log(e.message);
     }

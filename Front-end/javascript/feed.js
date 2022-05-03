@@ -20,7 +20,7 @@ function showSearch() {
 searchBar.addEventListener('submit', evt =>  {
   const searchForm = new FormData(searchBar);
   // Start but don't await the asynchronous function to prevent UI sluggishness
-  sortArticlesBySearchTerms(searchForm);
+  //sortArticlesBySearchTerms(searchForm);
 })
 
 //------Test if user is logged in and act accordingly---------------------------
@@ -43,7 +43,7 @@ if (!sessionUser) {
       const response = await fetch(url + '/post', fetchOptions);
       const posts = await response.json();
       //Here we generate the posts
-      await postGenerator(postFeed, posts, true);
+      await postGenerator(postFeed, posts, true, true, false);
     } catch (e) {
       console.log(e.message);
     }
@@ -72,7 +72,7 @@ if (!sessionUser) {
       const response = await fetch(url + '/post', fetchOptions);
       const posts = await response.json();
       //Here we generate the posts
-      await postGenerator(postFeed, posts, true, false);
+      await postGenerator(postFeed, posts, true, true, false);
     } catch (e) {
       console.log(e.message);
     }
