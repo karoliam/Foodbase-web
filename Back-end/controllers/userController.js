@@ -3,7 +3,8 @@
 const bcryptjs = require('bcryptjs');
 const userModel = require('../models/userModel');
 const {validationResult} = require("express-validator");
-const {getUserLogin, getUserPreferencesByID, getUserFoodFacts} = require('../models/userModel');
+const {getUserFoodFacts} = require('../models/foodFactModel');
+const {getUserLogin} = require('../models/userModel');
 const {deleteAllPostsPreferencesByUserID, deleteAllPostsByUserID} = require('../models/postModel');
 
 
