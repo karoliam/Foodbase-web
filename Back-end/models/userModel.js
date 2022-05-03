@@ -14,7 +14,7 @@ const getUserLogin = async (params) => {
   }
 };
 
-
+//-----SELECT-----SELECT-----
 const getAllUsers = async () => {
   try {
     const [rows] = await promisePool.query('SELECT ID,email,username,area FROM user');
@@ -35,6 +35,29 @@ const getUserById = async (id, res) => {
   }
 };
 
+//For getting the user preferences
+const getUserPreferencesByID = async (id,res) => {
+  try {
+    const [rows] = await promisePool.query('SELECT * FROM user_preferences WHERE ID = ?', [id]);
+    return rows;
+  } catch (e) {
+    console.error('userModel getUserPreferencesByID error', e.message);
+    res.status(500).json({ message: 'something went wrong src: userModel getUserPreferencesByID' });
+  }
+};
+
+// GET food_facts based on user ID
+const getUserPrefsByID = async (id, res) => {
+  try {
+    const [rows] = await promisePool.query('SELECT DISTINCT food_fact_ID FROM user_preferences WHERE user_ID=?', [id]);
+    return rows;
+  } catch (e) {
+    console.error('userModel getUserPrefsByID error', e.message);
+    res.status(500).json({ message: 'something went wrong src: userModel getUserPrefsByID' });
+  }
+};
+
+//-----POST-----POST-----
 //For creating new users
 const createUser = async (user, res) => {
   try {
@@ -59,7 +82,7 @@ const createUserPreferences = async (prefsToInsert, res) => {
   }
 };
 
-
+//-----PUT-----PUT-----
 //For updating users as a regular user
 const updateUser = async (newUser, res) => {
     try {
@@ -84,6 +107,7 @@ const updateUserPassword = async (newUser, res) => {
   }
 };
 
+//-----DELETE-----DELETE-----
 //For deleting users
 const deleteUser = async (userId) => {
   try {
@@ -125,28 +149,6 @@ const adminDeleteUser = async (AdminUser, toBeDelUserID) => {
   }
 }
 
-//For getting the user preferences
-
-const getUserPreferencesByID = async (id,res) => {
-  try {
-    const [rows] = await promisePool.query('SELECT * FROM user_preferences WHERE ID = ?', [id]);
-    return rows;
-  } catch (e) {
-    console.error('userModel getUserPreferencesByID error', e.message);
-    res.status(500).json({ message: 'something went wrong src: userModel getUserPreferencesByID' });
-  }
-};
-
-// GET food_facts based on user ID
-const getUserPrefsByID = async (id, res) => {
-  try {
-    const [rows] = await promisePool.query('SELECT DISTINCT food_fact_ID FROM user_preferences WHERE user_ID=?', [id]);
-    return rows;
-  } catch (e) {
-    console.error('userModel getUserPrefsByID error', e.message);
-    res.status(500).json({ message: 'something went wrong src: userModel getUserPrefsByID' });
-  }
-};
 
 // DELETE preferences from user
 const deleteUserPreferences = async (userId, prefsToDelete, res) => {
@@ -163,6 +165,8 @@ const deleteUserPreferences = async (userId, prefsToDelete, res) => {
 module.exports = {
   getAllUsers,
   getUserById,
+  getUserPreferencesByID,
+  getUserPrefsByID,
   createUser,
   createUserPreferences,
   updateUser,
@@ -170,7 +174,5 @@ module.exports = {
   deleteUser,
   deleteUserAllUserPreferences,
   getUserLogin,
-  getUserPreferencesByID,
-  getUserPrefsByID,
   deleteUserPreferences,
 }
