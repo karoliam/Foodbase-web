@@ -21,7 +21,7 @@ const login = (req, res, next) => {
         res.send(error);
       }
       const token = jwt.sign(user, process.env.JWT_SECRET);
-      const preferences = await userModel.getUserFoodFacts(user.ID);
+      const preferences = await foodFactModel.getUserFoodFacts(user.ID);
       return res.json({user, token, preferences});
     });
 
@@ -55,8 +55,15 @@ const userCreate_post = async (req, res) => {
     for (const prefsKey in req.body) {
       prefIDS.push(parseInt(prefsKey));
     }
-
-    const result = await userModel.createUser(user, prefIDS, res);
+    // create the main user data
+    const result = await userModel.createUser(user, res);
+    let prefsToInsert = [];
+    for (let i = 0; i < prefIDS.length; i++) {
+      prefsToInsert.push([result.insertId, prefIDS[i]]);
+    }
+    // create preferences for the user
+    const preferences = await userModel.createUserPreferences(prefsToInsert, res);
+    console.log('preferences created for user:', preferences);
     if (result.insertId) {
       res.json({createSuccessful: true});
     } else {

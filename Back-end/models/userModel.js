@@ -7,8 +7,7 @@ const promisePool = pool.promise();
 const getUserLogin = async (params) => {
   try {
     const [rows] = await promisePool.execute(
-        'SELECT * FROM user WHERE email = ?;',
-        params);
+        'SELECT * FROM user WHERE email = ?;', params);
     return rows;
   } catch (e) {
     console.log('error', e.message);
@@ -37,21 +36,10 @@ const getUserById = async (id, res) => {
 };
 
 //For creating new users
-const createUser = async (user, prefs, res) => {
+const createUser = async (user, res) => {
   try {
-    // insert base user data to DB
     const [rows] = await promisePool.query('INSERT INTO user(username, email, password, area) VALUES (?,?,?,?)',
         [user.username,user.email,user.password,user.area]);
-
-    let prefsToInsert = [];
-    for (let i = 0; i < prefs.length; i++) {
-      prefsToInsert.push([rows.insertId, prefs[i]])
-    }
-    // For every preference name (=ID) we add the ID to the Database
-      const [prefRows] = await promisePool.query('INSERT INTO user_preferences(user_ID, food_fact_ID) VALUES ?',
-          [prefsToInsert]);
-    // TODO: Remove this dangerous log before release
-    console.log('user model insert: ', rows);
     return rows;
   } catch (e) {
     console.error('userModel createUser error', e.message);
@@ -59,9 +47,20 @@ const createUser = async (user, prefs, res) => {
   }
 };
 
+//For creating new users preferences
+const createUserPreferences = async (prefsToInsert, res) => {
+  try {
+    const [rows] = await promisePool.query('INSERT INTO user_preferences(user_ID, food_fact_ID) VALUES ?',
+        [prefsToInsert]);
+    return rows.affectedRows;
+  } catch (e) {
+    console.error('userModel createUserPreferences error', e.message);
+    res.status(500).json({message: 'An error occurred src: userModel createUserPreferences'});
+  }
+};
+
 //For updating users
 const updateUser = async (newUser, newPrefs, res) => {
-    // TODO this fine piece of work has to be ctrl + c and ctrl + v to every relevant function
     try {
       let prefsToDelete = [];
       let prefsToInsert = [];
@@ -100,7 +99,6 @@ const updateUser = async (newUser, newPrefs, res) => {
             [prefsToInsert]);
         console.log("new post foodfact notes added: ", addRows.affectedRows);
       }
-      // TODO I'm just a helpful todo marker for Vili's copy pasting
     //Users can update only their own username, area
     const [rows] = await promisePool.query('UPDATE user SET username = ?, area = ? WHERE ID=? AND email=?',
         [newUser.username, newUser.area, newUser.ID, newUser.email]);
@@ -189,27 +187,15 @@ const getUserPrefsByID = async (id, res) => {
   }
 };
 
-// GET food_facts based on user ID
-const getUserFoodFacts = async (ID) => {
-  try {
-    const [rows] = await promisePool.query(
-        'SELECT * FROM food_fact WHERE ID IN(SELECT food_fact_ID FROM user_preferences WHERE user_ID = ?)',
-        [ID]);
-    return rows;
-  } catch (e) {
-    console.error('error', e.message);
-  }
-};
-
 module.exports = {
   getAllUsers,
   getUserById,
   createUser,
+  createUserPreferences,
   updateUser,
   updateUserPassword,
   deleteUser,
   getUserLogin,
   getUserPreferencesByID,
   getUserPrefsByID,
-  getUserFoodFacts,
 }

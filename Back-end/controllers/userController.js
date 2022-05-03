@@ -33,8 +33,6 @@ const user_profile_put = async (req, res) => {
     console.log('Profile update error', errors);
     res.send(errors.array());
   } else {
-    // TODO: Remove this dangerous log before release
-    console.log('user controller profile update body', req.body);
     const newUser = {};
     const prefIDS = [];
 

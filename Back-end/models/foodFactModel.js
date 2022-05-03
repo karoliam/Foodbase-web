@@ -56,6 +56,18 @@ const getPostFoodFactsByID = async (id, res) => {
         res.status(500).json({ message: 'something went wrong src: foodFactModel getFoodFactIDByName' });
     }
 }
+
+// GET food_facts based on user ID
+const getUserFoodFacts = async (ID) => {
+    try {
+        const [rows] = await promisePool.query(
+            'SELECT * FROM food_fact WHERE ID IN(SELECT food_fact_ID FROM user_preferences WHERE user_ID = ?)',
+            [ID]);
+        return rows;
+    } catch (e) {
+        console.error('error', e.message);
+    }
+};
 // exports
 module.exports = {
     getAllFoodFacts,
@@ -63,4 +75,5 @@ module.exports = {
     getFoodFactIDByName,
     getPostFoodFacts,
     getPostFoodFactsByID,
+    getUserFoodFacts,
 };
