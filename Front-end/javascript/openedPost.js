@@ -4,6 +4,10 @@
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 const messageTextarea = document.querySelector('#contact');
 const messageSubmitButton = document.querySelector('#send-button');
+const contactForm = document.querySelector('#contact-form');
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const id = urlParams.get('id');
 
 messageTextarea.addEventListener('input', evt => {
   // Check that sessionUser is found
@@ -29,9 +33,7 @@ const getPost = async () => {
         Authorization: 'Bearer ' + sessionStorage.getItem('token'),
       },
     };
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const id = urlParams.get('id');
+
     const response = await fetch(url + `/post/openedPost/${id}`, fetchOptions);
     const post = await response.json();
     //Generate a single post
@@ -42,3 +44,30 @@ const getPost = async () => {
   }
 };
 getPost();
+
+const messageField = document.querySelector("#contact");
+
+contactForm.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  console.log(sessionUser.ID, messageField.value.toString(), id);
+  const messageDataJson = {
+    "sender_ID": sessionUser.ID,
+    "text": messageField.value.toString(),
+    "receiver_ID": id
+  };
+  console.log('messagedatajson', messageDataJson);
+  const messageToDb = {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+    },
+    body: JSON.stringify(messageDataJson),
+  };
+  const response = await fetch(url + '/message', messageToDb);
+  console.log(response);
+  const json = await response.json();
+  alert(json.message);
+  messageTextarea.value = '';
+});

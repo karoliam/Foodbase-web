@@ -6,5 +6,7 @@ const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 if (!sessionUser) {
   location.href = "../html/anonymousUser.html";
 } else {
-  // TODO: Messaging. Currently only checks that user is logged in.
+
+
+
 }

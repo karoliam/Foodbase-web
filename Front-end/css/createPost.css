@@ -1,5 +1,5 @@
 h4 {
-    margin-top: 0em;
+    margin-top: 0;
     font-size: 0.8em;
 }
 #createPost {
@@ -33,7 +33,7 @@ textarea {
 
 
 label {
-    margin-left: 40px;
+    margin: 0 26px 26px;
 }
 
 
@@ -69,9 +69,16 @@ select option {
     margin-bottom: 48px;
 }
 
+#label-foodfacts {
+    font-size: 0.5em;
+    font-weight: bold;
+    margin-top: 26px;
+}
 
-h6 {
+
+#text-input label {
     font-size: 0.4em;
+    font-weight: bold;
 }
 
 #description {
@@ -108,15 +115,25 @@ h6 {
         font-size: 0.8em;
 
     }
-    h6 {
-        margin: 8px 0 8px 0;
+    #text-input label {
+        font-weight: bold;
+        margin: 26px 0 26px 26px;
+
     }
+
     #label-foodfacts {
-        font-size: 1em;
+        font-size: 0.3em;
+        font-weight: bold;
     }
 
     nav ul li {
         margin-left: 32px;
     }
 
+}
+
+@media screen and (min-width: 635px ) and (max-width: 733px) {
+    label {
+        margin: 0 0 26px 26px;
+    }
 }

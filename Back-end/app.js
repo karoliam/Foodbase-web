@@ -6,6 +6,7 @@ const userRoute = require('./routes/userRoute');
 const postRoute = require('./routes/postRoute');
 const foodFactRoute = require('./routes/foodFactRoute');
 const authorizationRoute = require('./routes/authorizationRoute');
+const messageRoute = require('./routes/messageRoute');
 const passport = require('./utilities/pass');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -36,6 +37,7 @@ app.get('/', (req, res) => {
 });
 app.use('/post', postRoute);
 app.use('/food', foodFactRoute);
+app.use('/message', messageRoute);
 
 // Authenticated routes
 app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);

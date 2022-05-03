@@ -18,8 +18,6 @@
     <header>
         <nav>
             <a href="feed.html"><h1 class="home">Foodbase</h1></a>
-
-            </div>
             <ul>
                 <li class="message"><a href="messages.html"><i class="fa-solid fa-envelope"></i><span id="messages-text">Messages</span></a></li>
                 <li class="profile"><a href="profile.html"><i class="fa-solid fa-user"></i><span id="profile-text">Profile</span></a></li>
@@ -32,18 +30,18 @@
     <article>
         <form action="https://localhost:3000/post" method="post" id="createPost" enctype="multipart/form-data">
             <div id="text-input">
-                <label for="area"><h6>Area:</h6></label>
+                <label for="area">Area:</label>
                 <select name="area" id="area">
                     <!--Areas, js generated-->
                 </select>
-                <label for="title"><h6>Title</h6></label>
+                <label for="title">Title</label>
                 <input type="text" id="title" name="title" placeholder="Title" required>
-                <label for="description"><h6>Description:</h6></label>
+                <label for="description">Description:</label>
                 <textarea id="description" name="description" placeholder="Write a description" rows="4" cols="32" required></textarea>
-                <label for="picture"><h6>Select a picture:</h6></label>
+                <label for="picture">Select a picture:</label>
                 <input type="file" id="picture" name="picture">
             </div>
-            <label for="food-facts" id="label-foodfacts"><h6>Is your product...</h6></label>
+            <label for="food-facts" id="label-foodfacts">Is your product...</label>
             <div id="food-facts">
                 <div id="allergens">
                     <!--Allergens, js generated-->
