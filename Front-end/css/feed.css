@@ -154,13 +154,25 @@ figure {
 #food-facts div label {
     width: 40%;
 }
-.post-food-fact-div {
+
+.post-food-fact-details summary {
+    font-size: 0.17em;
+}
+
+.post-food-facts-div {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
 }
 .post-food-fact {
-    font-size: 0.15em;
-    width: 40%;
+    font-size: 0.1em;
+    width: 43%;
+    margin: 8px;
 }
+.post-food-fact i {
+    font-size: 0.8em;
+}
+
 
 .details {
     margin-top: -0.5em;
