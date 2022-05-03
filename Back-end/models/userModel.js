@@ -131,32 +131,40 @@ const updateUserPassword = async (newUser, res) => {
 };
 
 //For deleting users
-const deleteUser = async (user, id, res) => {
+const deleteUser = async (user) => {
   try {
-    if (user.role === 0) {
+    //normal users can delete only their own user
+    // delete preferences
+    const [rows1] = await promisePool.query('DELETE from user_preferences WHERE user_ID=?', [user.ID]);
+    // delete user
+    console.log('user model normal delete user_preferences: ', rows1);
+    const [rows] = await promisePool.query('DELETE from user WHERE ID=?', [user.ID]);
+    console.log('user model normal delete: ', rows);
+    return rows.affectedRows === 1;
+  } catch (e) {
+    console.error('userModel deleteUser error', e.message);
+    return false;
+  }
+};
+
+//For deleting users with administrator privileges
+const adminDeleteUser = async (AdminUser, toBeDelUserID) => {
+  try {
+    if (AdminUser.role === 0) {
       //Moderator can delete which user they ever want to.
       // delete preferences
-      const [rows1] = await promisePool.query('DELETE from user_preferences WHERE id=?', [id]);
+      const [rows1] = await promisePool.query('DELETE from user_preferences WHERE user_ID=?', [toBeDelUserID]);
       // delete user
       console.log('user model admin delete user_preferences: ', rows1);
-      const [rows] = await promisePool.query('DELETE from user WHERE id=?', [id]);
+      const [rows] = await promisePool.query('DELETE from user WHERE ID=?', [toBeDelUserID]);
       console.log('user model admin delete: ', rows);
-      return rows.affectedRows === 1;
-    } else {
-      //normal users can delete only their own user
-      // delete preferences
-      const [rows1] = await promisePool.query('DELETE from user_preferences WHERE id=?', [id]);
-      // delete user
-      console.log('user model normal delete user_preferences: ', rows1);
-      const [rows] = await promisePool.query('DELETE from user WHERE id=? AND id=?', [id, user.user_id]);
-      console.log('user model normal delete: ', rows);
       return rows.affectedRows === 1;
     }
   } catch (e) {
     console.error('userModel deleteUser error', e.message);
-    res.status(500).json({message: 'something went wrong src: userModel deleteUser'});
+    return false;
   }
-};
+}
 
 //For getting the user preferences
 
@@ -178,7 +186,6 @@ const getUserPrefsByID = async (id, res) => {
   } catch (e) {
     console.error('userModel getUserPrefsByID error', e.message);
     res.status(500).json({ message: 'something went wrong src: userModel getUserPrefsByID' });
-    return;
   }
 };
 

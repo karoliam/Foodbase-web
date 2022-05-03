@@ -57,7 +57,7 @@ if (!sessionUser) {
   generateCheckBoxListWithPreCheck(dietsDiv, 1, sessionPreferences);
   // Logout functionality
   logout.addEventListener('click', evt => {
-    logUserOut(sessionUser);
+    logUserOut();
   })
 
   // TODO: Remove this call to generate all posts

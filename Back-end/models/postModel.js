@@ -147,6 +147,23 @@ const deletePostByID = async (id, res, user) => {
         res.status(500).json({ message: 'something went wrong src: postModel deletePostByID' });
     }
 };
+// delete all posts by the user
+const deleteAllPostsByUserID = async (user) => {
+    try {
+        // delete post (that belongs to the user) related food fact notes from DB
+        const [rows1] = await promisePool.query(
+            'DELETE FROM post_preferences WHERE post_ID IN(SELECT ID FROM post WHERE owner_ID = ?)', [user.ID]);
+        console.log('items deleted from post_preferences:', rows1.affectedRows);
+
+        // delete the actual post data from DB
+        const [rows] = await promisePool.query('DELETE FROM post WHERE owner_ID = ?', [user.ID]);
+        console.log('post model delete', rows);
+        return true;
+    } catch (e) {
+        console.error('postModel deletePostByID error', e.message);
+        return false
+    }
+};
 // get posts by user ID (your posts needs this)
 const getPostsByUserID = async (id, res) => {
     try {
@@ -178,4 +195,5 @@ module.exports = {
     deletePostByID,
     getPostsByUserID,
     getPostPrefsByID,
+    deleteAllPostsByUserID,
 };
