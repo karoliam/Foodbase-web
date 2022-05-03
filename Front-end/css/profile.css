@@ -53,7 +53,7 @@ li {
     background-color: rgb(222, 154, 1)
 }
 
-.delete-button {
+#delete-button {
     border-style: none;
     background-color: rgb(222, 192, 208);
     border-radius: 20px;
@@ -61,7 +61,7 @@ li {
     padding: 10px;
     margin-top: 30px;
 }
-.delete-button:hover {
+#delete-button:hover {
     background-color: rgb(182, 76, 76);
 }
 
@@ -89,7 +89,7 @@ li {
         font-size: 1.1em;
         width: 130%;
     }
-    .delete-button {
+    #delete-button {
         font-size: 1.4em;
     }
     .profile-links {

@@ -20,7 +20,7 @@ if (!sessionUser) {
 
   // Logout functionality
   logout.addEventListener('click', evt => {
-    logUserOut(sessionUser);
+    logUserOut();
   })
 
 
