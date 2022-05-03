@@ -127,8 +127,8 @@ const deletePostPreferencesById = async (postId, foodFactIds, res) => {
 // delete all post preferences from user's posts by user id
 const deleteAllPostsPreferencesByUserID = async (userId, res) => {
     try {
-        const [rows] = await promisePool.query(
-            'DELETE FROM post_preferences WHERE post_ID IN(SELECT ID FROM post WHERE owner_ID = ?)', [userId]);
+        const [rows] = await promisePool.query('DELETE FROM post_preferences WHERE post_ID IN(SELECT ID FROM post WHERE owner_ID = ?)', [userId]);
+        console.log(rows)
         return rows.affectedRows;
     } catch (e) {
         console.error('postModel deleteAllPostsPreferencesByUserID error', e.message);
