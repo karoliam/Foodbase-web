@@ -46,6 +46,17 @@ CREATE TABLE user_preferences (
 	CONSTRAINT PK_user_preferences PRIMARY KEY (user_ID, food_fact_ID)
 );
 
+CREATE TABLE message (
+   	ID Int NOT NULL AUTO_INCREMENT,
+    sender_ID Int,
+    receiver_ID Int,
+	time_stamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    text VARCHAR(1000) DEFAULT "",
+   	PRIMARY KEY (ID),
+   	FOREIGN KEY (sender_ID) REFERENCES user(ID),
+   	FOREIGN KEY (receiver_ID) REFERENCES user(ID)
+);
+
 INSERT INTO food_fact(name,display_name,type)
 VALUES("gluten","Gluten-free",0),
 ("fish","Fish-free",0),
@@ -60,7 +71,7 @@ VALUES("gluten","Gluten-free",0),
 ("meat","Meat free",1),
 ("low_fat","Low fat",1);
 
---VET (valid end time) not yet implemented
+--VET (valid end time) not yet implemented      (canceled)
 --description DEFAULT is set to empty string
 --user roles 0 = admin, 1 = registered user
 
@@ -73,6 +84,7 @@ DESCRIBE food_fact;
 DESCRIBE post;
 DESCRIBE post_preferences;
 DESCRIBE user_preferences;
+DESCRIBE message;
 
 --DESCRIPTIONS FOR TABLES
 
@@ -107,3 +119,10 @@ DESCRIBE user_preferences;
 --  TABLE user_preferences  all the user's food fact preferences are stored here
 --	user_ID                 refers to the related user of this preference (PK)
 --	food_fact_ID            refers to the related food fact of this preference (PK)
+
+--  TABLE message (
+-- 	ID                      primary key of the message
+--  sender_ID               refers to the user that sent the message
+--  receiver_ID             refers to the user that received the message
+--	time_stamp              time the message was sent
+--  text                    the text content of the message
