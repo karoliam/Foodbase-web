@@ -100,6 +100,7 @@ const deletePostByID = async (postId, userId, res) => {
     }
 };
 
+// delete post preference with post id & user id
 const deletePostPreferencesByIdCheck = async (postId, userId, res) => {
   try {
       const [rows] = await promisePool.query(
@@ -111,30 +112,39 @@ const deletePostPreferencesByIdCheck = async (postId, userId, res) => {
   }
 }
 
-const deletePostPreferencesById = async (postId, preferenceIds, res) => {
+// delete post preference post id & an array of food fact ids
+const deletePostPreferencesById = async (postId, foodFactIds, res) => {
     try {
         const [rows] = await promisePool.query('DELETE FROM post_preferences WHERE post_ID =? AND food_fact_ID IN ?',
-            [postId, [preferenceIds]]);
+            [postId, [foodFactIds]]);
         return rows.affectedRows;
     } catch (e) {
         console.error('postModel deletePostPreferencesById error', e.message);
         res.status(500).json({ message: 'something went wrong src: postModel deletePostPreferencesById' });
     }
 };
-// delete all posts by the user
-const deleteAllPostsByUserID = async (user) => {
-    try {
-        // delete post (that belongs to the user) related food fact notes from DB
-        const [rows1] = await promisePool.query(
-            'DELETE FROM post_preferences WHERE post_ID IN(SELECT ID FROM post WHERE owner_ID = ?)', [user.ID]);
-        console.log('items deleted from post_preferences:', rows1.affectedRows);
 
-        // delete the actual post data from DB
-        const [rows] = await promisePool.query('DELETE FROM post WHERE owner_ID = ?', [user.ID]);
-        console.log('post model delete', rows);
+// delete all post preferences from user's posts by user id
+const deleteAllPostsPreferencesByUserID = async (userId, res) => {
+    try {
+        const [rows] = await promisePool.query(
+            'DELETE FROM post_preferences WHERE post_ID IN(SELECT ID FROM post WHERE owner_ID = ?)', [userId]);
+        return rows.affectedRows;
+    } catch (e) {
+        console.error('postModel deleteAllPostsPreferencesByUserID error', e.message);
+        res.status(500).json({ message: 'something went wrong src: postModel deleteAllPostsPreferencesByUserID' });
+        return 0;
+    }
+}
+// delete all posts by the user
+const deleteAllPostsByUserID = async (userId, res) => {
+    try {
+        const [rows] = await promisePool.query('DELETE FROM post WHERE owner_ID = ?', [userId]);
+        console.log('postModel delete', rows);
         return true;
     } catch (e) {
-        console.error('postModel deletePostByID error', e.message);
+        console.error('postModel deleteAllPostsByUserID error', e.message);
+        res.status(500).json({ message: 'something went wrong src: postModel deleteAllPostsByUserID' });
         return false
     }
 };
@@ -151,4 +161,5 @@ module.exports = {
     deletePostPreferencesByIdCheck,
     deletePostPreferencesById,
     deleteAllPostsByUserID,
+    deleteAllPostsPreferencesByUserID,
 };

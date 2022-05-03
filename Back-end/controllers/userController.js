@@ -4,7 +4,7 @@ const bcryptjs = require('bcryptjs');
 const userModel = require('../models/userModel');
 const {validationResult} = require("express-validator");
 const {getUserLogin} = require('../models/userModel');
-const {deleteAllPostsByUserID} = require('../models/postModel');
+const {deleteAllPostsByUserID, deleteAllPostsPreferencesByUserID} = require('../models/postModel');
 
 
 
@@ -104,7 +104,11 @@ const user_delete_byId = async (req, res) => {
     return res.json({message: 'Incorrect password.'});
   } else {
     //First delete the posts
-    const postsDel = await deleteAllPostsByUserID(req.user);
+    // delete post (that belongs to the user) related food fact notes from DB
+    const postsDelPrefs = await deleteAllPostsPreferencesByUserID(req.user.id, res);
+    console.log('users post preferences deleted:', postsDelPrefs)
+    // delete the actual post data from DB
+    const postsDel = await deleteAllPostsByUserID(req.user.id, res);
     if (postsDel) {
       console.log('user posts deleted');
       // Then delete user preferences and the user (in the same function currently
