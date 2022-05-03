@@ -172,6 +172,15 @@ figure {
 .post-food-fact i {
     font-size: 0.8em;
 }
+.report-form {
+    font-size: 0.15em;
+}
+.report-form input {
+    width: 100%;
+}
+#report-submit {
+    font-size: 1em;
+}
 
 
 .details {

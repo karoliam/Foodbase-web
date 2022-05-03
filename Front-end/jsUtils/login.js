@@ -19,3 +19,4 @@ const logUserIn = async (fetchOpt, redirectLocation) => {
     }
   }
 }
+

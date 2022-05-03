@@ -94,7 +94,7 @@ deleteButton.addEventListener('click',async (evt) => {
   //Append the created form to the profileList
   const profileList = document.querySelector('.profile-list');
   profileList.appendChild(confirmationForm);
-})
+},{once: true})
 
 // Profile deletion function
 const deleteProfile = async () => {

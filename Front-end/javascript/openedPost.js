@@ -36,7 +36,7 @@ const getPost = async () => {
     const post = await response.json();
     //Generate a single post
     const postFeed = document.querySelector('.post-feed');
-    await postGenerator(postFeed, post, false, false);
+    await postGenerator(postFeed, post, false, true, false);
   } catch (e) {
     console.log(e.message);
   }

@@ -1,8 +1,8 @@
 'use strict';
 
 // Generate a list of posts or a single post according to the boolean 'single'
-const postGenerator = async (feedElement, fetchedPosts, withLink, editable) => {
-  fetchedPosts.forEach((post) => {
+const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, editable) => {
+  fetchedPosts.forEach((post, loopIndex) => {
     //create needed elements, generate their data and add the to postFeed
 
     //------header--------------------------------------------------------------
@@ -11,9 +11,8 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, editable) => {
     headingH6.className = 'post-title';
 
     //------imgLinkLabel (with edit and delete links)---------------------------
-
-    //Only generate icons if the post is editable
     const imgLabel = document.createElement('label');
+    //Only generate icons if the post is editable
     if (editable) {
       imgLabel.htmlFor = 'post-image';
 
@@ -29,6 +28,7 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, editable) => {
       //deleteLink
       const deleteLink = document.createElement('a');
       deleteLink.addEventListener('click', evt => {
+        evt.preventDefault();
         //prompts the user whether they want to delete the post
         const postDeleteConfirm = confirm('Delete the selected post?');
         if (postDeleteConfirm) {
@@ -131,20 +131,35 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, editable) => {
     //append foodFactsDiv to the details-element
     foodFactDetails.appendChild(foodFactsDiv);
 
-    //flagLink and its content (flagLink)
-    const flagLink = document.createElement('a');
-    const flagIcon = document.createElement('i');
-    flagIcon.className = 'fa-solid fa-flag';
-    flagLink.appendChild(flagIcon);
-
     //append elements to figCaption
     figcaption.appendChild(username);
     figcaption.appendChild(innerFigDescription);
     figcaption.appendChild(foodFactDetails)
-    figcaption.appendChild(flagLink);
-
+    //only when a flag is needed create and append it to figCaption
+    if (withFlag) {
+      //flagLink and its content (flagLink)
+      const flagLink = document.createElement('a');
+      const flagIcon = document.createElement('i');
+      flagIcon.className = 'fa-solid fa-flag';
+      flagLink.appendChild(flagIcon);
+      //Listener
+      flagLink.addEventListener('click', evt => {
+        evt.preventDefault();
+        // Check that user is logged in
+        const sessionUser = JSON.parse(sessionStorage.getItem('user'));
+        if (!sessionUser) {
+          location.href = '../html/anonymousUser.html';
+        } else {
+          //call the flagPost function with the post's position index and ID
+          flagPost(loopIndex, post.ID);
+        }
+      }, {once: true})
+      //append
+      figcaption.appendChild(flagLink);
+    }
     //------onePost (contains the generated post)-------------------------------
     const onePost = document.createElement('div');
+    onePost.id = `post-no-${loopIndex}`;
     onePost.className = 'post';
 
     //figure
@@ -189,3 +204,67 @@ const deletePost = async (postID) => {
     console.log(e.message);
   }
 };
+
+// Post flagging function
+const flagPost = (postPosition, postID) => {
+  //Select the post figcaption to append the reportForm
+  const appendFigcaption = document.querySelector(`#post-no-${postPosition} figcaption`);
+
+  // reportInput
+  const reportInput = document.createElement('input');
+  reportInput.id = 'report-input';
+  reportInput.type = 'text';
+  reportInput.maxLength = 1000;
+  reportInput.name = 'message';
+  reportInput.placeholder = 'Leave a short explanation';
+
+  // reportInputLabel
+  const reportInputLabel = document.createElement('label');
+  reportInputLabel.htmlFor = reportInput.id;
+  reportInputLabel.innerText = 'Report-message:';
+
+  // reportSubmit
+  const reportSubmit = document.createElement('button');
+  reportSubmit.type = 'submit';
+  reportSubmit.id = 'report-submit';
+  reportSubmit.innerText = 'Send report';
+
+  // reportForm and appends
+  const reportForm = document.createElement('form');
+  reportForm.className = 'report-form';
+
+  // Appends
+  reportForm.appendChild(reportInputLabel);
+  reportForm.appendChild(reportInput);
+  reportForm.appendChild(reportSubmit);
+
+  // On submit
+  reportForm.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    // Send the report for administrators to be examined
+    const reportMSG = document.querySelector(`#post-no-${postPosition} input`);
+    try {
+      const fetchOptions = {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({postID: postID, message: reportMSG.value}),
+      };
+      const response = await fetch(url + `/post/${postID}`, fetchOptions);
+      const postReport = await response.json();
+      if (postReport.reportSuccessful) {
+        console.log(postReport.message);
+      } else {
+        // TODO: Remove this log
+        console.log('unsuccessful', postReport.message);
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
+    appendFigcaption.removeChild(reportForm);
+  })
+  // Append the reportForm to the post
+  appendFigcaption.appendChild(reportForm);
+}

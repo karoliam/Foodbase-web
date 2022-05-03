@@ -115,6 +115,12 @@ const post_posting = async (req, res) => {
     res.json({message: `post created with id: ${postCreateId} and ${prefsAdded} preferences.`});
 };
 
+// Test post reporting
+const post_report_post = async (req, res) => {
+    console.log(req.body);
+    res.json({message: "Post report test successful!", reportSuccessful: true});
+}
+
 //-----PUT-----PUT-----
 // modify posts with this
 const post_update_put = async (req, res) => {
@@ -219,6 +225,7 @@ module.exports = {
     get_post_by_id,
     post_list_get_your_posts,
     post_posting,
+    post_report_post,
     post_update_put,
     delete_post_by_id,
 };
