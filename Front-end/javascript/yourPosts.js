@@ -1,10 +1,9 @@
 'use strict';
 
 // Logout functionality
-const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 const logout = document.querySelector('#logout-link');
 logout.addEventListener('click', evt => {
-    logUserOut(sessionUser);
+    logUserOut();
 })
 
 // Get user's posts by user ID

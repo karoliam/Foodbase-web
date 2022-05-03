@@ -6,6 +6,7 @@ const username = document.querySelector('#username');
 const email = document.querySelector('#email');
 const area = document.querySelector('#area');
 const feedPreferences = document.querySelector('#feed-preferences');
+const deleteButton = document.querySelector('#delete-button');
 
 // Grab user and preferences from session storage
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
@@ -17,7 +18,16 @@ if (!sessionUser) {
 } else {
   // Logout functionality
   logout.addEventListener('click', evt => {
-    logUserOut(sessionUser);
+    logUserOut();
+  })
+
+  // Profile delete functionality
+  deleteButton.addEventListener('click',async (evt) => {
+    const confirmation = prompt('Are you sure you want to delete your profile?','Your password please, you don\'t need it anymore now do you...');
+    if (confirmation) {
+      //Call for the function
+      await deleteProfile(confirmation);
+    }
   })
 
   // Generate the data and populate the elements
@@ -54,3 +64,29 @@ if (!sessionUser) {
     feedPreferences.appendChild(pPreference);
   }
 }
+
+// Profile deletion function
+const deleteProfile = async (password) => {
+  try {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({password: password}),
+    };
+
+    const response = await fetch(url + `/user/${sessionUser.ID}`, fetchOptions);
+    const deleteProfile = await response.json();
+    //Inform the user
+    alert(deleteProfile.message);
+    //Redirect to feed if delete was successful
+    if (deleteProfile.deleteSuccessful) {
+      location.href = '../html/feed.html';
+      logUserOut();
+    }
+  } catch (e) {
+    console.log(e.message);
+  }
+};

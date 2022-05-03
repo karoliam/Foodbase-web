@@ -140,3 +140,12 @@ select {
          margin-bottom: 8px;
      }
  }
+
+@media screen and (min-width: 258px ) and (max-width: 423px) {
+    #food-facts div {
+        display: grid;
+        grid-template-columns:  40% 50% 40% 50%;
+        margin-left: 82px;
+        width: 54%;
+    }
+}

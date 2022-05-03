@@ -4,6 +4,7 @@ const bcryptjs = require('bcryptjs');
 const userModel = require('../models/userModel');
 const {validationResult} = require("express-validator");
 const {getUserLogin} = require('../models/userModel');
+const {deleteAllPostsByUserID} = require('../models/postModel');
 
 
 
@@ -94,9 +95,28 @@ const user_password_put = async (req, res) => {
 
 //For deleting accounts
 const user_delete_byId = async (req, res) => {
-  console.log('User controller delete by id: ', req.params.id);
-  const del = await userModel.deleteUser(req.user, req.params.id, res);
-  res.json({message: `user deleted: ${del}.`});
+  //Deletes user preferences, and posts (and their preferences) by this user, and the user.
+
+  // First get the existing user and see if the given password matches
+  const [userFromDB] = await getUserLogin([req.user.email]);
+  const existingPassword = userFromDB.password;
+  if (!await bcryptjs.compare(req.body.password, existingPassword)) {
+    return res.json({message: 'Incorrect password.'});
+  } else {
+    //First delete the posts
+    const postsDel = await deleteAllPostsByUserID(req.user);
+    if (postsDel) {
+      console.log('user posts deleted');
+      // Then delete user preferences and the user (in the same function currently
+      console.log('User controller delete by id: ', req.user.ID);
+      const userDel = await userModel.deleteUser(req.user);
+      if (userDel){
+        return res.json({message: 'User deleted!', deleteSuccessful: true});
+      }
+    }
+    //In case something went wrong
+    return res.json({message: 'Something went clearly wrong. Contact administrators!', deleteSuccessful: false});
+  }
 }
 
 module.exports = {

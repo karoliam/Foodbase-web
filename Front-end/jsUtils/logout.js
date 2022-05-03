@@ -1,6 +1,6 @@
 'use strict';
 
-const logUserOut = (sessionUser) => {
+const logUserOut = () => {
   sessionStorage.removeItem('token');
   sessionStorage.removeItem('user');
   sessionStorage.removeItem('preferences');

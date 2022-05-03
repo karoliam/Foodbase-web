@@ -16,7 +16,7 @@ const sessionPreferences = JSON.parse(sessionStorage.getItem('preferences'));
 
 // Logout functionality
 logout.addEventListener('click', evt => {
-  logUserOut(sessionUser);
+  logUserOut();
 })
 
 //---------------Generate the data and populate the elements--------------------
