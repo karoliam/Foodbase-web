@@ -93,7 +93,6 @@ const modifyPost = async (postInfo, res) => {
 const deletePostByID = async (postId, userId, res) => {
     try {
         const [rows] = await promisePool.query('DELETE FROM post WHERE ID = ? AND owner_ID = ?', [postId, userId]);
-        console.log('post model delete', rows);
         return rows.affectedRows === 1;
     } catch (e) {
         console.error('postModel deletePostByID error', e.message);

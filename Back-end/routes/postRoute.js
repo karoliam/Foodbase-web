@@ -20,27 +20,30 @@ const validateFileFormat = (req, file, cb) => {
 const upload = multer({ dest: 'uploads/', validateFileFormat});
 
 router.route('/')
-.get(postController.post_list_get)
-.post(upload.single('picture'),
-    body('area', 'Area must contain minimum 2 characters').isLength({min: 2}),
-    body('title', 'Title must contain minimum 2 characters').isLength({min:2}),
-    body('description', 'Description must contain minimum 2 characters').isLength({min:2}),
-    postController.post_posting)
-.put(upload.single('picture'),
-    body('area', 'Area must contain minimum 2 characters').isLength({min: 2}),
-    body('title', 'Title must contain minimum 2 characters').isLength({min:2}),
-    body('description', 'Description must contain minimum 2 characters').isLength({min:2}),
-    postController.post_update_put);
+    .get(postController.post_list_get)
+    .post(upload.single('picture'),
+        passport.authenticate('jwt', {session: false}),
+        body('area', 'Area must contain minimum 2 characters').isLength({min: 2}),
+        body('title', 'Title must contain minimum 2 characters').isLength({min:2}),
+        body('description', 'Description must contain minimum 2 characters').isLength({min:2}),
+        postController.post_posting)
+    .put(upload.single('picture'),
+        passport.authenticate('jwt', {session: false}),
+        body('area', 'Area must contain minimum 2 characters').isLength({min: 2}),
+        body('title', 'Title must contain minimum 2 characters').isLength({min:2}),
+        body('description', 'Description must contain minimum 2 characters').isLength({min:2}),
+        postController.post_update_put);
 
 router.route('/yourPosts/:id')
-    .get(postController.post_list_get_your_posts);
+    .get(passport.authenticate('jwt', {session: false}),
+        postController.post_list_get_your_posts);
 
 router.route('/openedPost/:id')
     .get(postController.get_post_by_id)
 
 router.route('/:id')
-.get(passport.authenticate('jwt', {session: false}), postController.get_post_by_id)
-.delete(passport.authenticate('jwt', {session: false}), postController.delete_post_by_id);
+    .get(passport.authenticate('jwt', {session: false}), postController.get_post_by_id)
+    .delete(passport.authenticate('jwt', {session: false}), postController.delete_post_by_id);
 
 
 module.exports = router;

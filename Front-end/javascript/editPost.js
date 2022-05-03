@@ -6,18 +6,22 @@ const dietsUL = document.querySelector('#diets');
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 // Generate the area dropdown options
 generateAreaListWithPreselect(area, sessionUser.area);
-generateCheckBoxList(allergensUL,0);
-// generate List of diets
-generateCheckBoxList(dietsUL,1);
 
-const editPostDivider = (post) => {
+// wait for preference data from DB
+const waitForPostData = async (post) => {
+    // generate List of allergies
+    generateCheckBoxListWithPreCheck(allergensUL,0, post.preferences);
+    // generate List of diets
+    generateCheckBoxListWithPreCheck(dietsUL,1, post.preferences);
+}
+
+const editPostDivider = async (post) => {
     //
-    const editArea = document.querySelector('#area');
     const editTitle = document.querySelector('#title');
     const editDescription = document.querySelector('#description');
     //
-    editArea.setAttribute('value',`${post.area}`);
-    editTitle.setAttribute('value',`${post.name}`);
+    console.log(post)
+    editTitle.value = post.name;
     editDescription.innerHTML = `${post.description}`;
     //
 };
@@ -43,7 +47,7 @@ editPost.addEventListener('submit', async (evt) => {
     alert(json.message);
     location.href = '../html/feed.html';
 });
-
+let post = []
 const getPost = async () => {
     try {
         const fetchOptions = {
@@ -56,8 +60,11 @@ const getPost = async () => {
         const id = urlParams.get('id');
         console.log('tässä on id ', id);
         const response = await fetch(url + `/post/openedPost/${id}`, fetchOptions);
-        const post = await response.json();
-        editPostDivider(post);
+        post = await response.json();
+        console.log(post)
+        console.log(post[0].preferences)
+        await waitForPostData(post[0]);
+        await editPostDivider(post[0]);
     } catch (e) {
         console.log(e.message);
     }
