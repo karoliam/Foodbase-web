@@ -51,7 +51,39 @@ const user_profile_put = async (req, res) => {
     for (const prefsKey in req.body) {
       prefIDS.push(parseInt(prefsKey));
     }
-
+    let prefsToDelete = [];
+    let prefsToInsert = [];
+    const oldPrefs = [];
+    // check the preferences in DB with post ID
+    const oldRows = await userModel.getUserPrefsByID(newUser.ID, res);
+    for (const rowKey in oldRows) {
+      oldPrefs.push(oldRows[rowKey].food_fact_ID);
+    }
+    // no loop if no preferences existed in DB
+    if (oldPrefs.length !== 0) { for (let i = 0; i < prefIDS.length; i++) {
+      // check for new preferences to add, we can't add duplicates
+      if (!oldPrefs.includes(prefIDS[i])) { prefsToInsert.push([newUser.ID, prefIDS[i]]); }
+    }
+    } else { for (let i = 0; i < prefIDS.length; i++) {
+      prefsToInsert.push([newUser.ID, prefIDS[i]]);
+    }
+    }
+    // no loop if no preferences were ticked in edit form
+    if (prefIDS.length !== 0) { for (let i = 0; i < oldPrefs.length; i++) {
+      // check what preferences don't exist in the new set
+      if (!prefIDS.includes(oldPrefs[i])) { prefsToDelete.push(oldPrefs[i]); }
+    }
+    } else { prefsToDelete = prefsToDelete.concat(oldPrefs); }
+    // if no preferences exist in DB there's nothing to delete
+    if (prefsToDelete.length !== 0) {
+      const delPrefs = await userModel.deleteUserPreferences(newUser.ID, prefsToDelete, res)
+      console.log("post foodfact notes deleted: ", delPrefs)
+    }
+    // if no preferences were ticked in Form there is nothing to add
+    if (prefsToInsert.length !== 0) {
+      const addPrefs = await userModel.createUserPreferences(prefsToInsert, res);
+      console.log("new post foodfact notes added: ", addPrefs);
+    }
     const profileUpdate = await userModel.updateUser(newUser, prefIDS, res);
     if (profileUpdate) {
       res.json({message: `Profile updated!`, profileUpdated: true});
@@ -83,8 +115,11 @@ const user_password_put = async (req, res) => {
     // bcrypt the new password and remove the old_password
     newUser.password = await bcryptjs.hash(req.body.password, 13);
     delete newUser.old_password;
-
+    // TODO: Remove this dangerous log before release
+    console.log('newUser at usermodel', newUser);
     const passwdUpdate = await userModel.updateUserPassword(newUser,res);
+    console.log('user model password update: ', passwdUpdate);
+    // TODO: Remove this dangerous log before release
     if (passwdUpdate) {
       res.json({message: `Password updated!`, passwordUpdated: true});
     }
@@ -111,7 +146,10 @@ const user_delete_byId = async (req, res) => {
       console.log('user posts deleted');
       // Then delete user preferences and the user (in the same function currently
       console.log('User controller delete by id: ', req.user.ID);
-      const userDel = await userModel.deleteUser(req.user);
+
+      const userPrefDel = await userModel.deleteUserAllUserPreferences(req.user.ID);
+      console.log('user preferences deleted: ', userPrefDel)
+      const userDel = await userModel.deleteUser(req.user.ID);
       if (userDel){
         return res.json({message: 'User deleted!', deleteSuccessful: true});
       }
