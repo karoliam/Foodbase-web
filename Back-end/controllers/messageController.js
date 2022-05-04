@@ -4,15 +4,19 @@ const messageModel = require('../models/messageModel')
 
 
 const message_list_get = async (req, res) => {
-  console.log('tämä route')
   const allMessages = await messageModel.getAllMessages(res);
   res.json(allMessages);
 };
 
-const one_conversation_get = async (req, res) => {
+const username_conversation_get = async (req, res) => {
   console.log('tässä on req.user.id', req.user.ID);
-  const receiverId = await messageModel.oneConversation(req.user.ID);
+  const receiverId = await messageModel.usernameWithConversation(req.user.ID);
   res.json(receiverId);
+}
+
+const conversation_messages_get = async (req, res) => {
+  const oneConversation = await messageModel.getConversation(req.user.ID, req.params.id);
+  res.json(oneConversation);
 }
 
 const message_post = async (req, res) => {
@@ -27,5 +31,6 @@ const message_post = async (req, res) => {
 module.exports = {
   message_post,
   message_list_get,
-  one_conversation_get,
+  username_conversation_get,
+  conversation_messages_get,
 }

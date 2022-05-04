@@ -28,9 +28,17 @@
         <h4>Chat</h4>
         <div id="chat-container">
         </div>
+        <form id="contact-form" method="post" >
+            <label for="contact" class="contact-label">Send a message</label>
+            <div id="textarea-button">
+                <textarea name="contact" id="contact" cols="32" rows="4"></textarea>
+                <button type="submit" id="send-button">Send</button>
+            </div>
+        </form>
     </article>
 </main>
 </body>
+<script src="../jsUtils/sendMsg.js"></script>
 <script src="../jsUtils/url.js"></script>
 <script src="../javascript/messageThread.js"></script>
 </html>

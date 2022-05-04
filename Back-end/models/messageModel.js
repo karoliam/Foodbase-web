@@ -14,7 +14,7 @@ const getAllMessages = async (res) => {
 
 const usernameWithConversation = async (id, res) => {
   try {
-    const[rows] = await promisePool.query(`SELECT sender_username FROM message WHERE sender_ID = ? OR receiver_ID = ? UNION SELECT receiver_username FROM message WHERE sender_ID = ? OR receiver_ID = ?`,
+    const[rows] = await promisePool.query(`SELECT sender_username, sender_ID FROM message WHERE sender_ID = ? OR receiver_ID = ? UNION SELECT receiver_username, receiver_ID FROM message WHERE sender_ID = ? OR receiver_ID = ?`,
         [id, id, id, id]);
     return rows;
   } catch (e) {
@@ -25,7 +25,7 @@ const usernameWithConversation = async (id, res) => {
 
 const getConversation = async (userID, mirkkuliID ,res) => {
   try {
-    const[rows] = await promisePool.query(`SELECT text, time_stamp FROM message WHERE sender_ID = ? AND receiver_ID = ? OR sender_ID = ? AND receiver_ID = ?  `,
+    const[rows] = await promisePool.query(`SELECT text, time_stamp, sender_ID, sender_username, receiver_ID, receiver_username FROM message WHERE sender_ID = ? AND receiver_ID = ? OR sender_ID = ? AND receiver_ID = ?  `,
         [userID, mirkkuliID,mirkkuliID ,userID]);
     return rows;
   } catch (e) {
@@ -54,5 +54,6 @@ const addMessage = async(message, res) => {
 module.exports = {
   addMessage,
   getAllMessages,
-  oneConversation: usernameWithConversation,
+  usernameWithConversation,
+  getConversation,
 };

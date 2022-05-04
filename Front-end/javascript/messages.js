@@ -1,26 +1,35 @@
 'use strict';
 
-const messageThread = document.getElementById('message-thread');
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
-const usernameTitle = document.getElementById('username-time');
+const article = document.querySelector('#message-article');
 
 
 if (!sessionUser) {
   location.href = "../html/anonymousUser.html";
 } else {
 
-  const getUsernameConversation = async (conversation) => {
-    conversation.forEach((conversation) => {
+  const getUsernameConversation = async (username) => {
+    username.forEach((username) => {
 
-      if(conversation.sender_username !== sessionUser.username) {
-        console.log('täällä', conversation.sender_username);
+      if(username.sender_username !== sessionUser.username) {
+        const usernameTitle = document.createElement('div');
+        usernameTitle.className = 'username-time';
+
+        console.log('täällä', username.sender_username, 'id:ni on', username.sender_ID);
+        const conversationLink = document.createElement('a');
+        conversationLink.className = 'message-link';
+
+        conversationLink.href = `messageThread.html?id=${username.sender_ID}&username=${username.sender_username}`;
+        console.log(conversationLink.href);
         const messageUsername = document.createElement('p');
         const box = document.createElement('div');
-        box.id = 'message-thread';
-        messageUsername.id = conversation.sender_username;
-        messageUsername.textContent = conversation.sender_username;
-          box.appendChild(messageUsername);
-          usernameTitle.appendChild(box);
+        box.className = 'message-thread';
+        messageUsername.id = username.sender_username;
+        messageUsername.textContent = username.sender_username;
+        box.appendChild(messageUsername);
+        usernameTitle.appendChild(box);
+        conversationLink.appendChild(usernameTitle);
+        article.appendChild(conversationLink);
       }
     })
   };
@@ -32,7 +41,7 @@ if (!sessionUser) {
           Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       };
-      const response = await fetch(url + '/message/conversation', fetchOptions);
+      const response = await fetch(url + '/message/username', fetchOptions);
       const username = await response.json();
       console.log(username);
       //Here we generate the posts
