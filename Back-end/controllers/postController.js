@@ -72,6 +72,28 @@ const post_list_get_your_posts = async (req, res) => {
     res.json(posts);
 }
 
+const getPostsByPreferencesAndString = async (req, res) => {
+    const postMain = await postModel.getAllPosts(res);
+    const postMainJson = {};
+    for (const postMainKey in postMain) {
+        postMainJson[postMainKey] = postMain[postMainKey];
+        postMainJson[postMainKey].preferences = [];
+    }
+    for (const postMainJsonKey in postMainJson) {
+        const postPrefs = await foodFactModel.getPostFoodFactsByID([postMainJson[postMainJsonKey].ID]);
+        if (postPrefs.length > 0) {
+            for (const postPrefsKey in postPrefs) {
+                postMainJson[postMainJsonKey].preferences.push(postPrefs[postPrefsKey]);
+            }
+        }
+    }
+    let posts = []
+    for (const postMainJsonKey in postMainJson) {
+        posts.push(postMainJson[postMainJsonKey])
+    }
+    res.json(posts);
+}
+
 //-----POST-----POST-----
 // create new post while logged in
 const post_posting = async (req, res) => {
@@ -241,6 +263,7 @@ module.exports = {
     post_list_get,
     get_post_by_id,
     post_list_get_your_posts,
+    getPostsByPreferencesAndString,
     post_posting,
     post_report_post,
     post_update_put,
