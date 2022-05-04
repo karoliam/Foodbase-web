@@ -42,7 +42,7 @@ router.route('/openedPost/:id')
     .get(postController.get_post_by_id);
 
 router.route('/search')
-    .get(postController.getPostsByPreferencesAndString);
+    .post(postController.getPostsByPreferencesAndString);
 
 router.route('/:id')
     .get(passport.authenticate('jwt', {session: false}), postController.get_post_by_id)

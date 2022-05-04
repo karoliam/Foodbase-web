@@ -16,12 +16,34 @@ function showSearch() {
   searchBar.style.display = 'block';
 }
 
+// Function for generating filtered posts
+const generateFilteredPosts = async () => {
+  try {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      },
+      body: sessionStorage.getItem('preferences'),
+    };
+    const response = await fetch(url + '/post/search', fetchOptions);
+    const posts = await response.json();
+    //Here we generate the posts
+    await postGenerator(postFeed, posts, true, true, false);
+  } catch (e) {
+    console.log(e.message);
+  }
+}
+
 // On form submit
 searchBar.addEventListener('submit', evt =>  {
   const searchForm = new FormData(searchBar);
   // Start but don't await the asynchronous function to prevent UI sluggishness
-  //sortArticlesBySearchTerms(searchForm);
+
+  searchArticlesBySearchTerms(searchForm);
 })
+
 
 //------Test if user is logged in and act accordingly---------------------------
 if (!sessionUser) {
@@ -60,27 +82,6 @@ if (!sessionUser) {
     logUserOut();
   })
 
-  // TODO: Remove this call to generate all posts
-  const postFeed = document.querySelector('.post-feed');
-  const getAllPosts = async () => {
-    try {
-      const fetchOptions = {
-        headers: {
-          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-        },
-      };
-      const response = await fetch(url + '/post', fetchOptions);
-      const posts = await response.json();
-      //Here we generate the posts
-      await postGenerator(postFeed, posts, true, true, false);
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-  // Initially at page load if user not logged in
-  getAllPosts();
-
-
   // TODO: Get and generate all user preference matching posts
-
+  generateFilteredPosts();
 }

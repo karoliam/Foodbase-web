@@ -73,6 +73,7 @@ const post_list_get_your_posts = async (req, res) => {
 }
 
 const getPostsByPreferencesAndString = async (req, res) => {
+    console.log(req.body);
     const postMain = await postModel.getAllPosts(res);
     const postMainJson = {};
     for (const postMainKey in postMain) {
