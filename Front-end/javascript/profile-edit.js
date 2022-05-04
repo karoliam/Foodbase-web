@@ -8,7 +8,9 @@ const area = document.querySelector('#area');
 const allergensDiv = document.querySelector('#allergens');
 const dietsDiv = document.querySelector('#diets');
 const profileForm = document.querySelector('#userinfo-edit');
+const profileFormSubmit = document.querySelector('#save-profile-edit');
 const passwdForm = document.querySelector('#password-edit');
+const passwdFormSubmit = document.querySelector('#save-password-edit');
 
 // Grab user and preferences from session storage
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
@@ -63,6 +65,8 @@ profileForm.addEventListener('submit', async (evt) => {
       // set new user data and preferences
       sessionStorage.setItem('user', JSON.stringify(profileUpdateResponseJson.user));
       sessionStorage.setItem('preferences', JSON.stringify(profileUpdateResponseJson.preferences));
+      profileFormSubmit.textContent = 'Changes saved successfully!';
+      setTimeout(() => {profileFormSubmit.textContent = 'Save changes';}, 2000);
     }
     return;
   }
@@ -117,6 +121,9 @@ passwdForm.addEventListener('submit', async (evt) => {
       body: formedPasswdForm,
     };
     await logUserIn(newFetchOptions, 0);
+    passwdFormSubmit.textContent = 'Password Changed!';
+    setTimeout(() => {passwdFormSubmit.textContent = 'Change password';},2000);
+    return;
   }
   alert(passwordUpdateResponseJson.message);
 })
