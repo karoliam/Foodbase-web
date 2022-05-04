@@ -50,7 +50,24 @@ const get_post_by_id = async (req, res) => {
 
 // get all posts for logged in user
 const post_list_get_your_posts = async (req, res) => {
-    const posts = await postModel.getPostsByUserID(req.params.id, res);
+    const postMain = await postModel.getPostsByUserID(req.params.id, res);
+    const postMainJson = {};
+    for (const postMainKey in postMain) {
+        postMainJson[postMainKey] = postMain[postMainKey];
+        postMainJson[postMainKey].preferences = [];
+    }
+    for (const postMainJsonKey in postMainJson) {
+        const postPrefs = await foodFactModel.getPostFoodFactsByID([postMainJson[postMainJsonKey].ID]);
+        if (postPrefs.length > 0) {
+            for (const postPrefsKey in postPrefs) {
+                postMainJson[postMainJsonKey].preferences.push(postPrefs[postPrefsKey]);
+            }
+        }
+    }
+    let posts = []
+    for (const postMainJsonKey in postMainJson) {
+        posts.push(postMainJson[postMainJsonKey])
+    }
     console.log('post_list_get_your_posts length:', posts.length);
     res.json(posts);
 }
