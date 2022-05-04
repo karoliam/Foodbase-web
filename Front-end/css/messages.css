@@ -16,6 +16,15 @@ h5, p {
     margin-left: 30px;
 }
 
+#contact {
+    font-size: 0.3em;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top: 10%;
+    margin-bottom: 16px;
+    resize: none;
+}
+
 #message-thread {
     background-color: #ccae85;
     padding-bottom: 40px;
@@ -24,8 +33,23 @@ h5, p {
     overflow: hidden;
     border-radius: 20px;
     border-top-style: groove;
+}
+#send-button {
+    background-color:  transparent;
+    border-style: none;
+}
+#send-button:hover {
+    background-color: rgb(222, 154, 1);
+}
 
+#send-button:active {
+    background-color: rgb(164, 136, 149);
 
+}
+
+#textarea-button {
+    display: flex;
+    flex-direction: column;
 }
 
 #message-thread:hover {
@@ -53,18 +77,28 @@ h5, p {
 }
 
 .received {
-    color: pink;
+    background-color: rgb(130 169 171 / 37%);
+    border-radius: 20px;
     text-align: left;
+    padding: 8px;
+    width: 50%;
 }
 
 .sent {
     text-align: right;
+    background-color: rgb(220 191 204 / 56%);
+    border-radius: 20px;
+    padding: 8px;
+    width: 50%;
+    align-self: flex-end;
+
 }
 
 #chat-container {
     display: flex;
     flex-direction: column;
 }
+
 
 @media screen and (min-width: 500px) {
     nav {

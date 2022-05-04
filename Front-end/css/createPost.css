@@ -47,7 +47,7 @@ label {
 }
 
 #save-edit:hover {
-    background-color: #de9a01;
+    background-color: rgb(222, 154, 1);
 }
 #save-edit:active {
     background-color: rgb(164, 136, 149);

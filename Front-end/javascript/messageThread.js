@@ -38,17 +38,16 @@ if (!sessionUser) {
         },
       };
       const response = await fetch(url + `/message/conversation/${userID}`, fetchOptions);
-      console.log('tässä userID', userID);
       const message = await response.json();
-      console.log('tässä on message', message);
-      //Here we generate the posts
+      chatContainer.innerHTML = '';
+      //here we generate the messages
       await getConversation(message);
     } catch (e) {
       console.log(e.message);
     }
   };
-  // Initially at page load if user not logged in
   getMessages();
+  // Initially at page load if user not logged in
 }
 contactForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
