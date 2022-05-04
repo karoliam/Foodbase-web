@@ -112,6 +112,8 @@ const searchArticlesBySearchTerms = async (searchForm) => {
     const response = await fetch(url + '/post/search', fetchOptions);
     const posts = await response.json();
     //Here we generate the posts
+    //First clear the old posts
+    postFeed.innerHTML = '';
     await postGenerator(postFeed, posts, true, true, false);
   } catch (e) {
     console.log(e.message);
