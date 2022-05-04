@@ -40,6 +40,13 @@ function showSearch() {
 //------Function for generating filtered posts----------------------------------
 const postFeed = document.querySelector('.post-feed');
 const generateFilteredPosts = async () => {
+  // Only send pref ID's
+  const preferencesToBeSent = {};
+  for (const pref in sessionPreferences) {
+    const prefName = sessionPreferences[pref].ID;
+    preferencesToBeSent[prefName] = true;
+  }
+
   try {
     const fetchOptions = {
       method: 'POST',
@@ -47,7 +54,7 @@ const generateFilteredPosts = async () => {
         Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         'Content-Type': 'application/json',
       },
-      body: sessionStorage.getItem('preferences'),
+      body: JSON.stringify(preferencesToBeSent),
     };
     const response = await fetch(url + '/post/search', fetchOptions);
     const posts = await response.json();
