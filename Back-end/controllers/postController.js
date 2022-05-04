@@ -88,32 +88,31 @@ const getPostsByPreferencesAndString = async (req, res) => {
             }
         }
     }
-
+    delete req.body.keywords;
     let posts = []
     let searchPreferenceArr = []
     for (const bodyKey in req.body) {
-        searchPreferenceArr.push(bodyKey);
+        console.log('key',bodyKey)
+        searchPreferenceArr.push(parseInt(bodyKey));
     }
     console.log('search ids',searchPreferenceArr)
-    if (searchPreferenceArr > 0) {
+    if (searchPreferenceArr.length > 0) {
         for (const postMainJsonKey in postMainJson) {
             let postPreferencesArr = [];
             for (const preferencesKey in postMainJson[postMainJsonKey].preferences) {
-                postPreferencesArr.push(postMainJson[postMainJsonKey].preferences[preferencesKey].ID);
+                postPreferencesArr.push(parseInt(postMainJson[postMainJsonKey].preferences[preferencesKey].ID));
             }
-            console.log('post ids',postPreferencesArr);
             if (searchPreferenceArr.every( ai => postPreferencesArr.includes(ai))) {
                 posts.push(postMainJson[postMainJsonKey])
             }
             // empty the post preferences ID array
-            postPreferencesArr = []
         }
     } else {
         for (const postMainJsonKey in postMainJson) {
             posts.push(postMainJson[postMainJsonKey])
         }
     }
-    console.log(posts);
+    console.log(posts.length);
     res.json(posts);
 }
 
