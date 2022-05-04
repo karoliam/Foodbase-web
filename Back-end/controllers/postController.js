@@ -92,7 +92,7 @@ const getPostsByPreferencesAndString = async (req, res) => {
     let posts = []
     let searchPreferenceArr = []
     for (const bodyKey in req.body) {
-        searchPreferenceArr.push(req.body[bodyKey].ID);
+        searchPreferenceArr.push(bodyKey);
     }
     console.log('search ids',searchPreferenceArr)
     if (searchPreferenceArr > 0) {

@@ -1,22 +1,44 @@
 'use strict';
 
 // Select most important stuff
-const logout = document.querySelector('#logout-link');
-const logoutLi = document.querySelector('.logout');
+const allergensDiv = document.querySelector('#allergens');
+const dietsDiv = document.querySelector('#diets');
 const sessionPreferences = JSON.parse(sessionStorage.getItem('preferences'));
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 
 //------Functionality for searchBar---------------------------------------------
-const allergensDiv = document.querySelector('#allergens');
-const dietsDiv = document.querySelector('#diets');
-const searchBar = document.querySelector('#search-bar')
+// Mobile search form
+const mobileSearchForm = document.querySelector('#mobile-search-form');
 
+// Mobile search submit
+mobileSearchForm.addEventListener('submit', evt =>  {
+  evt.preventDefault();
+  const mobileSearchFormData = new FormData(mobileSearchForm);
+  // Start but don't await the asynchronous function to prevent UI sluggishness
+  searchArticlesBySearchTerms(mobileSearchFormData);
+})
+
+// Desktop search form
+const desktopSearchBar = document.querySelector('#search-text-bar-desktop');
+const desktopSearchButton = document.querySelector('.nav-search-button');
+
+// desktop search submit
+desktopSearchButton.addEventListener('click', evt =>  {
+  evt.preventDefault();
+  // Get the preferences from the mobileSearchForm but replace the keywords
+  const desktopSearchFormData = new FormData(mobileSearchForm);
+  desktopSearchFormData.delete('keywords');
+  desktopSearchFormData.append('keywords', desktopSearchBar.value);
+  // Start but don't await the asynchronous function to prevent UI sluggishness
+  searchArticlesBySearchTerms(desktopSearchFormData);
+})
 // Visual search slide-in
 function showSearch() {
-  searchBar.style.display = 'block';
+  mobileSearchForm.style.display = 'block';
 }
 
-// Function for generating filtered posts
+//------Function for generating filtered posts----------------------------------
+const postFeed = document.querySelector('.post-feed');
 const generateFilteredPosts = async () => {
   try {
     const fetchOptions = {
@@ -36,25 +58,16 @@ const generateFilteredPosts = async () => {
   }
 }
 
-// On form submit
-searchBar.addEventListener('submit', evt =>  {
-  const searchForm = new FormData(searchBar);
-  // Start but don't await the asynchronous function to prevent UI sluggishness
-
-  searchArticlesBySearchTerms(searchForm);
-})
-
-
 //------Test if user is logged in and act accordingly---------------------------
 if (!sessionUser) {
   // Generate checkbox lists without precheck
   generateCheckBoxList(allergensDiv,0);
   generateCheckBoxList(dietsDiv,1);
   // Hide the logout button
+  const logoutLi = document.querySelector('.logout');
   logoutLi.style.display = 'none';
 
   // Get and generate all posts to feed
-  const postFeed = document.querySelector('.post-feed');
   const getAllPosts = async () => {
     try {
       const fetchOptions = {
@@ -77,11 +90,30 @@ if (!sessionUser) {
   // Generate prechecked checkbox lists
   generateCheckBoxListWithPreCheck(allergensDiv, 0, sessionPreferences);
   generateCheckBoxListWithPreCheck(dietsDiv, 1, sessionPreferences);
+
   // Logout functionality
+  const logout = document.querySelector('#logout-link');
   logout.addEventListener('click', evt => {
     logUserOut();
   })
 
-  // TODO: Get and generate all user preference matching posts
+  // Get and generate all user preference matching posts
   generateFilteredPosts();
+}
+
+//------Function for searching posts--------------------------------------------
+const searchArticlesBySearchTerms = async (searchForm) => {
+  try {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {},
+      body: searchForm,
+    };
+    const response = await fetch(url + '/post/search', fetchOptions);
+    const posts = await response.json();
+    //Here we generate the posts
+    await postGenerator(postFeed, posts, true, true, false);
+  } catch (e) {
+    console.log(e.message);
+  }
 }

@@ -106,7 +106,7 @@ figure {
     justify-content: space-between;
 }
 
-#search-bar {
+#mobile-search-form {
     display: none;
     margin-bottom: 50px;
 }
@@ -242,7 +242,7 @@ footer {
     margin: auto;
 }
 
-.createPost-nav, .nav-search-button, #messages-text, #profile-text, #new-post-text, #search-text-bar, #logout-text{
+.createPost-nav, .nav-search-button, #messages-text, #profile-text, #new-post-text, #search-text-bar-desktop, #logout-text{
     display: none;
 }
 
@@ -267,7 +267,7 @@ footer {
     .home:hover {
         font-size: 1.3em;
     }
-    #search-text-bar {
+    #search-text-bar-desktop {
         display: block;
         border: none;
         border-bottom: 1px solid rgb(164, 136, 149);
@@ -278,7 +278,7 @@ footer {
         transition: font-size 1s;
         background-color: rgba(246, 242, 236, 0.46);
     }
-    #search-text-bar:hover {
+    #search-text-bar-desktop:hover {
         font-size: 0.35em;
     }
     #search, .fa-magnifying-glass {
@@ -340,7 +340,7 @@ footer {
         margin: -13px 0 0 -13px;
         text-decoration: underline;
     }
-    #search-bar {
+    #mobile-search-form {
         display: flex;
         font-size: 1em;
         margin: 24px 0 0 0;
