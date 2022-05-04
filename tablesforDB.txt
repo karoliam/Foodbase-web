@@ -52,6 +52,8 @@ CREATE TABLE message (
     receiver_ID Int,
 	time_stamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
     text VARCHAR(1000) DEFAULT "",
+    sender_username VARCHAR(50),
+    receiver_usernaem VARCHAR(50),
    	PRIMARY KEY (ID),
    	FOREIGN KEY (sender_ID) REFERENCES user(ID),
    	FOREIGN KEY (receiver_ID) REFERENCES user(ID)

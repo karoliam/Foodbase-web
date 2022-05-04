@@ -8,6 +8,8 @@ const contactForm = document.querySelector('#contact-form');
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id');
+const ownerID = urlParams.get('userid');
+const receiverUsername = urlParams.get('user');
 
 messageTextarea.addEventListener('input', evt => {
   // Check that sessionUser is found
@@ -46,14 +48,16 @@ const getPost = async () => {
 getPost();
 
 const messageField = document.querySelector("#contact");
-
+console.log('session user', sessionUser.username, 'receiver username', receiverUsername);
 contactForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   console.log(sessionUser.ID, messageField.value.toString(), id);
   const messageDataJson = {
     "sender_ID": sessionUser.ID,
     "text": messageField.value.toString(),
-    "receiver_ID": id
+    "receiver_ID": ownerID,
+    "sender_username": sessionUser.username,
+    "receiver_username": receiverUsername,
   };
   console.log('messagedatajson', messageDataJson);
   const messageToDb = {
