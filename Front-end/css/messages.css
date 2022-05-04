@@ -3,7 +3,7 @@ h4 {
     font-size: 0.6em;
 }
 
-.username-time {
+#username-time {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -16,7 +16,7 @@ h5, p {
     margin-left: 30px;
 }
 
-.message-thread {
+#message-thread {
     background-color: #ccae85;
     padding-bottom: 40px;
     text-overflow: ellipsis;
@@ -28,7 +28,7 @@ h5, p {
 
 }
 
-.message-thread:hover {
+#message-thread:hover {
     background-color: #b79b76;
 }
 .chat-container {
@@ -50,6 +50,20 @@ h5, p {
 
 .item-received-button:active {
     background-color: pink;
+}
+
+.received {
+    color: pink;
+    text-align: left;
+}
+
+.sent {
+    text-align: right;
+}
+
+#chat-container {
+    display: flex;
+    flex-direction: column;
 }
 
 @media screen and (min-width: 500px) {

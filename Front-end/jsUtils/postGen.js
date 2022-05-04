@@ -48,7 +48,7 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
 
     //------imageLink and its content (image)-----------------------------------
     const imageLink = document.createElement('a');
-    imageLink.href = `openedPost.html?id=${post.ID}`;
+    imageLink.href = `openedPost.html?id=${post.ID}&user=${post.username}&userid=${post.owner_ID}`;
     imageLink.className = 'post-image-link';
 
     //set image attributes and append to imageLink

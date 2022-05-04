@@ -39,5 +39,6 @@ app.use('/post', postRoute);
 app.use('/food', foodFactRoute);
 app.use('/message', messageRoute);
 
+
 // Authenticated routes
 app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
