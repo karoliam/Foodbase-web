@@ -5,6 +5,7 @@ const allergensDiv = document.querySelector('#allergens');
 const dietsDiv = document.querySelector('#diets');
 const sessionPreferences = JSON.parse(sessionStorage.getItem('preferences'));
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
+const logout = document.querySelector('.logout');
 
 //------Functionality for searchBar---------------------------------------------
 // Mobile search form
@@ -66,7 +67,8 @@ if (!sessionUser) {
   // Hide the logout button
   const logoutLi = document.querySelector('.logout');
   logoutLi.style.display = 'none';
-
+  //creating loginIcon instead of logout
+  createLoginIcon(logout);
   // Get and generate all posts to feed
   const getAllPosts = async () => {
     try {

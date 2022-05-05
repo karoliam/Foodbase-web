@@ -139,6 +139,7 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
     if (withFlag) {
       //flagLink and its content (flagLink)
       const flagLink = document.createElement('a');
+      flagLink.id = 'flag-link';
       const flagIcon = document.createElement('i');
       flagIcon.className = 'fa-solid fa-flag';
       flagLink.appendChild(flagIcon);

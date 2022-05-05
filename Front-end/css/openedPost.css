@@ -20,12 +20,16 @@
     margin-top: 5%;
     border-radius: 20px;
     border-style: none;
-    padding: 15px;
-    background-color: rgb(255, 220, 0);
+    padding: 10px;
+    background-color: rgb(145, 187, 186);
     font-size: 0.5em;
 }
 #send-button:hover {
-    background-color: rgb(204, 174, 133);
+    background-color: rgb(222, 154, 1);
+}
+
+#send-button:active {
+    background-color: rgb(164, 136, 149);
 }
 
 .contact-label {
@@ -36,6 +40,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+#message-sent-container {
+    margin: auto;
+    font-size: 0.4em;
+    background-color: rgb(255, 197, 91);
+    border-radius: 50px;
+    padding: 20px;
+    width: 20%;
+    text-align: center;
 }
 
 figure {
@@ -53,12 +66,15 @@ figure {
 nav ul li {
     font-size: 1em !important;
 }
+.fa-solid:hover {
+    color: rgb(107, 133, 129);
+}
 
 @media screen and (min-width: 600px) {
     .post-feed {
         display: flex !important;
         flex-direction: column;
-        margin: 48px auto;
+        margin: auto;
         width: 60%;
     }
     #contact {
