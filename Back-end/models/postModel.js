@@ -164,7 +164,7 @@ const deleteAllPostsPreferencesByUserID = async (userId, res) => {
         return rows.affectedRows;
     } catch (e) {
         console.error('postModel deleteAllPostsPreferencesByUserID error', e.message);
-        res.status(500).json({ message: 'something went wrong src: postModel deleteAllPostsPreferencesByUserID' });
+        res.status(500).json({});
         return 0;
     }
 }
@@ -176,10 +176,22 @@ const deleteAllPostsByUserID = async (userId, res) => {
         return true;
     } catch (e) {
         console.error('postModel deleteAllPostsByUserID error', e.message);
-        res.status(500).json({ message: 'something went wrong src: postModel deleteAllPostsByUserID' });
-        return false
+        res.status(500).json({});
+        return false;
     }
 };
+
+// delete all reports from a post
+const deletePostReportsByID = async (postID) => {
+    try {
+        const [rows] = await promisePool.query('DELETE FROM post_reports WHERE post_ID = ?', [postID]);
+        console.log('postModel delete reports', rows);
+        return rows.affectedRows === 1;
+    } catch (e) {
+        console.error('postModel deleteAllPostsByUserID error', e.message);
+        return false;
+    }
+}
 
 module.exports = {
     getAllPosts,
@@ -197,4 +209,5 @@ module.exports = {
     deletePostPreferencesById,
     deleteAllPostsByUserID,
     deleteAllPostsPreferencesByUserID,
+    deletePostReportsByID,
 };
