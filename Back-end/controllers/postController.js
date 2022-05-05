@@ -2,9 +2,34 @@
 
 const postModel = require('../models/postModel');
 const foodFactModel = require("../models/foodFactModel");
-const {validationResult, body} = require('express-validator');
+const {validationResult} = require('express-validator');
 const {makeThumbnail} = require('../utilities/resize');
-const {toInt} = require("validator");
+
+//------Helpful controller functions not connected to routes--------------------
+const getPostAndPreference = async (req,id,res) => {
+    const postPrefs = await foodFactModel.getPostFoodFactsByID(id, res);
+    const postMain = await postModel.getPostByID(id, res);
+    const postMainJson = {};
+    for (const postMainKey in postMain) {
+        postMainJson[`post${postMainKey}`] = postMain[postMainKey];
+    }
+    postMainJson['post0'].preferences = [];
+    for (const postPrefsKey in postPrefs) {
+        postMainJson['post0'].preferences.push(postPrefs[postPrefsKey]);
+    }
+    const post = [];
+
+    // If the request is made by a moderator
+    if (req.user) {
+        if (req.user.role === 0) {
+            // Append the report data to posts
+            postMainJson['post0'].reports = await postModel.getPostReportsByID(postMainJson['post0'].ID);
+            console.log(postMainJson['post0']);
+        }
+    }
+    post.push(postMainJson['post0']);
+    return post;
+}
 
 //-----GET-----GET-----
 // get all posts from DB with food facts
@@ -32,18 +57,7 @@ const post_list_get = async (req, res) => {
 
 // get post by ID with food facts from DB
 const get_post_by_id = async (req, res) => {
-    const postPrefs = await foodFactModel.getPostFoodFactsByID(req.params.id, res);
-    const postMain = await postModel.getPostByID(req.params.id, res);
-    const postMainJson = {};
-    for (const postMainKey in postMain) {
-        postMainJson[`post${postMainKey}`] = postMain[postMainKey];
-    }
-    postMainJson[`post0`].preferences = [];
-    for (const postPrefsKey in postPrefs) {
-        postMainJson[`post0`].preferences.push(postPrefs[postPrefsKey]);
-    }
-    const post = []
-    post.push(postMainJson['post0'])
+    const post = await getPostAndPreference(req, req.params.id, res);
     console.log('post with preferences: ', post)
     res.json(post || {})
 };
@@ -116,6 +130,22 @@ const getPostsByPreferencesAndString = async (req, res) => {
     res.json(posts);
 }
 
+// Get all reported posts (for moderators)
+const get_reported_posts = async (req, res) => {
+    // Only allow authenticated users with a role of 0 to get reported posts
+    if (req.user.role === 0) {
+        const reports = await postModel.getAllPostReports();
+        let reportedPosts = [];
+        for (const report in reports) {
+            const reportedPost = await getPostAndPreference(req, reports[report].post_ID, res);
+            reportedPosts.push(reportedPost[0]);
+        }
+        console.log(reportedPosts);
+        return res.json(reportedPosts);
+    }
+    res.status(401);
+}
+
 //-----POST-----POST-----
 // create new post while logged in
 const post_posting = async (req, res) => {
@@ -176,10 +206,14 @@ const post_posting = async (req, res) => {
     res.json({message: `post created with id: ${postCreateId} and ${prefsAdded} preferences.`});
 };
 
-// Test post reporting
+// Post reporting
 const post_report_post = async (req, res) => {
     console.log(req.body);
-    res.json({message: "Post report test successful!", reportSuccessful: true});
+    const report = postModel.addNewReport(req.body.reason, req.body.postID);
+    if (report) {
+        return res.json({message: "Post reported", reportSuccessful: true});
+    }
+    res.json({message: "Post report failed!", reportSuccessful: false});
 }
 
 //-----PUT-----PUT-----
@@ -281,13 +315,26 @@ const delete_post_by_id = async (req, res) => {
     res.json({message: `Post deleted! ${delPost}`});
 };
 
+// Get all reported posts (for moderators)
+const delete_reported_post_by_id = async (req, res) => {
+    // Only allow authenticated users with a role of 0 to delete reported posts
+    if (req.user.role === 0) {
+        console.log('moderator deletion privileges!!!');
+        return;
+        return res.json(posts);
+    }
+    res.json({});
+}
+
 module.exports = {
     post_list_get,
     get_post_by_id,
     post_list_get_your_posts,
     getPostsByPreferencesAndString,
+    get_reported_posts,
     post_posting,
     post_report_post,
     post_update_put,
     delete_post_by_id,
+    delete_reported_post_by_id,
 };

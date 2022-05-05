@@ -1,7 +1,7 @@
 'use strict';
 
 // Generate a list of posts or a single post according to the boolean 'single'
-const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, editable) => {
+const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, editable, moderated) => {
   fetchedPosts.forEach((post, loopIndex) => {
     //create needed elements, generate their data and add the to postFeed
 
@@ -11,39 +11,54 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
     headingH6.className = 'post-title';
 
     //------imgLinkLabel (with edit and delete links)---------------------------
-    const imgLabel = document.createElement('label');
-    //Only generate icons if the post is editable
-    if (editable) {
-      imgLabel.htmlFor = 'post-image';
-
-      //editLink
-      const editLink = document.createElement('a');
-      editLink.href = `edit-post.html?id=${post.ID}`;
-      editLink.id = 'editLink';
-      //icon for editLink
-      const editIcon = document.createElement('i');
-      editIcon.className = 'fa-solid fa-pen-to-square';
-      editLink.appendChild(editIcon);
-
+    const imgLinkLabel = document.createElement('label');
+    //Only generate icons if the post is editable or moderated
+    if (editable || moderated) {
+      imgLinkLabel.htmlFor = 'post-image';
       //deleteLink
       const deleteLink = document.createElement('a');
-      deleteLink.addEventListener('click', evt => {
-        evt.preventDefault();
-        //prompts the user whether they want to delete the post
-        const postDeleteConfirm = confirm('Delete the selected post?');
-        if (postDeleteConfirm) {
-          // delete the selected post
-          deletePost(post.ID);
-        }
-      })
+
       //icon for deleteLink
       const deleteIcon = document.createElement('i');
       deleteIcon.className = 'fa-solid fa-trash-can';
       deleteLink.appendChild(deleteIcon);
+      if (moderated) {
+        // deleteLink functionality for moderator use
+        deleteLink.addEventListener('click', evt => {
+          evt.preventDefault();
+          //prompts the moderator whether they want to delete the post
+          const postDeleteConfirm = confirm('Delete the selected post?');
+          if (postDeleteConfirm) {
+            // delete the selected post
+            moderatorDeletePost(post.ID);
+          }
+        })
+        //append the deleteLink to imgLinkLabel
+        imgLinkLabel.appendChild(deleteLink);
+      } else {
+        //editLink
+        const editLink = document.createElement('a');
+        editLink.href = `edit-post.html?id=${post.ID}`;
+        editLink.id = 'editLink';
+        //icon for editLink
+        const editIcon = document.createElement('i');
+        editIcon.className = 'fa-solid fa-pen-to-square';
+        editLink.appendChild(editIcon);
 
-      //append elements to imgLinkLabel
-      imgLabel.appendChild(editLink);
-      imgLabel.appendChild(deleteLink);
+        // deleteLink functionality for normal use
+        deleteLink.addEventListener('click', evt => {
+          evt.preventDefault();
+          //prompts the user whether they want to delete the post
+          const postDeleteConfirm = confirm('Delete the selected post?');
+          if (postDeleteConfirm) {
+            // delete the selected post
+            deletePost(post.ID);
+          }
+        })
+        //append both elements to imgLinkLabel
+        imgLinkLabel.appendChild(editLink);
+        imgLinkLabel.appendChild(deleteLink);
+      }
     }
 
     //------imageLink and its content (image)-----------------------------------
@@ -134,7 +149,8 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
     //append elements to figCaption
     figcaption.appendChild(username);
     figcaption.appendChild(innerFigDescription);
-    figcaption.appendChild(foodFactDetails)
+    figcaption.appendChild(foodFactDetails);
+
     //only when a flag is needed create and append it to figCaption
     if (withFlag) {
       //flagLink and its content (flagLink)
@@ -158,6 +174,26 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
       //append
       figcaption.appendChild(flagLink);
     }
+
+    //only when moderated, add the information about reports and messages
+    if (moderated) {
+      console.log(post);
+      const reportInfo = document.createElement('div');
+      const reportSummary = document.createElement('h6');
+      reportSummary.className = 'post-title';
+      reportSummary.innerText = `Reports: ${post.reports.length}`;
+      reportInfo.appendChild(reportSummary);
+      //for each report add an information-box
+      for (const report in post.reports) {
+        const reason = document.createElement('p');
+        reason.className = 'username';
+        reason.innerText = post.reports[report].reason;
+        reportInfo.appendChild(reason);
+      }
+      //append
+      figcaption.appendChild(reportInfo);
+    }
+
     //------onePost (contains the generated post)-------------------------------
     const onePost = document.createElement('div');
     onePost.id = `post-no-${loopIndex}`;
@@ -166,9 +202,9 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
     //figure
     const figure = document.createElement('figure');
     figure.appendChild(headingH6);
-    if (editable) {
-      //append the editable post icons
-      figure.appendChild(imgLabel);
+    if (editable || moderated) {
+      //append the editable/moderated post icon(s)
+      figure.appendChild(imgLinkLabel);
     }
     if (withLink) {
       //append the link with embedded image
@@ -186,7 +222,7 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
   })
 }
 
-// Post deletion function
+// Post deletion function for normal users
 const deletePost = async (postID) => {
   try {
     const fetchOptions = {
@@ -196,6 +232,26 @@ const deletePost = async (postID) => {
       },
     };
     const response = await fetch(url + `/post/${postID}`, fetchOptions);
+    const deletePost = await response.json();
+    // TODO: Remove this log
+    console.log(deletePost.message);
+    //Reload page
+    location.href = '../html/yourPosts.html';
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+// Post deletion function for moderators
+const moderatorDeletePost = async (postID) => {
+  try {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      },
+    };
+    const response = await fetch(url + `/post/report/${postID}`, fetchOptions);
     const deletePost = await response.json();
     // TODO: Remove this log
     console.log(deletePost.message);
@@ -242,7 +298,7 @@ const flagPost = (postPosition, postID) => {
   // On submit
   reportForm.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-    // Send the report for administrators to be examined
+    // Send the report for moderators to be examined
     const reportMSG = document.querySelector(`#post-no-${postPosition} input`);
     try {
       const fetchOptions = {
@@ -251,9 +307,9 @@ const flagPost = (postPosition, postID) => {
           Authorization: 'Bearer ' + sessionStorage.getItem('token'),
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({postID: postID, message: reportMSG.value}),
+        body: JSON.stringify({postID: postID, reason: reportMSG.value}),
       };
-      const response = await fetch(url + `/post/${postID}`, fetchOptions);
+      const response = await fetch(url + `/post/reported/${postID}`, fetchOptions);
       const postReport = await response.json();
       if (postReport.reportSuccessful) {
         console.log(postReport.message);

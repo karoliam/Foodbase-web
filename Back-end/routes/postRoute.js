@@ -38,16 +38,18 @@ router.route('/yourPosts/:id')
     .get(passport.authenticate('jwt', {session: false}),
         postController.post_list_get_your_posts);
 
-router.route('/openedPost/:id')
-    .get(postController.get_post_by_id);
-
 router.route('/search')
     .post(multer().none(), postController.getPostsByPreferencesAndString);
 
-router.route('/:id')
-    .get(passport.authenticate('jwt', {session: false}), postController.get_post_by_id)
-    .post(passport.authenticate('jwt', {session: false}), postController.post_report_post)
-    .delete(passport.authenticate('jwt', {session: false}), postController.delete_post_by_id);
+router.route('/reported')
+.get(passport.authenticate('jwt', {session: false}), postController.get_reported_posts)
 
+router.route('/reported/:id')
+.post(passport.authenticate('jwt', {session: false}), postController.post_report_post)
+.delete(passport.authenticate('jwt', {session: false}), postController.delete_reported_post_by_id);
+
+router.route('/:id')
+.get(postController.get_post_by_id)
+.delete(passport.authenticate('jwt', {session: false}), postController.delete_post_by_id);
 
 module.exports = router;

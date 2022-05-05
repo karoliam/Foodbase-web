@@ -13,6 +13,7 @@ router.get('/token', userController.checkToken);
 //Modifying the profile
 router.route('/profile')
 .put(multer().none(),
+    passport.authenticate('jwt', {session: false}),
     body('email', 'email is not valid').isEmail().isLength({max:40}),
     check('username').escape().isLength({max:40}),
     user_profile_put);
@@ -20,6 +21,7 @@ router.route('/profile')
 //Modifying the password
 router.route('/password')
 .put(multer().none(),
+    passport.authenticate('jwt', {session: false}),
     body('email', 'email is not valid').isEmail().isLength({max:40}),
     body('password', 'at least 8 characters long').isLength({min:8}),
     check('username').escape().isLength({max:40}),

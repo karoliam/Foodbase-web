@@ -90,6 +90,8 @@ const user_profile_put = async (req, res) => {
       console.log('newUser', newUser);
       // Grab user preferences and return them and the user
       const userPreferences = await getUserFoodFacts(newUser.ID);
+      // Add the user role
+      newUser['role'] = req.user.role;
       res.json({user: newUser, preferences: userPreferences, profileUpdated: true});
     }
   }
