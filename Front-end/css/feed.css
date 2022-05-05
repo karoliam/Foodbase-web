@@ -18,7 +18,7 @@ nav {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    border-bottom: 3px solid #6b8581;
+    border-bottom: 3px solid rgb(107, 133, 129);
     width: 100%;
 }
 nav ul {
@@ -64,7 +64,7 @@ a {
 figure {
     display: flex;
     flex-direction: column;
-    background-color: rgb(220, 211, 196);
+    background-color: rgba(208, 184, 172, 0.46);
     padding: 4%;
     margin: auto;
     border-radius: 20px;
@@ -79,7 +79,7 @@ figure {
 }
 .username {
     font-size: 0.3em;
-    color: #657a77
+    color: rgb(107, 133, 129);
 }
 
 .details {
@@ -111,6 +111,7 @@ figure {
     margin-bottom: 50px;
 }
 
+
 #search {
     font-size: 0.4em;
     border-style: none;
@@ -126,7 +127,7 @@ figure {
     font-size: 0.4em;
 }
 .fa-magnifying-glass:hover {
-    color: #6b8581;
+    color: rgb(107, 133, 129);
     cursor: pointer;
 }
 .search-button .fa-magnifying-glass:active {
@@ -134,7 +135,7 @@ figure {
 }
 
 #fact-details summary {
-    font-size: 0.6em;
+    font-size: 0.4em;
 }
 
 #food-facts div {
@@ -177,9 +178,26 @@ figure {
 }
 .report-form input {
     width: 100%;
+    border-style: none;
+    border-radius: 10px;
+    padding: 6px;
+    margin-bottom: 8px;
 }
+
 #report-submit {
     font-size: 1em;
+    border-style: none;
+    padding: 8px;
+    border-radius: 10px;
+    background-color: rgb(145, 187, 186);
+}
+
+#report-submit:hover {
+    background-color: rgb(222, 154, 1);
+}
+
+#report-submit:active {
+    background-color: rgb(164, 136, 149);
 }
 
 
@@ -242,7 +260,7 @@ footer {
     margin: auto;
 }
 
-.createPost-nav, .nav-search-button, #messages-text, #profile-text, #new-post-text, #search-text-bar-desktop, #logout-text{
+.createPost-nav, .nav-search-button, #messages-text, #profile-text, #new-post-text, #search-text-bar-desktop, #logout-text, #login-text{
     display: none;
 }
 
@@ -308,10 +326,16 @@ footer {
     nav ul {
         padding: 32px;
     }
-    #messages-text, #new-post-text, #logout-text {
+    #messages-text, #new-post-text, #logout-text{
         display: block;
         font-size: 0.2em;
         margin: -13px 0 0 -14px;
+        text-decoration: underline;
+    }
+    #login-text {
+        display: block;
+        font-size: 0.2em;
+        margin: -13px 0 0 -4px;
         text-decoration: underline;
     }
     #profile-text {
@@ -320,10 +344,10 @@ footer {
         margin: -13px 0 0 -8px;
         text-decoration: underline;
     }
-    .message, .profile, .logout {
+    .message, .profile, .logout, .login {
         transition: font-size 300ms;
     }
-    .message:hover, .profile:hover, .logout:hover {
+    .message:hover, .profile:hover, .logout:hover, .login:hover {
         font-size: 1.3em;
     }
     .createPost {
@@ -355,8 +379,14 @@ footer {
         font-size: 0.2em;
     }
 
-    .fa-envelope:hover, .fa-user:hover, .fa-right-from-bracket:hover, .fa-circle-plus:hover {
+    .fa-envelope:hover, .fa-user:hover, .fa-right-from-bracket:hover, .fa-circle-plus:hover, .fa-lock-open:hover {
         color: rgb(107, 133, 132);
     }
 
+}
+
+@media screen and (max-width: 1002px) {
+    #new-post-text {
+        margin: -13px 0 0 0;
+    }
 }

@@ -2,7 +2,7 @@
 
 const sendMsg = async (sessionUser, urlParams) => {
   const id = urlParams.get('id');
-  const receiverUsername = urlParams.get('username');
+  const receiverUsername = urlParams.get('user');
   const messageField = document.querySelector('#contact');
   console.log('session user', sessionUser.username, 'receiver username', receiverUsername);
 

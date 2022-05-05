@@ -10,7 +10,6 @@ if (!sessionUser) {
 
   const getUsernameConversation = async (username) => {
     username.forEach((username) => {
-
       if(username.sender_username !== sessionUser.username) {
         const usernameTitle = document.createElement('div');
         usernameTitle.className = 'username-time';
@@ -19,13 +18,14 @@ if (!sessionUser) {
         const conversationLink = document.createElement('a');
         conversationLink.className = 'message-link';
 
-        conversationLink.href = `messageThread.html?id=${username.sender_ID}&username=${username.sender_username}`;
+        conversationLink.href = `messageThread.html?id=${username.sender_ID}&user=${username.sender_username}`;
         console.log(conversationLink.href);
         const messageUsername = document.createElement('p');
         const box = document.createElement('div');
         box.className = 'message-thread';
         messageUsername.id = username.sender_username;
         messageUsername.textContent = username.sender_username;
+
         box.appendChild(messageUsername);
         usernameTitle.appendChild(box);
         conversationLink.appendChild(usernameTitle);

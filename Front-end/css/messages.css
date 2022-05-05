@@ -37,14 +37,17 @@ h5, p {
 #send-button {
     background-color:  transparent;
     border-style: none;
+    width: 20%;
+    margin-top: -40px;
+    align-self: flex-end;
+    margin-right: -6%;
 }
-#send-button:hover {
-    background-color: rgb(222, 154, 1);
+#textarea-button .fa-solid {
+    align-self: flex-end;
+    cursor: pointer;
 }
-
-#send-button:active {
-    background-color: rgb(164, 136, 149);
-
+.fa-solid:hover {
+    color: #6b8581;
 }
 
 #textarea-button {
