@@ -46,7 +46,6 @@ router.route('/reported')
 
 router.route('/reported/:id')
 .post(passport.authenticate('jwt', {session: false}), postController.post_report_post)
-.delete(passport.authenticate('jwt', {session: false}), postController.delete_reported_post_by_id);
 
 router.route('/:id')
 .get(postController.get_post_by_id)

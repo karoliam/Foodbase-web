@@ -30,7 +30,7 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
           const postDeleteConfirm = confirm('Delete the selected post?');
           if (postDeleteConfirm) {
             // delete the selected post
-            moderatorDeletePost(post.ID);
+            deletePost(post.ID);
           }
         })
         //append the deleteLink to imgLinkLabel
@@ -236,27 +236,12 @@ const deletePost = async (postID) => {
     // TODO: Remove this log
     console.log(deletePost.message);
     //Reload page
-    location.href = '../html/yourPosts.html';
-  } catch (e) {
-    console.log(e.message);
-  }
-};
-
-// Post deletion function for moderators
-const moderatorDeletePost = async (postID) => {
-  try {
-    const fetchOptions = {
-      method: 'DELETE',
-      headers: {
-        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-      },
-    };
-    const response = await fetch(url + `/post/report/${postID}`, fetchOptions);
-    const deletePost = await response.json();
-    // TODO: Remove this log
-    console.log(deletePost.message);
-    //Reload page
-    location.href = '../html/yourPosts.html';
+    const sessionUser = JSON.parse(sessionStorage.getItem('user'));
+    if (sessionUser.role === 0) {
+      location.href = '../html/moderatorTools.html';
+    } else {
+      location.href = '../html/yourPosts.html';
+    }
   } catch (e) {
     console.log(e.message);
   }

@@ -24,7 +24,6 @@ const getPostAndPreference = async (req,id,res) => {
         if (req.user.role === 0) {
             // Append the report data to posts
             postMainJson['post0'].reports = await postModel.getPostReportsByID(postMainJson['post0'].ID);
-            console.log(postMainJson['post0']);
         }
     }
     post.push(postMainJson['post0']);
@@ -136,9 +135,18 @@ const get_reported_posts = async (req, res) => {
     if (req.user.role === 0) {
         const reports = await postModel.getAllPostReports();
         let reportedPosts = [];
-        for (const report in reports) {
-            const reportedPost = await getPostAndPreference(req, reports[report].post_ID, res);
-            reportedPosts.push(reportedPost[0]);
+        for (let i = 0; i<reports.length; i++) {
+            // Check if a reportedPost was already created with the same post_ID
+            let append = true;
+            if (i > 0) {
+                if (reportedPosts[i-1].ID === reports[i].post_ID) {
+                    append = false;
+                }
+            }
+            if (append) {
+                const reportedPost = await getPostAndPreference(req, reports[i].post_ID, res);
+                reportedPosts.push(reportedPost[0]);
+            }
         }
         console.log(reportedPosts);
         return res.json(reportedPosts);
@@ -306,24 +314,31 @@ const post_update_put = async (req, res) => {
 // literally just delete a post by ID
 const delete_post_by_id = async (req, res) => {
     console.log('post controller delete by id', req.params.id);
-    const user = req.user;
+    const postOwner = req.user;
+    let postOwnerId = postOwner.ID;
 
-    // delete post (that belongs to the user) related food fact notes from DB
-    const delPreferences = await postModel.deletePostPreferencesByIdCheck(req.params.id, user.ID);
-    console.log('items deleted from post_preferences:', delPreferences);
-    const delPost = await postModel.deletePostByID(req.params.id, user.ID, res);
-    res.json({message: `Post deleted! ${delPost}`});
-};
-
-// Get all reported posts (for moderators)
-const delete_reported_post_by_id = async (req, res) => {
-    // Only allow authenticated users with a role of 0 to delete reported posts
     if (req.user.role === 0) {
-        console.log('moderator deletion privileges!!!');
-        return;
-        return res.json(posts);
+        // Delete the reported post (Moderator only)
+        // First delete all reports made for this post
+        const delReports = await postModel.deletePostReportsByID(req.params.id);
+        //Then call moderator post deletion
+        if (delReports) {
+            // Get the owner_ID of the post
+            const postToBeDeleted = await getPostAndPreference(req, req.params.id, res);
+            // Assign the owner_ID as the postOwnerId
+            postOwnerId = postToBeDeleted[0].owner_ID;
+        } else {
+            return res.json({});
+        }
     }
-    res.json({});
+    // delete post (that belongs to the postOwner) AND related food fact notes from DB
+    const delPreferences = await postModel.deletePostPreferencesByIdCheck(req.params.id, postOwnerId);
+    console.log('items deleted from post_preferences:', delPreferences);
+    const delPost = await postModel.deletePostByID(req.params.id, postOwnerId, res);
+    if (delPost) {
+        return res.json({message: 'Post deleted!'});
+    }
+    res.json({message: 'Post deletion failed!'});
 }
 
 module.exports = {
@@ -336,5 +351,4 @@ module.exports = {
     post_report_post,
     post_update_put,
     delete_post_by_id,
-    delete_reported_post_by_id,
 };
