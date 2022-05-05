@@ -1,7 +1,5 @@
 # 4th-period-2k22-project
 
-Our food project
-
 ## Name
 Foodbase
 
@@ -17,29 +15,30 @@ to the community.
 3. Ease of use (intuitive UI)
 
 ###Different roles in the application
--Anonymous users can:
-    -Browse the feed
-    -Open posts
-    -Search for posts with keywords and filters
 
--Registered users can do the same, plus:
-    -Get their feed automatically filtered according to their preferences
-    -Send messages to post authors and chat with them
-    -Flag disturbing posts
-    -Create posts and edit them
-    -Edit their profile and change password (email not editable)
-    -Delete their posts or their account
+####Anonymous users can:
+    1. Browse the feed
+    2. Open posts
+    3. Search for posts with keywords and filters
 
--Moderators can do the same, plus:
-    -See all flagged posts, the amount of reports per post and the report messages for each post
-    -Delete clearly inappropriate posts that have been reported multiple times
+####Registered users can do the same, plus:
+    4. Get their feed automatically filtered according to their preferences
+    5. Send messages to post authors and chat with them
+    6. Flag disturbing posts
+    7. Create posts and edit them
+    8. Edit their profile and change password (email not editable)
+    9. Delete their posts or their account
+
+####Moderators can do the same, plus:
+    10.See all flagged posts, the amount of reports per post and the report messages for each post
+    11.Delete clearly inappropriate posts that have been reported multiple times
 
 ## Installation
-1.Clone the repo
-2.Install Node.js
-3.Run npm i
-4.Run npm start
-5.Deploy in localhost or virtual server.
+1. Clone the repo 
+2. Install Node.js 
+3. Run npm i 
+4. Run npm start 
+5. Deploy in localhost or virtual server.
 
 ## Support
 You can send an email to reimani@metropolia.fi if you encounter a problem or have questions.
@@ -68,7 +67,7 @@ original authors are credited clearly.
 ## Project status
 Summer break
 
-## SPECIAL THANKS
-Ilkka Kylmäniemi - For front-end/back-end exercise materials that helped a lot in the project.
-Patrick Ausderau - For helping with database logic.
-Ulla Sederlöf - For hinting that we missed the meta tag for .
+# SPECIAL THANKS
+###Ilkka Kylmäniemi - For front-end/back-end exercise materials that helped a lot in the project.
+###Patrick Ausderau - For helping with database logic.
+###Ulla Sederlöf - For hinting that we missed the meta tag for mobile users.
