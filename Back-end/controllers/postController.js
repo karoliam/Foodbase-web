@@ -230,7 +230,7 @@ const post_report_post = async (req, res) => {
 //-----PUT-----PUT-----
 // modify posts with this
 const post_update_put = async (req, res) => {
-    console.log('request put body', req.body);
+
     const postInfo = {};
     const newPreferenceIDS = [];
 
@@ -245,20 +245,23 @@ const post_update_put = async (req, res) => {
     delete req.body.ID;
 
     // Image filename
-    const oldData = await postModel.getPostByID(postInfo.ID, res);
-    if (typeof req.file !== 'undefined') {
-        postInfo.filename = req.file.filename;
-    } else if (oldData.filename !== null) {
-        postInfo.filename = oldData.filename;
+    // Check that the file is not undefined or null
+    if (req.file) {
+        if (typeof req.file !== 'undefined') {
+            postInfo.filename = req.file.filename;
+            await makeThumbnail(req.file.path, postInfo.filename);
+        }
+    } else {
+        //keep the old filename
+        const oldData = await postModel.getPostByID(postInfo.ID, res);
+        postInfo.filename = oldData[0].filename;
     }
-    console.log("There should be strnums & on here: ", req.body)
+
     // after deleting other post info theres only preferences left in req.body
     for (const prefsKey in req.body) {
         newPreferenceIDS.push(parseInt(prefsKey));
     }
-    if (typeof req.file !== 'undefined') {
-        await makeThumbnail(req.file.path, postInfo.filename);
-    }
+
     // send post related data to postModel for DB changes
     let prefsToDelete = [];
     let prefsToInsert = [];
@@ -295,22 +298,25 @@ const post_update_put = async (req, res) => {
     // if no preferences exist in DB there's nothing to delete
     let totalPrefDel = 0;
     if (prefsToDelete.length !== 0) {
-        const delPostPreferences = await postModel.deletePostPreferencesById(postInfo.ID, prefsToDelete, res)
+        const delPostPreferences = await postModel.deletePostPreferencesById(postInfo.ID, prefsToDelete, res);
         totalPrefDel += delPostPreferences;
     }
     let totalPrefAdd = 0;
     // if no preferences were ticked in Form there is nothing to add
     if (prefsToInsert.length !== 0) {
-        const addPostPreferences = await postModel.addPostPreferences(prefsToInsert, res)
+        const addPostPreferences = await postModel.addPostPreferences(prefsToInsert, res);
         totalPrefAdd += addPostPreferences;
     }
     // update post's main data to DB
-    console.log()
-    const result = await postModel.modifyPost(postInfo, res)
-    res.json({
-        message: `post edited succesfully: ${result} with ${totalPrefDel} preferences deleted and
-   ${totalPrefAdd} added.`
-    });
+    const result = await postModel.modifyPost(postInfo, res);
+    if (result) {
+        console.log(`post edited succesfully: ${result} with ${totalPrefDel} preferences deleted and
+   ${totalPrefAdd} added.`);
+        return res.json({postEdited: true});
+    }
+    console.log(`post edited: ${result}, ${totalPrefDel} preferences deleted and
+   ${totalPrefAdd} added.`);
+    res.json({postEdited: false, message: message});
 };
 
 //-----DELETE-----DELETE-----

@@ -6,18 +6,26 @@ const router = express.Router();
 const multer  = require('multer');
 const {body} = require('express-validator');
 const passport = require('../utilities/pass');
+const path = require('path');
 
+//Function for filtering out wrong file types
+function validateFileFormat(file, cb){
+  const allowedExtensions = /jpeg|jpg|png|gif/;
+  // Checking the file extension
+  const extname = allowedExtensions.test(path.extname(file.originalname).toLowerCase());
+  // Checking media type
+  const mimetype = allowedExtensions.test(file.mimetype);
 
-const validateFileFormat = (req, file, cb) => {
-  const allowedMimetypes = ['image/png', 'image/jpeg', 'image/gif', 'image/jpg'];
-  if (allowedMimetypes.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(null, false);
+  if(mimetype && extname){
+    return cb(null,true);
   }
-};
-
-const upload = multer({ dest: 'uploads/', validateFileFormat});
+  return cb(false);
+}
+const upload = multer({
+  dest: 'uploads/',
+  fileFilter: function(_req, file, cb){
+    validateFileFormat(file, cb);
+  }});
 
 router.route('/')
     .get(postController.post_list_get)
