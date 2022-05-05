@@ -11,7 +11,8 @@ CREATE TABLE user (
 	username VARCHAR(45),
 	area VARCHAR(45),
 	role Int DEFAULT 1,
-	PRIMARY KEY (ID)
+	PRIMARY KEY (ID),
+	UNIQUE (email)
 );
 
 CREATE TABLE food_fact (

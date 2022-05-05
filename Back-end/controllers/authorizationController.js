@@ -57,14 +57,18 @@ const userCreate_post = async (req, res) => {
     }
     // create the main user data
     const result = await userModel.createUser(user, res);
-    let prefsToInsert = [];
-    for (let i = 0; i < prefIDS.length; i++) {
-      prefsToInsert.push([result.insertId, prefIDS[i]]);
-    }
-    // create preferences for the user
-    const preferences = await userModel.createUserPreferences(prefsToInsert, res);
-    console.log('preferences created for user:', preferences);
+
     if (result.insertId) {
+      let prefsToInsert = [];
+      for (let i = 0; i < prefIDS.length; i++) {
+        prefsToInsert.push([result.insertId, prefIDS[i]]);
+      }
+      let preferences = 0;
+      // create preferences for the user
+      if (prefsToInsert.length > 0) {
+        preferences = await userModel.createUserPreferences(prefsToInsert, res);
+      }
+      console.log('preferences created for user:', preferences);
       res.json({createSuccessful: true});
     } else {
       res.json({error: 'Login error: Contact website administrators'});

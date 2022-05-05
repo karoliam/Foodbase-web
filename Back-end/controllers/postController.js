@@ -210,7 +210,10 @@ const post_posting = async (req, res) => {
         prefsToInsert.push([postCreateId, newPreferenceIDS[i]]);
     }
     // create preferences for post
-    const prefsAdded = await postModel.addPostPreferences(prefsToInsert, res);
+    let prefsAdded = 0;
+    if (prefsToInsert.length > 0) {
+        prefsAdded = await postModel.addPostPreferences(prefsToInsert, res);
+    }
     res.json({message: `post created with id: ${postCreateId} and ${prefsAdded} preferences.`});
 };
 
