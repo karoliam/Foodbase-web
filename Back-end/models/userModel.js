@@ -63,7 +63,7 @@ const createUser = async (user, res) => {
   try {
     const [rows] = await promisePool.query('INSERT INTO user(username, email, password, area) VALUES (?,?,?,?)',
         [user.username,user.email,user.password,user.area]);
-    return rows.affectedRows === 1;
+    return rows;
   } catch (e) {
     console.error('userModel createUser error', e.message);
     res.status(500).json({message: 'An error occurred src: userModel createUser'});

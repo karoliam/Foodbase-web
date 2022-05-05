@@ -69,8 +69,9 @@ const userCreate_post = async (req, res) => {
       result = await userModel.createUser(user, res);
     }
 
-    if (result) {
+    if (result.affectedRows === 1) {
       let prefsToInsert = [];
+      console.log('result id', result.insertId)
       for (let i = 0; i < prefIDS.length; i++) {
         prefsToInsert.push([result.insertId, prefIDS[i]]);
       }
