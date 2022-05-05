@@ -111,7 +111,6 @@ DESCRIBE message;
 --	owner_ID                refers to the ID of the user who uploaded the post
 --	area                    refers to the location of the item in the  post
 
-
 --  TABLE post_preferences  all the post's food facts are stored here
 --	post_ID                 refers to the related post by ID (PK)
 --	food_fact_ID            refers to the related food fact by ID (PK)
@@ -119,6 +118,12 @@ DESCRIBE message;
 --  TABLE user_preferences  all the user's food fact preferences are stored here
 --	user_ID                 refers to the related user of this preference (PK)
 --	food_fact_ID            refers to the related food fact of this preference (PK)
+
+--  TABLE post_reports      user reports regarding posts are stored here
+--	ID                      primary key of this table (PK
+--  reason                  An explanation of why the report was made
+--  time_stamp              the time the report was made
+--	post_ID                 refers to the ID of the post (FK)
 
 --  TABLE message (
 -- 	ID                      primary key of the message
