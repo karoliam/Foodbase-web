@@ -85,7 +85,7 @@ if (!sessionUser) {
       const response = await fetch(url + '/post', fetchOptions);
       const posts = await response.json();
       //Here we generate the posts
-      await postGenerator(postFeed, posts, true, true, false);
+      await postGenerator(postFeed, posts, true, true, false, false);
     } catch (e) {
       console.log(e.message);
     }
@@ -121,7 +121,7 @@ const searchArticlesBySearchTerms = async (searchForm) => {
     //Here we generate the posts
     //First clear the old posts
     postFeed.innerHTML = '';
-    await postGenerator(postFeed, posts, true, true, false);
+    await postGenerator(postFeed, posts, true, true, false, false);
   } catch (e) {
     console.log(e.message);
   }

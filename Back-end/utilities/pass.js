@@ -22,7 +22,6 @@ passport.use(new Strategy(
                 return done(null, false, {message: 'Incorrect email or password.'});
             }
             delete user.password;
-            delete user.role;
             return done(null, {...user}, {message: 'Logged In Successfully'}); // use spread syntax to create shallow copy to get rid of binary row type
         } catch (err) {
             return done(err);

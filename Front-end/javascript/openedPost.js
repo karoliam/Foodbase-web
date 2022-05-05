@@ -1,6 +1,5 @@
 'use strict';
 
-// TODO: Messaging. Currently only checks that user is logged in.
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 const messageTextarea = document.querySelector('#contact');
 const messageSubmitButton = document.querySelector('#send-button');
@@ -35,11 +34,11 @@ const getPost = async () => {
       },
     };
 
-    const response = await fetch(url + `/post/openedPost/${id}`, fetchOptions);
+    const response = await fetch(url + `/post/${id}`, fetchOptions);
     const post = await response.json();
     //Generate a single post
     const postFeed = document.querySelector('.post-feed');
-    await postGenerator(postFeed, post, false, true, false);
+    await postGenerator(postFeed, post, false, true, false, false);
   } catch (e) {
     console.log(e.message);
   }

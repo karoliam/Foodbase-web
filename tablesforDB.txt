@@ -40,6 +40,15 @@ CREATE TABLE post_preferences (
 	CONSTRAINT PK_post_preferences PRIMARY KEY (post_ID, food_fact_ID)
 );
 
+CREATE TABLE post_reports (
+	ID Int NOT NULL AUTO_INCREMENT,
+	reason VARCHAR(1000) DEFAULT "",
+	time_stamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+	post_ID Int,
+	PRIMARY KEY (ID),
+	FOREIGN KEY (post_ID) REFERENCES post(ID)
+);
+
 CREATE TABLE user_preferences (
 	user_ID int NOT NULL,
 	food_fact_ID int NOT NULL,
@@ -53,7 +62,7 @@ CREATE TABLE message (
 	time_stamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
     text VARCHAR(1000) DEFAULT "",
     sender_username VARCHAR(50),
-    receiver_usernaem VARCHAR(50),
+    receiver_username VARCHAR(50),
    	PRIMARY KEY (ID),
    	FOREIGN KEY (sender_ID) REFERENCES user(ID),
    	FOREIGN KEY (receiver_ID) REFERENCES user(ID)
@@ -113,16 +122,21 @@ DESCRIBE message;
 --	owner_ID                refers to the ID of the user who uploaded the post
 --	area                    refers to the location of the item in the  post
 
-
 --  TABLE post_preferences  all the post's food facts are stored here
 --	post_ID                 refers to the related post by ID (PK)
 --	food_fact_ID            refers to the related food fact by ID (PK)
+
+--  TABLE post_reports      user reports regarding posts are stored here
+--	ID                      primary key of this table
+--  reason                  An explanation of why the report was made
+--  time_stamp              the time the report was made
+--	post_ID                 refers to the ID of the post
 
 --  TABLE user_preferences  all the user's food fact preferences are stored here
 --	user_ID                 refers to the related user of this preference (PK)
 --	food_fact_ID            refers to the related food fact of this preference (PK)
 
---  TABLE message (
+--  TABLE message
 -- 	ID                      primary key of the message
 --  sender_ID               refers to the user that sent the message
 --  receiver_ID             refers to the user that received the message

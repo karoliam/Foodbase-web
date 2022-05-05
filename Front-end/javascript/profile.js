@@ -14,14 +14,26 @@ const sessionPreferences = JSON.parse(sessionStorage.getItem('preferences'));
 
 // Check that sessionUser is found
 if (!sessionUser) {
-  location.href = "../html/login-and-signup.html";
+  location.href = "../html/anonymousUser.html";
 } else {
+  //------Preparations----------------------------------------------------------
+
+  // Moderator Tools link
+  // If the user is a moderator make the links smaller
+  if (sessionUser.role === 0) {
+    const linkList = document.querySelector('.profile-links');
+    linkList.style.fontSize = '0.8em';
+  } else {
+    const moderatorToolsLink = document.querySelector('#moderator-tools-link');
+    moderatorToolsLink.style.display = 'none';
+  }
+
   // Logout functionality
   logout.addEventListener('click', evt => {
     logUserOut();
   })
 
-  // Generate the data and populate the elements
+  //------Create and populate the elements---------------------------
 
   // Username
   let pUser = document.createElement('p');

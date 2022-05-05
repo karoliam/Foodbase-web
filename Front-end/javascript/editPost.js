@@ -59,7 +59,7 @@ const getPost = async () => {
         const urlParams = new URLSearchParams(queryString);
         const id = urlParams.get('id');
         console.log('tässä on id ', id);
-        const response = await fetch(url + `/post/openedPost/${id}`, fetchOptions);
+        const response = await fetch(url + `/post/${id}`, fetchOptions);
         post = await response.json();
         console.log(post)
         console.log(post[0].preferences)

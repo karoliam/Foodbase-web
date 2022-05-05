@@ -49,6 +49,26 @@ const getPostPrefsByID = async (id, res) => {
     }
 }
 
+// get all post reports
+const getAllPostReports = async () => {
+    try {
+        const [rows] = await promisePool.query('SELECT * FROM post_reports');
+        return rows;
+    } catch (e) {
+        console.error('postModel getAllPostreports error', e.message);
+    }
+}
+
+// get all post report
+const getPostReportsByID = async (id) => {
+    try {
+        const [rows] = await promisePool.query('SELECT post_ID, reason FROM post_reports WHERE post_ID=?', [id]);
+        return rows;
+    } catch (e) {
+        console.error('postModel getPostReportsByID error', e.message);
+    }
+}
+
 //-----INSERT-----INSERT-----
 // insert post data to DB
 const addPost = async (postInfo, res) => {
@@ -72,6 +92,18 @@ const addPostPreferences = async (prefsToInsert, res) => {
     } catch (e) {
         console.error('postModel addPostPreferences error', e.message);
         res.status(500).json({ message: 'something went wrong src: postModel addPostPreferences'});
+    }
+}
+
+// Insert post report
+const addNewReport = async (reason, id) => {
+    try {
+        // insert report data to DB
+        const [rows] = await promisePool.query('INSERT INTO post_reports(reason, post_ID) VALUES(?,?)',
+            [reason, id]);
+        return rows.affectedRows === 1;
+    } catch (e) {
+        console.error('postModel addNewReport error', e.message);
     }
 }
 
@@ -154,8 +186,11 @@ module.exports = {
     getPostByID,
     getPostsByUserID,
     getPostPrefsByID,
+    getAllPostReports,
+    getPostReportsByID,
     addPost,
     addPostPreferences,
+    addNewReport,
     modifyPost,
     deletePostByID,
     deletePostPreferencesByIdCheck,
