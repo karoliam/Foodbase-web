@@ -14,6 +14,17 @@ h6 {
     display: flex;
     flex-direction: column;
 }
+
+.text-input label {
+    font-size: 0.5em;
+    margin: 8px 0 8px 0;
+    font-weight: bold;
+}
+p {
+    font-size: 0.4em;
+    font-weight: bold;
+}
+
 select {
     border-style: none;
     border-radius: 20px;
@@ -47,6 +58,7 @@ select {
     padding: 10px;
     border-style: none;
     border-radius: 20px;
+    align-self: flex-end;
 }
 
 #save-edit:hover {

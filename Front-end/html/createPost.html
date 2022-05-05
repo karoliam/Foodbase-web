@@ -28,7 +28,7 @@
         <h4>Create a post</h4>
     </header>
 
-    <article>
+
         <form action="https://localhost:3000/post" method="post" id="createPost" enctype="multipart/form-data">
             <div id="text-input">
                 <label for="area">Area:</label>
@@ -40,9 +40,9 @@
                 <label for="description">Description:</label>
                 <textarea id="description" name="description" placeholder="Write a description" rows="4" cols="32" required></textarea>
                 <label for="picture">Select a picture:</label>
-                <input type="file" id="picture" name="picture">
+                <input type="file" id="picture" name="picture" required>
             </div>
-            <label for="food-facts" id="label-foodfacts">Is your product...</label>
+            <p id="label-food-facts">Is your product...</p>
             <div id="food-facts">
                 <div id="allergens">
                     <!--Allergens, js generated-->
@@ -54,7 +54,6 @@
             </div>
             <button type="submit" id="save-edit">Create a post!</button>
         </form>
-    </article>
 </main>
 <script src="../jsUtils/areaListGen.js"></script>
 <script src="../jsUtils/checkBoxGen.js"></script>

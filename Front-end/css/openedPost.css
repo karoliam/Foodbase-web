@@ -8,6 +8,10 @@
     margin-top: -0.5em;
 }
 
+a {
+    font-size: 1.25em;
+}
+
 #contact {
     border-radius: 20px;
     font-size: 0.6em;
@@ -52,7 +56,7 @@
 }
 
 figure {
-    background-color: #d5d2ce !important;
+    background-color: rgba(213, 210, 206, 0.66) !important;
 }
 
 .post-title {
@@ -79,6 +83,9 @@ nav ul li {
     }
     #contact {
         width: 100%;
+    }
+    nav {
+        justify-content: space-between;
     }
 
 }

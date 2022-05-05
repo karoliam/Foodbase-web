@@ -20,9 +20,9 @@
         <nav>
             <a class="home" href="feed.html">Foodbase</a>
             <ul>
-                <li class="message"><a href="messages.html"><i class="fa-solid fa-envelope"></i></a></li>
-                <li class="profile"><a href="profile.html"><i class="fa-solid fa-user"></i></a></li>
-                <li class="logout"><a id="logout-link"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+                <li class="message"><a href="messages.html"><i class="fa-solid fa-envelope"></i><span id="messages-text">Messages</span></a></li>
+                <li class="profile"><a href="profile.html"><i class="fa-solid fa-user"></i><span id="profile-text">Profile</span></a></li>
+                <li class="logout"><a id="logout-link"><i class="fa-solid fa-right-from-bracket"></i><span id="logout-text">Logout</span></a></li>
             </ul>
         </nav>
     </header>
@@ -30,18 +30,18 @@
         <a href="profile.html" id="profile-link">Profile</a>
         <a href="yourPosts.html" id="your-posts-link">Your posts</a>
     </div>
-    <article>
+    <div class="info-password-edit-container">
         <form id="userinfo-edit">
             <h4>Change user information</h4>
-            <label for="username"><h6>Username:</h6></label>
+            <label for="username">Username:</label>
             <input type="text" id="username" name="username" maxlength="40" required>
-            <label for="email"><h6>E-mail:</h6></label>
+            <label for="email">E-mail:</label>
             <input type="email" id="email" name="email" readonly>
-            <label for="area"><h6>Area:</h6></label>
+            <label for="area">Area:</label>
             <select name="area" id="area">
                 <!--Areas, js generated-->
             </select>
-            <label for="food-facts"><h6>Feed preferences:</h6></label>
+            <label for="food-facts">Feed preferences:</label>
             <div id="food-facts">
                 <div id="allergens">
                     <!--Allergens, js generated-->
@@ -56,17 +56,17 @@
 
         <form id="password-edit">
             <h4>Change password</h4>
-            <label for="old-password"><h6>Old password:</h6></label>
+            <label for="old-password">Old password:</label>
             <input type="password" id="old-password" name="old_password" minlength="8" required>
-            <label for="password"><h6>New password:</h6></label>
+            <label for="password">New password:</label>
             <input type="password" id="password" name="password" minlength="8" required>
-            <label for="re-enter-password"><h6>Re-enter new password:</h6></label>
+            <label for="re-enter-password">Re-enter new password:</label>
             <input type="password" id="re-enter-password" name="re-enter-password" minlength="8" required>
             <p id="password-error"></p>
             <button type="submit" id="save-password-edit">Change password</button>
         </form>
+    </div>
 
-    </article>
 </main>
 <script src="../jsUtils/url.js"></script>
 <script src="../jsUtils/areaListGen.js"></script>
