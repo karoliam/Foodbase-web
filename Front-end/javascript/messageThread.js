@@ -12,21 +12,59 @@ const contactForm = document.querySelector('#contact-form');
 if (!sessionUser) {
   location.href = "../html/anonymousUser.html";
 } else {
+  const logout = document.querySelector('#logout-link');
+  logout.addEventListener('click', evt => {
+    logUserOut();
+  })
+
   const getConversation = async (message) => {
     message.forEach((message) => {
+
+      const messageContainerSent = document.createElement('div');
+      messageContainerSent.className = 'message-container-sent';
+
+      const messageContainerReceived = document.createElement('div');
+      messageContainerReceived.className = 'message-container-received';
 
       const receivedMessage = document.createElement('p');
       const sentMessage = document.createElement('p');
       receivedMessage.className = 'received';
       sentMessage.className = 'sent';
+
+
+      const receiverUsername = document.createElement('p');
+      const timeStampReceiver = document.createElement('p');
+      const timeStampSender = document.createElement('p');
+
+      receiverUsername.className = 'receiver-username';
+      timeStampReceiver.className = 'timestamp-receiver';
+      timeStampSender.className = 'timestamp-sender';
+
+      const senderUsername = document.createElement('p');
+      senderUsername.className = 'sender-username';
+
+
+      const time = new Date(message.time_stamp).toLocaleTimeString('fi-FI',
+          { timeStyle: 'short', hour12: false});
+
       //received message
       if(message.receiver_ID === sessionUser.ID) {
-        receivedMessage.textContent = ` ${message.sender_username}: ${message.text}`;
-        chatContainer.appendChild(receivedMessage);
+        receiverUsername.textContent = message.sender_username;
+        receivedMessage.textContent = message.text;
+        timeStampSender.textContent = time;
+        messageContainerSent.appendChild(receiverUsername);
+        messageContainerSent.appendChild(receivedMessage);
+        messageContainerSent.appendChild(timeStampSender);
+        chatContainer.appendChild(messageContainerSent);
       } //sent message
       else if(message.sender_ID === sessionUser.ID) {
-        sentMessage.textContent = `${message.sender_username}: ${message.text}`;
-        chatContainer.appendChild(sentMessage);
+        senderUsername.textContent = message.sender_username;
+        sentMessage.textContent = message.text;
+        timeStampReceiver.textContent = time;
+        messageContainerReceived.appendChild(senderUsername);
+        messageContainerReceived.appendChild(sentMessage);
+        messageContainerReceived.appendChild(timeStampReceiver);
+        chatContainer.appendChild(messageContainerReceived);
       }
 })
   };

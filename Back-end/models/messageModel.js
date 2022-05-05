@@ -25,7 +25,8 @@ const usernameWithConversation = async (id, res) => {
 
 const getConversation = async (userID, mirkkuliID ,res) => {
   try {
-    const[rows] = await promisePool.query(`SELECT text, time_stamp, sender_ID, sender_username, receiver_ID, receiver_username FROM message WHERE sender_ID = ? AND receiver_ID = ? OR sender_ID = ? AND receiver_ID = ?  `,
+    const[rows] = await promisePool.query(`SELECT text, time_stamp, sender_ID, sender_username, receiver_ID, receiver_username 
+    FROM message WHERE sender_ID = ? AND receiver_ID = ? OR sender_ID = ? AND receiver_ID = ?  `,
         [userID, mirkkuliID,mirkkuliID ,userID]);
     return rows;
   } catch (e) {
