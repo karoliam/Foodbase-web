@@ -55,10 +55,21 @@ const userCreate_post = async (req, res) => {
     for (const prefsKey in req.body) {
       prefIDS.push(parseInt(prefsKey));
     }
-    // create the main user data
-    const result = await userModel.createUser(user, res);
 
-    if (result.insertId) {
+    // get existing emails to an array
+    const existingUsers = await userModel.getAllUsers();
+    const existingEmailsArr = [];
+    for (const existingUsersKey in existingUsers) {
+      existingEmailsArr.push(existingUsers[existingUsersKey].email);
+    }
+    let result = false;
+    // test if the email is already in use
+    if (!existingEmailsArr.some( ai => user.email.includes(ai))) {
+      // create the main user data
+      result = await userModel.createUser(user, res);
+    }
+
+    if (result) {
       let prefsToInsert = [];
       for (let i = 0; i < prefIDS.length; i++) {
         prefsToInsert.push([result.insertId, prefIDS[i]]);
