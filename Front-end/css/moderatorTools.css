@@ -1,0 +1,28 @@
+label a {
+    font-size: 0.7em;
+}
+
+.fa-trash-can:hover {
+    color: rgb(196, 81, 81);
+}
+
+label {
+    margin-top: -40px;
+}
+
+.description .post-title {
+    font-size: 0.2em;
+}
+
+#moderator-tools-link {
+    color: rgb(45, 70, 70);
+}
+
+#profile-link {
+    color: rgb(107, 133, 132);
+}
+@media screen and (min-width: 600px) {
+    .post-feed {
+        margin-top: 40px;
+    }
+}
