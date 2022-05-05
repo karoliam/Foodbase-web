@@ -15,7 +15,6 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
     //Only generate icons if the post is editable
     if (editable) {
       imgLabel.htmlFor = 'post-image';
-
       //editLink
       const editLink = document.createElement('a');
       editLink.href = `edit-post.html?id=${post.ID}`;

@@ -18,13 +18,14 @@
         <nav>
             <a class="home" href="feed.html">Foodbase</a>
             <ul>
-                <li class="message"><a href="messages.html"><i class="fa-solid fa-envelope"></i></a></li>
-                <li class="profile"><a href="profile.html"><i class="fa-solid fa-user"></i></a></li>
+                <li class="message"><a href="messages.html"><i class="fa-solid fa-envelope"></i><span id="messages-text">Messages</span></a></li>
+                <li class="profile"><a href="profile.html"><i class="fa-solid fa-user"></i><span id="profile-text">Profile</span></a></li>
+                <li class="logout"><a id="logout-link"><i class="fa-solid fa-right-from-bracket"></i><span id="logout-text">Logout</span></a></li>
             </ul>
 
         </nav>
     </header>
-    <article>
+
         <h4>Chat</h4>
         <div id="chat-container">
         </div>
@@ -36,10 +37,10 @@
 
             </div>
         </form>
-    </article>
+
 </main>
-</body>
 <script src="../jsUtils/sendMsg.js"></script>
 <script src="../jsUtils/url.js"></script>
 <script src="../javascript/messageThread.js"></script>
+</body>
 </html>

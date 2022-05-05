@@ -101,4 +101,7 @@ li {
     .home {
         margin-bottom: -24px;
     }
+    nav {
+        justify-content: space-between;
+    }
 }

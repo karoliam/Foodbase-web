@@ -1,24 +1,19 @@
-#login-form  {
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(229, 198, 198, 0.5);
-    font-size: 0.4em;
-    border-radius: 20px;
-    padding: 40px;
-}
-
-#signup-form {
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(229, 198, 198, 0.5);
-    font-size: 0.4em;
-    border-radius: 20px;
-    padding: 40px;
-}
-
 h2 {
     font-size: 0.7em;
 }
+
+/*Login and signup form*/
+#login-form, #signup-form  {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(229, 198, 198, 0.5);
+    font-size: 0.4em;
+    border-radius: 20px;
+    padding: 40px;
+}
+
+
+/*Login & signup button*/
 
 #login-button, #signup-button {
     margin: 50px auto;
@@ -29,20 +24,15 @@ h2 {
     background-color: rgb(145, 187, 186);
 }
 
-#area {
-    width: 100%;
-}
-
 #login-button:hover, #signup-button:hover {
-    background-color: #de9a01;
+    background-color: rgb(222, 154, 1);
 }
-
-
 
 #login-button:active, #signup-button:active {
-    background-color: #a48895;
+    background-color: rgb(164, 136, 149);
 }
 
+/*Login and signup forms*/
 #login-form input {
     border-radius: 20px;
     border-style: none;
@@ -66,10 +56,8 @@ h2 {
     flex-direction: column;
     margin: auto;
 }
-#area {
-    font-size: 1em;
-}
 
+/*Dropdown menu of area*/
 select {
     border-radius: 20px;
     padding: 10px;
@@ -79,6 +67,12 @@ select {
     flex: 1;
 }
 
+#area {
+    width: 100%;
+    font-size: 1em;
+}
+
+/*Food facts*/
 #food-facts {
     display: flex;
     flex-wrap: wrap;
@@ -93,10 +87,14 @@ select {
     flex-wrap: wrap;
 }
 
+
 #food-facts div label {
     width: 40%;
 }
+
+/*Media queries*/
  @media screen and (min-width: 600px) {
+     /*Login and signup forms - desktop*/
      #login-signup {
         width: 50%;
          font-size: 0.9em;
@@ -113,19 +111,23 @@ select {
          flex: 50%;
          margin: 16px;
      }
+     #signup-form input {
+         font-size: 1.25em;
+     }
+     /*Login and signup buttons - desktop*/
      #signup-button {
          width: 40%;
      }
      #login-button {
          width: 30%;
      }
+
      h2 {
          font-size: 0.8em;
          margin-left: 20px;
      }
-     #signup-form input {
-         font-size: 1.25em;
-     }
+
+    /*Food facts - desktop*/
      #food-facts {
         margin-left: 16px;
      }
@@ -134,7 +136,7 @@ select {
          grid-template-columns: 40% 50% 40% 50%;
          width: 60%;
          padding: 8px;
-         margin: auto;
+         margin: -8px auto;
      }
      #food-facts label {
          margin-bottom: 8px;

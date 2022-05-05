@@ -25,14 +25,15 @@ h5, p {
     resize: none;
 }
 
-#message-thread {
-    background-color: #ccae85;
+.message-thread {
+    background-color: rgba(146, 162, 162, 0.51);
     padding-bottom: 40px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     border-radius: 20px;
     border-top-style: groove;
+    margin-bottom: 32px;
 }
 #send-button {
     background-color:  transparent;
@@ -55,29 +56,6 @@ h5, p {
     flex-direction: column;
 }
 
-#message-thread:hover {
-    background-color: #b79b76;
-}
-.chat-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.item-received-button {
-    font-size: 0.3em;
-    border-radius: 20px;
-    background-color: #ffae00;
-    border-style: none;
-    padding: 10px;
-}
-
-.item-received-button:hover {
-    background-color: #de9a01;
-}
-
-.item-received-button:active {
-    background-color: pink;
-}
 
 .received {
     background-color: rgb(130 169 171 / 37%);
@@ -94,12 +72,15 @@ h5, p {
     padding: 8px;
     width: 50%;
     align-self: flex-end;
+    margin-right: 16px;
 
 }
 
 #chat-container {
     display: flex;
     flex-direction: column;
+    height: 500px;
+    overflow-y: scroll;
 }
 
 
@@ -109,17 +90,17 @@ h5, p {
     }
 }
 @media screen and (min-width: 600px) {
-    article {
+    .message-article {
         width: 70%;
         padding: 8vh;
-        background-color: rgb(255, 255, 255);
+        background-color: rgba(164, 136, 149, 0.08);
         border-radius: 20px;
         margin: 56px auto;
     }
 
     .message-thread {
         width: 80%;
-        margin: auto;
+
     }
     h4 {
         margin-top: 0;

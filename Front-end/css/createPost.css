@@ -59,7 +59,7 @@ form {
 }
 
 select option {
-    font-size: 0.6em;
+    font-size: 1em;
 }
 
 #food-facts {
@@ -69,10 +69,11 @@ select option {
     margin-bottom: 48px;
 }
 
-#label-foodfacts {
-    font-size: 0.5em;
+
+#label-food-facts {
+    font-size: 0.35em;
     font-weight: bold;
-    margin-top: 26px;
+    margin: 26px 0 32px 32px;
 }
 
 

@@ -24,7 +24,7 @@ const message_post = async (req, res) => {
   const message = req.body;
   console.log('message uploaded', message);
   const id = await messageModel.addMessage(message, res);
-  res.json({message: `message created with ${id}.`});
+  res.json({message: `${id}:Message sent!`});
 };
 
 
