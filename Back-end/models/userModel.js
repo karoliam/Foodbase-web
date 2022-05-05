@@ -130,26 +130,6 @@ const deleteUserAllUserPreferences = async (userId) => {
   }
 };
 
-//For deleting users with administrator privileges
-const adminDeleteUser = async (AdminUser, toBeDelUserID) => {
-  try {
-    if (AdminUser.role === 0) {
-      //Moderator can delete which user they ever want to.
-      // delete preferences
-      const [rows1] = await promisePool.query('DELETE from user_preferences WHERE user_ID=?', [toBeDelUserID]);
-      // delete user
-      console.log('user model admin delete user_preferences: ', rows1);
-      const [rows] = await promisePool.query('DELETE from user WHERE ID=?', [toBeDelUserID]);
-      console.log('user model admin delete: ', rows);
-      return rows.affectedRows === 1;
-    }
-  } catch (e) {
-    console.error('userModel deleteUser error', e.message);
-    return false;
-  }
-}
-
-
 // DELETE preferences from user
 const deleteUserPreferences = async (userId, prefsToDelete, res) => {
   try {

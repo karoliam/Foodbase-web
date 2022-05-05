@@ -6,18 +6,18 @@ const generateCheckBoxList = async (appendElement, wantedType) => {
   const response = await fetch(url + '/food/');
   const feedPreferenceList = await response.json();
 
-  for (let i = 0; i<feedPreferenceList.length; i++) {
+  for (const preference in feedPreferenceList) {
     // Generate only the preferences of wanted type
-    if (feedPreferenceList[i].type === wantedType) {
+    if (preference.type === wantedType) {
       //Create input element
       const newPreference= document.createElement('input');
-      newPreference.id = feedPreferenceList[i].name;
+      newPreference.id = preference.name;
       newPreference.type = "checkbox";
-      newPreference.name = feedPreferenceList[i].ID;
+      newPreference.name = preference.ID;
       //Create label for input
       const newPreferenceLabel = document.createElement('label');
       newPreferenceLabel.htmlFor = `${newPreference.id}`;
-      newPreferenceLabel.textContent = feedPreferenceList[i].display_name;
+      newPreferenceLabel.textContent = preference.display_name;
       //Append the input with label to the list of feedPreferences
       appendElement.appendChild(newPreferenceLabel);
       appendElement.appendChild(newPreference);
