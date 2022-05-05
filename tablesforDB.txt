@@ -40,6 +40,15 @@ CREATE TABLE post_preferences (
 	CONSTRAINT PK_post_preferences PRIMARY KEY (post_ID, food_fact_ID)
 );
 
+CREATE TABLE post_reports (
+	ID Int NOT NULL AUTO_INCREMENT,
+	reason VARCHAR(1000) DEFAULT "",
+	time_stamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+	post_ID Int,
+	PRIMARY KEY (ID),
+	FOREIGN KEY (post_ID) REFERENCES post(ID)
+);
+
 CREATE TABLE user_preferences (
 	user_ID int NOT NULL,
 	food_fact_ID int NOT NULL,
