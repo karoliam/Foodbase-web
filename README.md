@@ -11,12 +11,12 @@ excess food and people with a need for food.
 The application helps reduce food waste and also brings good spirit
 to the community.
 
-Principles:
-1.Mobile first
-2.User privacy and security (Although security is not top notch currently)
-3.Ease of use (intuitive UI)
+###Principles
+1. Mobile first 
+2. User privacy and security (Although security is not top notch currently)
+3. Ease of use (intuitive UI)
 
-Different roles in the application:
+###Different roles in the application
 -Anonymous users can:
     -Browse the feed
     -Open posts
