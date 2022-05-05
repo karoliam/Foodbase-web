@@ -20,7 +20,6 @@ h5, p {
     font-size: 0.3em;
     border-radius: 20px;
     padding: 10px;
-    margin-top: 10%;
     margin-bottom: 16px;
     resize: none;
 }
@@ -58,22 +57,15 @@ h5, p {
 
 
 .received {
-    background-color: rgb(130 169 171 / 37%);
-    border-radius: 20px;
     text-align: left;
-    padding: 8px;
-    width: 50%;
+    align-self: flex-start;
+    margin-left: 16px;
 }
 
 .sent {
     text-align: right;
-    background-color: rgb(220 191 204 / 56%);
-    border-radius: 20px;
-    padding: 8px;
-    width: 50%;
     align-self: flex-end;
     margin-right: 16px;
-
 }
 
 #chat-container {
@@ -81,8 +73,59 @@ h5, p {
     flex-direction: column;
     height: 500px;
     overflow-y: scroll;
+    background-color: rgba(255, 238, 211, 0.11);
+    margin-bottom: 16px;
+    border-radius: 20px;
 }
 
+
+.message-container-received {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(220 191 204 / 56%);
+    border-radius: 30px;
+    align-self: flex-end;
+    margin: 0 16px 16px 0;
+    width: 43%;
+}
+
+.sender-username {
+    margin-bottom: -12px;
+    color: rgba(107, 133, 129, 0.97);
+    align-self: flex-end;
+    margin-right: 16px;
+}
+
+.receiver-username {
+    margin-bottom: -12px;
+    align-self: flex-start;
+    margin-left: 16px;
+    color: rgba(222, 236, 235, 0.97);
+}
+
+
+.message-container-sent {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    background-color: rgba(146, 162, 162, 0.51);
+    border-radius: 30px;
+    width: 43%;
+    margin: 0 16px 16px 0;
+}
+
+
+.timestamp-sender {
+    align-self: flex-end;
+    margin-top: -8px;
+    color: rgba(128, 143, 138, 0.97);
+    margin-right: 16px;
+}
+
+.timestamp-receiver {
+    margin-top: -8px;
+    color: rgba(128, 143, 138, 0.97);
+}
 
 @media screen and (min-width: 500px) {
     nav {
@@ -90,6 +133,9 @@ h5, p {
     }
 }
 @media screen and (min-width: 600px) {
+    .message-container-sent, .message-container-received {
+        width: 35%;
+    }
     .message-article {
         width: 70%;
         padding: 8vh;
@@ -104,6 +150,11 @@ h5, p {
     }
     h4 {
         margin-top: 0;
+    }
+
+    .username-time {
+        width: 30%;
+        margin: auto;
     }
 
 

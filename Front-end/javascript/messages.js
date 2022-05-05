@@ -2,19 +2,21 @@
 
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 const article = document.querySelector('#message-article');
+const logout = document.querySelector('#logout-link');
 
 
 if (!sessionUser) {
   location.href = "../html/anonymousUser.html";
 } else {
-
+  logout.addEventListener('click', evt => {
+    logUserOut();
+  })
   const getUsernameConversation = async (username) => {
     username.forEach((username) => {
       if(username.sender_username !== sessionUser.username) {
         const usernameTitle = document.createElement('div');
         usernameTitle.className = 'username-time';
 
-        console.log('täällä', username.sender_username, 'id:ni on', username.sender_ID);
         const conversationLink = document.createElement('a');
         conversationLink.className = 'message-link';
 
