@@ -11,7 +11,7 @@ const ownerID = urlParams.get('userid');
 
 // Check whether a user is found
 if (sessionUser) {
-  if (ownerID === sessionUser.ID) {
+  if (parseInt(ownerID) === parseInt(sessionUser.ID)) {
     // Prevent the user from accidentally sending a message to themselves
     const contactForm = document.querySelector('#contact-form');
     contactForm.style.display = 'none';

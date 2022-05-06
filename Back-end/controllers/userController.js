@@ -106,9 +106,6 @@ const user_password_put = async (req, res) => {
     console.log('Password update error', errors);
     res.send(errors.array());
   } else {
-    // TODO: Remove this dangerous log before release
-    console.log('user controller password update body', req.body);
-
     // get the existing user and see if the given old password matches
     const [oldUser] = await getUserLogin([req.body.email]);
     const oldPassword = oldUser.password;
@@ -121,11 +118,7 @@ const user_password_put = async (req, res) => {
     // bcrypt the new password and remove the old_password
     newUser.password = await bcryptjs.hash(req.body.password, 13);
     delete newUser.old_password;
-    // TODO: Remove this dangerous log before release
-    console.log('newUser at usermodel', newUser);
     const passwdUpdate = await userModel.updateUserPassword(newUser,res);
-    console.log('user model password update: ', passwdUpdate);
-    // TODO: Remove this dangerous log before release
     if (passwdUpdate) {
       res.json({message: `Password updated!`, passwordUpdated: true});
     }

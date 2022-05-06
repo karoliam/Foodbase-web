@@ -157,12 +157,9 @@ const get_reported_posts = async (req, res) => {
 //-----POST-----POST-----
 // create new post while logged in
 const post_posting = async (req, res) => {
+    console.log('joo', req.file);
     if (!req.file) {
-        return res.status(400).json(
-            {
-                message: `post upload failed: file invalid`
-            }
-        );
+        return res.json({message: 'post upload failed: file invalid', postCreated: false});
     }
     //stop if validation errors
     const errors = validationResult(req);
@@ -173,7 +170,6 @@ const post_posting = async (req, res) => {
             errors: errors
         });
     }
-    console.log('request post body:', req.body);
     const postInfo = {};
     const newPreferenceIDS = [];
 
@@ -199,8 +195,6 @@ const post_posting = async (req, res) => {
         newPreferenceIDS.push(parseInt(prefsKey));
     }
 
-    console.log('req path', req.file.path);
-    console.log('filename', postInfo.filename);
     await makeThumbnail(req.file.path, postInfo.filename);
     // create post base data
     const postCreateId = await postModel.addPost(postInfo, res);
@@ -214,7 +208,7 @@ const post_posting = async (req, res) => {
     if (prefsToInsert.length > 0) {
         prefsAdded = await postModel.addPostPreferences(prefsToInsert, res);
     }
-    res.json({message: `post created with id: ${postCreateId} and ${prefsAdded} preferences.`});
+    res.json({postCreated: true});
 };
 
 // Post reporting

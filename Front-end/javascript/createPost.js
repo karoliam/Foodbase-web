@@ -36,8 +36,11 @@ if (!sessionUser) {
       body: formData,
     };
     const response = await fetch(url + '/post', posting);
-    const json = await response.json();
-    alert(json.message);
-    location.href = '../html/feed.html';
+    const created = await response.json();
+    if (created.postCreated) {
+      location.href = '../html/feed.html';
+    } else {
+      alert(created.message);
+    }
   });
 }
