@@ -1,7 +1,10 @@
 'use strict';
 
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
-
+const logout = document.querySelector('#logout-link');
+logout.addEventListener('click', evt => {
+  logUserOut();
+})
 // Get all reported posts
 const getReportedPosts = async () => {
   try {

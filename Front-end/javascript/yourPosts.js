@@ -7,7 +7,7 @@ const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 // If the user is a moderator make the links smaller
 if (sessionUser.role === 0) {
     const linkList = document.querySelector('.profile-links');
-    linkList.style.fontSize = '0.8em';
+    linkList.style.fontSize = '0.7em';
 } else {
     const moderatorToolsLink = document.querySelector('#moderator-tools-link');
     moderatorToolsLink.style.display = 'none';
