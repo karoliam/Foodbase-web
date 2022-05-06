@@ -299,6 +299,7 @@ const flagPost = (postPosition, postID) => {
     }
     appendFigcaption.removeChild(reportForm);
   })
+
   // Append the reportForm to the post
   appendFigcaption.appendChild(reportForm);
 }
