@@ -27,7 +27,6 @@ const sendMsg = async (sessionUser, urlParams) => {
     const response = await fetch(url + '/message', messageToDb);
     console.log(response);
     const json = await response.json();
-    alert(json.message);
     messageField.value = '';
 
 }
