@@ -11,7 +11,7 @@ const getAllPosts = async (res) => {
         return rows;
     } catch (e) {
         console.error('postModel getAllPosts error', e.message);
-        res.status(500).json({ message: 'something went wrong src: getAllPosts getAllPosts' });
+        res.status(500).json({ message: 'something went wrong' });
     }
 };
 
@@ -23,7 +23,7 @@ const getPostByID = async (id, res) => {
         return rows;
     } catch (e) {
         console.error('postModel getPostByID error', e.message);
-        res.status(500).json({ message: 'something went wrong src: postModel getPostByID' });
+        res.status(500).json({ message: 'something went wrong' });
     }
 };
 
@@ -34,7 +34,7 @@ const getPostsByUserID = async (id, res) => {
         return rows;
     } catch (e) {
         console.error('postModel getPostsByUserID error', e.message);
-        res.status(500).json({ message: 'something went wrong src: postModel getPostsByUserID' });
+        res.status(500).json({ message: 'something went wrong' });
     }
 };
 
@@ -45,7 +45,7 @@ const getPostPrefsByID = async (id, res) => {
         return rows;
     } catch (e) {
         console.error('postModel getPostPrefsByID error', e.message);
-        res.status(500).json({ message: 'something went wrong src: postModel getPostPrefsByID' });
+        res.status(500).json({ message: 'something went wrong' });
     }
 }
 
@@ -78,7 +78,7 @@ const addPost = async (postInfo, res) => {
         return rows.insertId;
     } catch (e) {
         console.error('postModel addPost error', e.message);
-        res.status(500).json({ message: 'something went wrong src: postModel addPost'});
+        res.status(500).json({ message: 'something went wrong'});
     }
 };
 
@@ -91,7 +91,7 @@ const addPostPreferences = async (prefsToInsert, res) => {
         return rows.affectedRows;
     } catch (e) {
         console.error('postModel addPostPreferences error', e.message);
-        res.status(500).json({ message: 'something went wrong src: postModel addPostPreferences'});
+        res.status(500).json({ message: 'something went wrong'});
     }
 }
 
@@ -116,7 +116,7 @@ const modifyPost = async (postInfo, res) => {
         return rows.affectedRows === 1;
     } catch (e) {
         console.error('postModel modifyPost error', e.message);
-        res.status(500).json({ message: 'something went wrong src: postModel modifyPost'});
+        res.status(500).json({ message: 'something went wrong'});
     }
 };
 
@@ -128,7 +128,7 @@ const deletePostByID = async (postId, userId, res) => {
         return rows.affectedRows === 1;
     } catch (e) {
         console.error('postModel deletePostByID error', e.message);
-        res.status(500).json({ message: 'something went wrong src: postModel deletePostByID' });
+        res.status(500).json({ message: 'something went wrong' });
     }
 };
 
@@ -140,7 +140,7 @@ const deletePostPreferencesByIdCheck = async (postId, userId, res) => {
       return rows.affectedRows;
   } catch (e) {
       console.error('postModel deletePostPreferencesByIdCheck error', e.message);
-      res.status(500).json({ message: 'something went wrong src: postModel deletePostPreferencesByIdCheck' });
+      res.status(500).json({ message: 'something went wrong' });
   }
 }
 
@@ -152,7 +152,7 @@ const deletePostPreferencesById = async (postId, foodFactIds, res) => {
         return rows.affectedRows;
     } catch (e) {
         console.error('postModel deletePostPreferencesById error', e.message);
-        res.status(500).json({ message: 'something went wrong src: postModel deletePostPreferencesById' });
+        res.status(500).json({ message: 'something went wrong' });
     }
 };
 

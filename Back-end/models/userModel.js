@@ -42,7 +42,7 @@ const getUserPreferencesByID = async (id,res) => {
     return rows;
   } catch (e) {
     console.error('userModel getUserPreferencesByID error', e.message);
-    res.status(500).json({ message: 'something went wrong src: userModel getUserPreferencesByID' });
+    res.status(500).json({ message: 'something went wrong' });
   }
 };
 
@@ -53,7 +53,7 @@ const getUserPrefsByID = async (id, res) => {
     return rows;
   } catch (e) {
     console.error('userModel getUserPrefsByID error', e.message);
-    res.status(500).json({ message: 'something went wrong src: userModel getUserPrefsByID' });
+    res.status(500).json({ message: 'something went wrong' });
   }
 };
 
@@ -66,7 +66,7 @@ const createUser = async (user, res) => {
     return rows;
   } catch (e) {
     console.error('userModel createUser error', e.message);
-    res.status(500).json({message: 'An error occurred src: userModel createUser'});
+    res.status(500).json({message: 'An error occurred'});
   }
 };
 
@@ -78,7 +78,7 @@ const createUserPreferences = async (prefsToInsert, res) => {
     return rows.affectedRows;
   } catch (e) {
     console.error('userModel createUserPreferences error', e.message);
-    res.status(500).json({message: 'An error occurred src: userModel createUserPreferences'});
+    res.status(500).json({message: 'An error occurred'});
   }
 };
 
@@ -138,7 +138,7 @@ const deleteUserPreferences = async (userId, prefsToDelete, res) => {
     return rows.affectedRows;
   } catch (e) {
     console.error('userModel getUserPrefsByID error', e.message);
-    res.status(500).json({ message: 'something went wrong src: userModel getUserPrefsByID' });
+    res.status(500).json({ message: 'something went wrong' });
   }
 }
 

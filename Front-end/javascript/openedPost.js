@@ -9,6 +9,14 @@ const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id');
 const ownerID = urlParams.get('userid');
 
+// Check whether a user is found
+if (sessionUser) {
+  if (parseInt(ownerID) === parseInt(sessionUser.ID)) {
+    // Prevent the user from accidentally sending a message to themselves
+    const contactForm = document.querySelector('#contact-form');
+    contactForm.style.display = 'none';
+  }
+}
 
 
 messageTextarea.addEventListener('input', evt => {

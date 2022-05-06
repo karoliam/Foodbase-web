@@ -232,9 +232,7 @@ const deletePost = async (postID) => {
       },
     };
     const response = await fetch(url + `/post/${postID}`, fetchOptions);
-    const deletePost = await response.json();
-    // TODO: Remove this log
-    console.log(deletePost.message);
+    await response.json();
     //Reload page
     const sessionUser = JSON.parse(sessionStorage.getItem('user'));
     if (sessionUser.role === 0) {
@@ -295,18 +293,13 @@ const flagPost = (postPosition, postID) => {
         body: JSON.stringify({postID: postID, reason: reportMSG.value}),
       };
       const response = await fetch(url + `/post/reported/${postID}`, fetchOptions);
-      const postReport = await response.json();
-      if (postReport.reportSuccessful) {
-        console.log(postReport.message);
-      } else {
-        // TODO: Remove this log
-        console.log('unsuccessful', postReport.message);
-      }
+      await response.json();
     } catch (e) {
       console.log(e.message);
     }
     appendFigcaption.removeChild(reportForm);
   })
+
   // Append the reportForm to the post
   appendFigcaption.appendChild(reportForm);
 }
