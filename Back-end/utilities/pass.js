@@ -13,8 +13,6 @@ passport.use(new Strategy(
         const params = [username];
         try {
             const [user] = await getUserLogin(params);
-            // TODO: Remove this log before final release
-            console.log('Local strategy', user); // result is binary row
             if (user === undefined) {
                 return done(null, false, {message: 'Incorrect email or password.'});
             }
