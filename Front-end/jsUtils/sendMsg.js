@@ -1,7 +1,7 @@
 'use strict';
 
 const sendMsg = async (sessionUser, urlParams) => {
-  const id = urlParams.get('id');
+  const id = urlParams.get('userid');
   const receiverUsername = urlParams.get('user');
   const messageField = document.querySelector('#contact');
   console.log('session user', sessionUser.username, 'receiver username', receiverUsername);

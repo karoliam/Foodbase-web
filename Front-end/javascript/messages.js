@@ -20,7 +20,7 @@ if (!sessionUser) {
         const conversationLink = document.createElement('a');
         conversationLink.className = 'message-link';
 
-        conversationLink.href = `messageThread.html?id=${username.sender_ID}&user=${username.sender_username}`;
+        conversationLink.href = `messageThread.html?userid=${username.sender_ID}&user=${username.sender_username}`;
         console.log(conversationLink.href);
         const messageUsername = document.createElement('p');
         const box = document.createElement('div');

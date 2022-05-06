@@ -4,7 +4,7 @@ const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 const chatContainer = document.getElementById('chat-container');
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const userID = urlParams.get('id');
+const userID = urlParams.get('userid');
 const userName = urlParams.get('username');
 const contactForm = document.querySelector('#contact-form');
 
