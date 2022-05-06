@@ -9,7 +9,7 @@ const getAllFoodFacts = async (res) => {
         return rows;
     } catch (e) {
         console.error('foodFactModel getAllFoodFacts error', e.message);
-        res.status(500).json({ message: 'something went wrong src: foodFactModel getAllFoodFacts' });
+        res.status(500).json({ message: 'something went wrong' });
     }
 };
 
@@ -20,7 +20,7 @@ const getFoodFactByID = async (id, res) => {
         return rows[0];
     } catch (e) {
         console.error('foodFactModel getFoodFactByID error', e.message);
-        res.status(500).json({ message: 'something went wrong src: foodFactModel getFoodFactByID' });
+        res.status(500).json({ message: 'something went wrong' });
     }
 };
 // GET food_fact ID using name
@@ -30,7 +30,7 @@ const getFoodFactIDByName = async (name,res) => {
         return rows[0].ID;
     } catch (e) {
         console.error('foodFactModel getFoodFactIDByName', e.message);
-        res.status(500).json({ message: 'something went wrong src: foodFactModel getFoodFactIDByName' });
+        res.status(500).json({message: 'something went wrong'});
     }
 };
 
@@ -43,7 +43,7 @@ const getPostFoodFacts = async (ID, res) => {
         return rows;
     } catch (e) {
         console.error('foodFactModel getPostFoodFacts', e.message);
-        res.status(500).json({ message: 'something went wrong src: foodFactModel getPostFoodFacts' });
+        res.status(500).json({ message: 'something went wrong' });
     }
 };
 
@@ -53,7 +53,7 @@ const getPostFoodFactsByID = async (id, res) => {
         return rows;
     } catch (e) {
         console.error('foodFactModel getFoodFactIDByName', e.message);
-        res.status(500).json({ message: 'something went wrong src: foodFactModel getFoodFactIDByName' });
+        res.status(500).json({ message: 'something went wrong' });
     }
 }
 

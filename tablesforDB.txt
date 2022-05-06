@@ -93,6 +93,7 @@ DESCRIBE user;
 DESCRIBE food_fact;
 DESCRIBE post;
 DESCRIBE post_preferences;
+DESCRIBE post_reports;
 DESCRIBE user_preferences;
 DESCRIBE message;
 

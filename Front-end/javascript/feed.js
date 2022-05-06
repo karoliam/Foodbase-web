@@ -38,9 +38,26 @@ function showSearch() {
   mobileSearchForm.style.display = 'block';
 }
 
-//------Function for generating filtered posts----------------------------------
+//------Post generation function------------------------------------------------
 const postFeed = document.querySelector('.post-feed');
-const generateFilteredPosts = async () => {
+const generatePosts = async (posts) => {
+  //First clear the old posts
+  postFeed.innerHTML = '';
+  if (!(posts.length === 0)) {
+    //Here we generate the posts
+    await postGenerator(postFeed, posts, true, true, false, false);
+  } else {
+    // If no posts show up notify the user.
+    const promptMessage = document.createElement('h6');
+    promptMessage.className = 'post-title';
+    promptMessage.textContent = 'Looks like not a single post showed up. Try changing your preferences!'
+    postFeed.appendChild(promptMessage);
+  }
+}
+
+//------Function for generating filtered posts----------------------------------
+
+const getFilteredPosts = async () => {
   // Only send pref ID's
   const preferencesToBeSent = {};
   for (const pref in sessionPreferences) {
@@ -59,8 +76,8 @@ const generateFilteredPosts = async () => {
     };
     const response = await fetch(url + '/post/search', fetchOptions);
     const posts = await response.json();
-    //Here we generate the posts
-    await postGenerator(postFeed, posts, true, true, false);
+    // Lazy generation
+    generatePosts(posts);
   } catch (e) {
     console.log(e.message);
   }
@@ -107,7 +124,7 @@ if (!sessionUser) {
   })
 
   // Get and generate all user preference matching posts
-  generateFilteredPosts();
+  getFilteredPosts();
 }
 
 //------Function for searching posts--------------------------------------------
@@ -120,10 +137,8 @@ const searchArticlesBySearchTerms = async (searchForm) => {
     };
     const response = await fetch(url + '/post/search', fetchOptions);
     const posts = await response.json();
-    //Here we generate the posts
-    //First clear the old posts
-    postFeed.innerHTML = '';
-    await postGenerator(postFeed, posts, true, true, false, false);
+    // Lazy generation
+    generatePosts(posts);
   } catch (e) {
     console.log(e.message);
   }
