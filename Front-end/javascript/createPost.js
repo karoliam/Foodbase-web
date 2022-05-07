@@ -1,6 +1,5 @@
 'use strict';
 
-const logout = document.querySelector('#logout-link');
 const createPost = document.querySelector('#createPost');
 const area = document.querySelector('#area');
 const allergensUL = document.querySelector('#allergens');
@@ -18,12 +17,6 @@ if (!sessionUser) {
   // generate List of diets
   generateCheckBoxList(dietsUL,1);
 
-  // Logout functionality
-  logout.addEventListener('click', evt => {
-    logUserOut();
-  })
-
-
   createPost.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const formData = new FormData(createPost);
@@ -39,8 +32,6 @@ if (!sessionUser) {
     const created = await response.json();
     if (created.postCreated) {
       location.href = '../html/feed.html';
-    } else {
-      alert(created.message);
     }
   });
 }

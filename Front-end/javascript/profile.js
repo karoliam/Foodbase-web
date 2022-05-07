@@ -1,7 +1,6 @@
 'use strict';
 
 // Select the elements
-const logout = document.querySelector('#logout-link');
 const username = document.querySelector('#username');
 const email = document.querySelector('#email');
 const area = document.querySelector('#area');
@@ -27,11 +26,6 @@ if (!sessionUser) {
     const moderatorToolsLink = document.querySelector('#moderator-tools-link');
     moderatorToolsLink.style.display = 'none';
   }
-
-  // Logout functionality
-  logout.addEventListener('click', evt => {
-    logUserOut();
-  })
 
   //------Create and populate the elements---------------------------
 

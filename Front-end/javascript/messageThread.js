@@ -12,10 +12,6 @@ const contactForm = document.querySelector('#contact-form');
 if (!sessionUser) {
   location.href = "../html/anonymousUser.html";
 } else {
-  const logout = document.querySelector('#logout-link');
-  logout.addEventListener('click', evt => {
-    logUserOut();
-  })
 
   const getConversation = async (message) => {
     message.forEach((message) => {
