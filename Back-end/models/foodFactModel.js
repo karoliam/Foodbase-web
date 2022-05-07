@@ -1,7 +1,9 @@
 'use strict';
+// Authors Vili M. & Reima N.
+
 const pool = require('../database/db');
-const {json} = require('express');
 const promisePool = pool.promise();
+
 // GET all food_facts
 const getAllFoodFacts = async (res) => {
     try {
@@ -47,6 +49,7 @@ const getPostFoodFacts = async (ID, res) => {
     }
 };
 
+// GET all food fact data based on id
 const getPostFoodFactsByID = async (id, res) => {
     try {
         const [rows] = await promisePool.query('SELECT food_fact.* FROM food_fact LEFT JOIN post_preferences ON food_fact.ID = post_preferences.food_fact_ID WHERE post_ID =?',[id]);

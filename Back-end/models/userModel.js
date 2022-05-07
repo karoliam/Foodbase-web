@@ -1,5 +1,5 @@
 'use strict';
-
+// Authors Reima N. & Vili M.
 const pool = require('../database/db');
 const promisePool = pool.promise();
 
@@ -15,6 +15,7 @@ const getUserLogin = async (params) => {
 };
 
 //-----SELECT-----SELECT-----
+// SELECT all users from DB
 const getAllUsers = async () => {
   try {
     const [rows] = await promisePool.query('SELECT ID,email,username,area FROM user');

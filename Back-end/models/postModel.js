@@ -1,12 +1,13 @@
 'use strict';
+// Authors Vili M. & Reima N.
+
 const pool = require('../database/db');
 const promisePool = pool.promise();
 
 // -----SELECT-----SELECT-----
-// SELECT all posts from DB
+// SELECT all posts from DB and JOIN username to the post
 const getAllPosts = async (res) => {
     try {
-        // retrieve all post basic data from DB
         const [rows] = await promisePool.query('SELECT post.*, user.username FROM post LEFT JOIN user ON post.owner_ID = user.ID ORDER BY time_stamp DESC');
         return rows;
     } catch (e) {
@@ -15,10 +16,9 @@ const getAllPosts = async (res) => {
     }
 };
 
-// SELECT post by id from DB
+// SELECT single post by id from DB and JOIN username to the post
 const getPostByID = async (id, res) => {
     try {
-        // retrieve post basic data from DB by post id
         const [rows] = await promisePool.query('SELECT post.*, user.username FROM post LEFT JOIN user ON post.owner_ID = user.ID WHERE post.ID = ?', [id]);
         return rows;
     } catch (e) {
@@ -27,7 +27,7 @@ const getPostByID = async (id, res) => {
     }
 };
 
-// SELECT all posts by user id
+// SELECT all posts by id and JOIN username to the post
 const getPostsByUserID = async (id, res) => {
     try {
         const [rows] = await promisePool.query('SELECT post.*, user.username FROM post LEFT JOIN user ON post.owner_ID = user.ID WHERE post.owner_ID =? ORDER BY time_stamp DESC', [id]);
@@ -38,7 +38,7 @@ const getPostsByUserID = async (id, res) => {
     }
 };
 
-// get post prefs food_fact IDs by post ID
+// SELECT all post_preferences food_fact ids by id
 const getPostPrefsByID = async (id, res) => {
     try {
         const [rows] = await promisePool.query('SELECT DISTINCT food_fact_ID FROM post_preferences WHERE post_ID=?', [id]);
@@ -59,7 +59,7 @@ const getAllPostReports = async () => {
     }
 }
 
-// get all post report
+// SELECT all post report by id
 const getPostReportsByID = async (id) => {
     try {
         const [rows] = await promisePool.query('SELECT post_ID, reason FROM post_reports WHERE post_ID=?', [id]);
@@ -70,7 +70,7 @@ const getPostReportsByID = async (id) => {
 }
 
 //-----INSERT-----INSERT-----
-// insert post data to DB
+// INSERT post's main data to DB
 const addPost = async (postInfo, res) => {
     try {
         const [rows] = await promisePool.query('INSERT INTO post(filename, description, name, owner_ID, area) VALUES (?,?,?,?,?)',
@@ -82,10 +82,9 @@ const addPost = async (postInfo, res) => {
     }
 };
 
-// insert post preferences by post ids
+// INSERT post preferences by a set of id's
 const addPostPreferences = async (prefsToInsert, res) => {
     try {
-        // insert post related food fact data to DB
         const [rows] = await promisePool.query('INSERT INTO post_preferences(post_ID, food_fact_ID) VALUES ?',
             [prefsToInsert]);
         return rows.affectedRows;
@@ -95,10 +94,9 @@ const addPostPreferences = async (prefsToInsert, res) => {
     }
 }
 
-// Insert post report
+// INSERT post report data to DB
 const addNewReport = async (reason, id) => {
     try {
-        // insert report data to DB
         const [rows] = await promisePool.query('INSERT INTO post_reports(reason, post_ID) VALUES(?,?)',
             [reason, id]);
         return rows.affectedRows === 1;
@@ -108,7 +106,7 @@ const addNewReport = async (reason, id) => {
 }
 
 //-----SET-----SET-----
-// modify existing post
+// UPDATE existing post's main data
 const modifyPost = async (postInfo, res) => {
     try {
         const [rows] = await promisePool.query('UPDATE post SET filename=?, description=?, name=?, area=? WHERE ID = ?',
@@ -121,7 +119,7 @@ const modifyPost = async (postInfo, res) => {
 };
 
 //-----DELETE-----DELETE-----
-// delete post by any id this refers to the post ID
+// delete post by it's id and owner id
 const deletePostByID = async (postId, userId, res) => {
     try {
         const [rows] = await promisePool.query('DELETE FROM post WHERE ID = ? AND owner_ID = ?', [postId, userId]);

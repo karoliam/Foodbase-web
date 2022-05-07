@@ -1,7 +1,10 @@
 'use strict';
+// Authors Karoliina M. & Reima N. & Vili M.
+
 const pool = require('../database/db');
 const promisePool = pool.promise();
 
+// SELECT all messages from DB
 const getAllMessages = async (res) => {
   try {
     const [rows] = await promisePool.query(`SELECT * FROM message`);
@@ -12,6 +15,7 @@ const getAllMessages = async (res) => {
   }
 };
 
+// SELECT the usernames for a conversation (useful for listing different conversations)
 const usernameWithConversation = async (id, res) => {
   try {
     const[rows] = await promisePool.query(`SELECT sender_username, sender_ID FROM message WHERE sender_ID = ? OR receiver_ID = ? UNION SELECT receiver_username, receiver_ID FROM message WHERE sender_ID = ? OR receiver_ID = ?`,
@@ -23,6 +27,7 @@ const usernameWithConversation = async (id, res) => {
   }
 };
 
+// SELECT message data for a conversation
 const getConversation = async (userID, mirkkuliID ,res) => {
   try {
     const[rows] = await promisePool.query(`SELECT text, time_stamp, sender_ID, sender_username, receiver_ID, receiver_username 
@@ -35,6 +40,7 @@ const getConversation = async (userID, mirkkuliID ,res) => {
   }
 }
 
+// INSERT a new message to DB
 const addMessage = async(message, res) => {
   try {
     console.log(message)
@@ -45,12 +51,8 @@ const addMessage = async(message, res) => {
   } catch (e) {
     console.error('messageModel addMessage error', e.message);
     res.status(500).json({message: 'something went wrong'});
-    return;
   }
 }
-
-
-
 
 module.exports = {
   addMessage,
