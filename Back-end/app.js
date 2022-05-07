@@ -35,6 +35,8 @@ app.get('/', (req, res) => {
     res.send('not secured?');
   }
 });
+
+// Partially authenticated routes
 app.use('/post', postRoute);
 app.use('/food', foodFactRoute);
 

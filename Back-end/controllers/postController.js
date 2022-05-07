@@ -139,13 +139,17 @@ const get_reported_posts = async (req, res) => {
             // Check if a reportedPost was already created with the same post_ID
             let append = true;
             if (i > 0) {
-                if (reportedPosts[i-1].ID === reports[i].post_ID) {
-                    append = false;
-                }
+                // Check that the reported post to be appended is not the same
+                reportedPosts.forEach(post => {
+                    if (post.ID === reports[i].post_ID) {
+                        append = false;
+                    }
+                })
             }
             if (append) {
                 const reportedPost = await getPostAndPreference(req, reports[i].post_ID, res);
                 reportedPosts.push(reportedPost[0]);
+                console.log('reportit appendin jälkeen', reportedPosts);
             }
         }
         console.log(reportedPosts);
@@ -157,7 +161,6 @@ const get_reported_posts = async (req, res) => {
 //-----POST-----POST-----
 // create new post while logged in
 const post_posting = async (req, res) => {
-    console.log('joo', req.file);
     if (!req.file) {
         return res.json({message: 'post upload failed: file invalid', postCreated: false});
     }
@@ -204,9 +207,8 @@ const post_posting = async (req, res) => {
         prefsToInsert.push([postCreateId, newPreferenceIDS[i]]);
     }
     // create preferences for post
-    let prefsAdded = 0;
     if (prefsToInsert.length > 0) {
-        prefsAdded = await postModel.addPostPreferences(prefsToInsert, res);
+        await postModel.addPostPreferences(prefsToInsert, res);
     }
     res.json({postCreated: true});
 };

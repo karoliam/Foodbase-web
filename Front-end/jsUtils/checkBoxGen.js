@@ -49,7 +49,7 @@ const generateCheckBoxListWithPreCheck = async (appendElement, wantedType, sessi
     }
   }
 
-  for (let i = 0; i<feedPreferenceList.length; i++) {
+  for (const i in feedPreferenceList) {
     // Generate only the preferences of wanted type
     if (feedPreferenceList[i].type === wantedType) {
       //Create input element
