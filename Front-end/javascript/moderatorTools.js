@@ -5,6 +5,9 @@ const logout = document.querySelector('#logout-link');
 logout.addEventListener('click', evt => {
   logUserOut();
 })
+const linkList = document.querySelector('.profile-links');
+linkList.style.fontSize = '0.7em';
+
 // Get all reported posts
 const getReportedPosts = async () => {
   try {

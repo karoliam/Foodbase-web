@@ -34,11 +34,19 @@ to the community.
     11.Delete clearly inappropriate posts that have been reported multiple times
 
 ## Installation
-1. Clone the repo 
-2. Install Node.js 
-3. Run npm i 
-4. Run npm start 
-5. Deploy in localhost or virtual server.
+1. Clone the repo
+2. Install MariaDB on your localhost or virtual server
+3. run the script from tablesForDB.txt, located in project root
+4. Configure your .env in the project folder with:
+   1. DB_HOST=**your server address or 127.0.0.1**
+   2. DB_NAME=foodbase
+   3. DB_USER=**your configured server user**
+   4. DB_PASS=**your password**
+   5. JWT_SECRET=**random string**
+5. Install Node.js
+6. Run npm i
+7. Run npm start
+8. Deploy in localhost or virtual server.
 
 ## Support
 You can send an email to reimani@metropolia.fi if you encounter a problem or have questions.
@@ -60,9 +68,10 @@ Reima Nikola,
 Vili Mäkinen.
 
 ## License
-This project follows the General Public License v3.0 and thus,
+This project follows the guidelines of General Public License v3.0 and thus,
 everyone is free to use parts or all of our code as long as the
 original authors are credited clearly.
+**The whole license is found in project root folder**
 
 ## Project status
 Summer break
