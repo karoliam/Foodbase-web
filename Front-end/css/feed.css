@@ -119,8 +119,7 @@ figure {
 }
 
 .descriptionText {
-    overflow-y: scroll;
-    scroll-margin: 20px;
+    overflow-y: auto;
     border: rgba(107, 133, 132, 0.55) solid;
     border-radius: 10px 0 0 10px;
     padding: 10px;
