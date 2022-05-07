@@ -100,7 +100,7 @@ const areaList = [
 // Generating the area options
 const generateAreaList = async (selectElement) => {
   //Add every location to the selectElement with a label
-  for (let i = 0; i<areaList.length; i++) {
+  for (const i in areaList) {
     // Create option element
     const option = document.createElement('option');
     option.id = areaList[i];
@@ -118,7 +118,7 @@ const generateAreaList = async (selectElement) => {
 // Generating the area options with the correct option preselected
 const generateAreaListWithPreselect = async (selectElement, toBeSelectedId) => {
   //Add every location to the selectElement with a label
-  for (let i = 0; i<areaList.length; i++) {
+  for (const i in areaList) {
     // Create option element
     const option = document.createElement('option');
     option.id = areaList[i];

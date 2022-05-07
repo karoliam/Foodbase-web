@@ -1,6 +1,15 @@
 'use strict';
+//  Authors Reima N. & Karoliina M.
 
-// Generate a list of posts or a single post according to the boolean 'single'
+/**
+ * @description Generate a list of posts according to parameters
+ * @param {HTMLElement} feedElement - The element to append the posts to
+ * @param {Array} fetchedPosts - The array of post data from which to generate the posts from
+ * @param {Boolean} withLink - Generates every post with a link in the picture to the openedPost-view
+ * @param {Boolean} withFlag - --||- with the report-flag and functionality
+ * @param {Boolean} editable - --||- with edit and delete icons and functionality
+ * @param {Boolean} moderated - --||- with the moderator view's elements
+**/
 const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, editable, moderated) => {
   fetchedPosts.forEach((post, loopIndex) => {
     //create needed elements, generate their data and add the to postFeed
@@ -222,7 +231,10 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
   })
 }
 
-// Post deletion function for normal users
+/**
+ * @description Post deletion function for normal users
+ * @param {Uint32Array} postID - The ID of the post
+ **/
 const deletePost = async (postID) => {
   try {
     const fetchOptions = {
@@ -245,7 +257,11 @@ const deletePost = async (postID) => {
   }
 };
 
-// Post flagging function
+/**
+ * @description Post flagging function for logged in users
+ * @param {Uint32Array} postPosition - Position of the post in the feed
+ * @param {Uint32Array} postID - The ID of the post
+ **/
 const flagPost = (postPosition, postID) => {
   //Select the post figcaption to append the reportForm
   const appendFigcaption = document.querySelector(`#post-no-${postPosition} figcaption`);
@@ -299,7 +315,6 @@ const flagPost = (postPosition, postID) => {
     }
     appendFigcaption.removeChild(reportForm);
   })
-
   // Append the reportForm to the post
   appendFigcaption.appendChild(reportForm);
 }
