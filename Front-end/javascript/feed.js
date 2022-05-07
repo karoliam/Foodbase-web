@@ -5,7 +5,6 @@ const allergensDiv = document.querySelector('#allergens');
 const dietsDiv = document.querySelector('#diets');
 const sessionPreferences = JSON.parse(sessionStorage.getItem('preferences'));
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
-const logout = document.querySelector('.logout');
 
 //------Functionality for searchBar---------------------------------------------
 // Mobile search form
@@ -92,7 +91,7 @@ if (!sessionUser) {
   const logoutLi = document.querySelector('.logout');
   logoutLi.style.display = 'none';
   //creating loginIcon instead of logout
-  createLoginIcon(logout);
+  createLoginIcon(logoutLi);
   // Get and generate all posts to feed
   const getAllPosts = async () => {
     try {
@@ -116,12 +115,6 @@ if (!sessionUser) {
   // Generate prechecked checkbox lists
   generateCheckBoxListWithPreCheck(allergensDiv, 0, sessionPreferences);
   generateCheckBoxListWithPreCheck(dietsDiv, 1, sessionPreferences);
-
-  // Logout functionality
-  const logout = document.querySelector('#logout-link');
-  logout.addEventListener('click', evt => {
-    logUserOut();
-  })
 
   // Get and generate all user preference matching posts
   getFilteredPosts();

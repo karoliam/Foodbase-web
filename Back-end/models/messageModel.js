@@ -45,7 +45,6 @@ const addMessage = async(message, res) => {
   } catch (e) {
     console.error('messageModel addMessage error', e.message);
     res.status(500).json({message: 'something went wrong'});
-    return;
   }
 }
 

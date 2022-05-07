@@ -18,13 +18,6 @@ const checkToken = (req, res, next) => {
   }
 };
 
-//Possibly for moderator to be able to see reported users
-const user_get_byId = async (req, res) => {
-  console.log('user get by id', req.params.id);
-  const userFilter = users.filter((item) => item.id == req.params.id);
-  res.json(userFilter[0] || {})
-};
-
 //For updating users
 const user_profile_put = async (req, res) => {
   // Extract the validation errors from a request.
@@ -159,7 +152,6 @@ const user_delete_byId = async (req, res) => {
 }
 
 module.exports = {
-  user_get_byId,
   user_profile_put,
   user_password_put,
   user_delete_byId,

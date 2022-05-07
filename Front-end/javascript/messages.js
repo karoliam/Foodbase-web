@@ -2,15 +2,11 @@
 
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 const article = document.querySelector('#message-article');
-const logout = document.querySelector('#logout-link');
 
 
 if (!sessionUser) {
   location.href = "../html/anonymousUser.html";
 } else {
-  logout.addEventListener('click', evt => {
-    logUserOut();
-  })
   const getUsernameConversation = async (username) => {
     username.forEach((username) => {
       if(username.sender_username !== sessionUser.username) {

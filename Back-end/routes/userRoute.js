@@ -4,7 +4,6 @@ const userController = require('../controllers/userController');
 const multer = require('multer');
 const {body, check} = require('express-validator');
 const {user_password_put, user_profile_put} = require('../controllers/userController');
-const passport = require('../utilities/pass');
 const router = express.Router();
 
 //authentication
@@ -25,9 +24,8 @@ router.route('/password')
     check('username').escape().isLength({max:40}),
     user_password_put);
 
-//Moderator tools/user account self-deletion
+//User account self-deletion
 router.route('/:id')
-.get(userController.user_get_byId)
 .delete(multer().none(), userController.user_delete_byId);
 
 //exporting the router

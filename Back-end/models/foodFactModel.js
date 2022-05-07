@@ -1,6 +1,5 @@
 'use strict';
 const pool = require('../database/db');
-const {json} = require('express');
 const promisePool = pool.promise();
 // GET all food_facts
 const getAllFoodFacts = async (res) => {

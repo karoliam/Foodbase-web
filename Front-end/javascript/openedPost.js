@@ -47,19 +47,14 @@ const getPost = async () => {
   }
 };
 getPost();
-const logoutDiv = document.querySelector('.logout')
 
 //When sending a message it replaces the message box with a box saying Message sent for 5 seconds and then switching it back
 const messageSent = document.createElement('p');
 const messageSentContainer = document.createElement('div');
 //If user is not logged in create Login icon instead of logout
 if(!sessionUser) {
-  createLoginIcon(logoutDiv);
-} else {
-  const logout = document.querySelector('#logout-link');
-  logout.addEventListener('click', evt => {
-    logUserOut();
-  })
+  const logoutli = document.querySelector('.logout');
+  createLoginIcon(logoutli);
 }
 
 function replaceElement() {

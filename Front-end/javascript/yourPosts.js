@@ -1,7 +1,6 @@
 'use strict';
 
 //------Preparations----------------------------------------------------------
-const logout = document.querySelector('#logout-link');
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 // Moderator Tools link
 // If the user is a moderator make the links smaller
@@ -12,11 +11,6 @@ if (sessionUser.role === 0) {
     const moderatorToolsLink = document.querySelector('#moderator-tools-link');
     moderatorToolsLink.style.display = 'none';
 }
-
-// Logout functionality
-logout.addEventListener('click', evt => {
-    logUserOut();
-})
 
 //------Get user's posts by user ID---------------------------------------------
 const getYourPosts = async () => {
