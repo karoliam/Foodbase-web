@@ -1,10 +1,6 @@
 'use strict';
 
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
-const logout = document.querySelector('#logout-link');
-logout.addEventListener('click', evt => {
-  logUserOut();
-})
 const linkList = document.querySelector('.profile-links');
 linkList.style.fontSize = '0.7em';
 

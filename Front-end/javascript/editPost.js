@@ -7,11 +7,6 @@ const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 // Generate the area dropdown options
 generateAreaListWithPreselect(area, sessionUser.area);
 
-const logout = document.querySelector('#logout-link');
-logout.addEventListener('click', evt => {
-    logUserOut();
-})
-
 // wait for preference data from DB
 const waitForPostData = async (post) => {
     // generate List of allergies
