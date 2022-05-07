@@ -1,4 +1,5 @@
 'use strict';
+// Authors Vili M. & Reima N. & Karoliina M.
 
 const postModel = require('../models/postModel');
 const foodFactModel = require("../models/foodFactModel");
@@ -30,27 +31,70 @@ const getPostAndPreference = async (req,id,res) => {
     return post;
 }
 
-//-----GET-----GET-----
-// get all posts from DB with food facts
-const post_list_get = async (req, res) => {
-    const postMain = await postModel.getAllPosts(res);
+// function to fetch all the posts from DB
+const getAllPostsHelper = async (res) => {
+    return await postModel.getAllPosts(res);
+}
+
+// function to push all the posts with their preferences included to a Json
+const turnRowsToJson = async (postMain, res) => {
     const postMainJson = {};
     for (const postMainKey in postMain) {
         postMainJson[postMainKey] = postMain[postMainKey];
         postMainJson[postMainKey].preferences = [];
     }
     for (const postMainJsonKey in postMainJson) {
-        const postPrefs = await foodFactModel.getPostFoodFactsByID([postMainJson[postMainJsonKey].ID]);
+        const postPrefs = await foodFactModel.getPostFoodFactsByID([postMainJson[postMainJsonKey].ID], res);
         if (postPrefs.length > 0) {
             for (const postPrefsKey in postPrefs) {
                 postMainJson[postMainJsonKey].preferences.push(postPrefs[postPrefsKey]);
             }
         }
     }
+    return postMainJson;
+}
+
+// function to push posts from Json to array (the front handles arrays)
+const pushPostsJsonToArray = async (postMainJson) => {
     let posts = []
     for (const postMainJsonKey in postMainJson) {
         posts.push(postMainJson[postMainJsonKey])
     }
+    return posts;
+}
+
+// Post's base data to a Json
+const postPostingAndEditingBaseData = async (reqBody) => {
+    const postInfo = {};
+    // base info for post goes to postInfo and are removed from req.body
+    postInfo.area = reqBody.area;
+    postInfo.title = reqBody.title;
+    postInfo.description = reqBody.description;
+    postInfo.ownerID = reqBody.ownerID;
+    return postInfo;
+}
+
+// create preferences array from req.body
+const postPostingPreferences = async (reqBody) => {
+    const newPreferenceIDS = [];
+    // delete all base data of the post
+    delete reqBody.area;
+    delete reqBody.title;
+    delete reqBody.description;
+    delete reqBody.ownerID;
+    // after deleting other post info theres only preferences left in req.body
+    for (const prefsKey in reqBody) {
+        newPreferenceIDS.push(parseInt(prefsKey));
+    }
+    return newPreferenceIDS;
+}
+
+//-----GET-----GET-----
+// get all posts from DB with food facts
+const post_list_get = async (req, res) => {
+    const postMain = await getAllPostsHelper(res);
+    const postMainJson = await turnRowsToJson(postMain, res);
+    const posts = await pushPostsJsonToArray(postMainJson);
     res.json(posts);
 };
 
@@ -64,43 +108,15 @@ const get_post_by_id = async (req, res) => {
 // get all posts for logged in user
 const post_list_get_your_posts = async (req, res) => {
     const postMain = await postModel.getPostsByUserID(req.params.id, res);
-    const postMainJson = {};
-    for (const postMainKey in postMain) {
-        postMainJson[postMainKey] = postMain[postMainKey];
-        postMainJson[postMainKey].preferences = [];
-    }
-    for (const postMainJsonKey in postMainJson) {
-        const postPrefs = await foodFactModel.getPostFoodFactsByID([postMainJson[postMainJsonKey].ID]);
-        if (postPrefs.length > 0) {
-            for (const postPrefsKey in postPrefs) {
-                postMainJson[postMainJsonKey].preferences.push(postPrefs[postPrefsKey]);
-            }
-        }
-    }
-    let posts = []
-    for (const postMainJsonKey in postMainJson) {
-        posts.push(postMainJson[postMainJsonKey])
-    }
-    console.log('post_list_get_your_posts length:', posts.length);
+    const postMainJson = await turnRowsToJson(postMain, res);
+    const posts = await pushPostsJsonToArray(postMainJson);
     res.json(posts);
 }
 
 const getPostsByPreferencesAndString = async (req, res) => {
-    console.log('rekkula bodi',req.body);
-    const postMain = await postModel.getAllPosts(res);
-    const postMainJson = {};
-    for (const postMainKey in postMain) {
-        postMainJson[postMainKey] = postMain[postMainKey];
-        postMainJson[postMainKey].preferences = [];
-    }
-    for (const postMainJsonKey in postMainJson) {
-        const postPrefs = await foodFactModel.getPostFoodFactsByID([postMainJson[postMainJsonKey].ID]);
-        if (postPrefs.length > 0) {
-            for (const postPrefsKey in postPrefs) {
-                postMainJson[postMainJsonKey].preferences.push(postPrefs[postPrefsKey]);
-            }
-        }
-    }
+    const postMain = await getAllPostsHelper(res);
+    const postMainJson = await turnRowsToJson(postMain, res);
+    // TODO
     delete req.body.keywords;
     let posts = []
     let searchPreferenceArr = []
@@ -108,8 +124,8 @@ const getPostsByPreferencesAndString = async (req, res) => {
         console.log('key',bodyKey)
         searchPreferenceArr.push(parseInt(bodyKey));
     }
-    console.log('search ids',searchPreferenceArr)
-    if (searchPreferenceArr.length > 0) {
+    // push to an array all the posts that have all the marked preferences
+   if (searchPreferenceArr.length > 0) {
         for (const postMainJsonKey in postMainJson) {
             let postPreferencesArr = [];
             for (const preferencesKey in postMainJson[postMainJsonKey].preferences) {
@@ -118,9 +134,9 @@ const getPostsByPreferencesAndString = async (req, res) => {
             if (searchPreferenceArr.every( ai => postPreferencesArr.includes(ai))) {
                 posts.push(postMainJson[postMainJsonKey])
             }
-            // empty the post preferences ID array
         }
     } else {
+       // if no preferences are listed then ignore preference filtering
         for (const postMainJsonKey in postMainJson) {
             posts.push(postMainJson[postMainJsonKey])
         }
@@ -173,30 +189,15 @@ const post_posting = async (req, res) => {
             errors: errors
         });
     }
-    const postInfo = {};
-    const newPreferenceIDS = [];
 
-    // base info for post goes to postInfo and are removed from req.body
-    postInfo.area = req.body.area;
-    delete req.body.area;
-    postInfo.title = req.body.title;
-    delete req.body.title;
-    postInfo.description = req.body.description;
-    delete req.body.description;
-    postInfo.ownerID = req.body.ownerID;
-    delete req.body.ownerID;
-
-    // Image filename
+    // post base data then filename and lastly preferences
+    const postInfo = await postPostingAndEditingBaseData(req.body)
     if (typeof req.file !== 'undefined') {
         postInfo.filename = req.file.filename;
     } else {
         postInfo.filename = null;
     }
-
-    // after deleting other post info theres only preferences left in req.body
-    for (const prefsKey in req.body) {
-        newPreferenceIDS.push(parseInt(prefsKey));
-    }
+    const newPreferenceIDS = await postPostingPreferences(req.body)
 
     await makeThumbnail(req.file.path, postInfo.filename);
     // create post base data
@@ -226,19 +227,9 @@ const post_report_post = async (req, res) => {
 //-----PUT-----PUT-----
 // modify posts with this
 const post_update_put = async (req, res) => {
-
-    const postInfo = {};
-    const newPreferenceIDS = [];
-
-    // base info for post goes to postInfo and are removed from req.body
-    postInfo.area = req.body.area;
-    delete req.body.area;
-    postInfo.title = req.body.title;
-    delete req.body.title;
-    postInfo.description = req.body.description;
-    delete req.body.description;
-    postInfo.ID = req.body.ID;
-    delete req.body.ID;
+    // Post base data and preferences
+    const postInfo = await postPostingAndEditingBaseData(req.body)
+    const newPreferenceIDS = await postPostingPreferences(req.body)
 
     // Image filename
     // Check that the file is not undefined or null
@@ -251,11 +242,6 @@ const post_update_put = async (req, res) => {
         //keep the old filename
         const oldData = await postModel.getPostByID(postInfo.ID, res);
         postInfo.filename = oldData[0].filename;
-    }
-
-    // after deleting other post info theres only preferences left in req.body
-    for (const prefsKey in req.body) {
-        newPreferenceIDS.push(parseInt(prefsKey));
     }
 
     // send post related data to postModel for DB changes
