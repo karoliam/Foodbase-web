@@ -1,4 +1,5 @@
 'use strict';
+
 // Authors Vili M. & Reima N. & Karoliina M.
 
 const postModel = require('../models/postModel');

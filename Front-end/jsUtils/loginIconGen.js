@@ -1,5 +1,7 @@
 'use strict';
 
+// Author Karoliina M.
+
 const createLoginIcon = (logout) => {
   //creating list, link and icon elements and assigning classnames, id's and hrefs
   const login = document.createElement('li');

@@ -1,5 +1,7 @@
 'use strict';
 
+// Author Reima N.
+
 // Generating the checkbox lists
 const generateCheckBoxList = async (appendElement, wantedType) => {
   // Fetch the list of feedPreferences

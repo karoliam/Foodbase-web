@@ -1,4 +1,5 @@
 'use strict';
+
 // Authors Karoliina M. & Reima N. & Vili M.
 
 const pool = require('../database/db');

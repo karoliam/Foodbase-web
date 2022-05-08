@@ -1,5 +1,7 @@
 'use strict';
 
+// Author Karoliina  M
+
 const sendMsg = async (sessionUser, urlParams) => {
   const id = urlParams.get('userid');
   const messageField = document.querySelector('#contact');

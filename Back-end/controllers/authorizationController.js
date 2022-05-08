@@ -1,5 +1,7 @@
 'use strict';
+
 // Authors Reima N. Vili M.
+
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const userModel = require('../models/userModel');

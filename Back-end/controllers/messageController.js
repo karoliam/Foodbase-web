@@ -1,5 +1,7 @@
 'use strict';
 
+// Authors Karoliina M. & Reima N.
+
 const messageModel = require('../models/messageModel')
 
 

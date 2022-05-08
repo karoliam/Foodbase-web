@@ -1,8 +1,9 @@
 'use strict';
 
+// Author Karoliina M.
+
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 const messageTextarea = document.querySelector('#contact');
-const messageSubmitButton = document.querySelector('#send-button');
 const contactForm = document.querySelector('#contact-form');
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -53,8 +54,8 @@ const messageSent = document.createElement('p');
 const messageSentContainer = document.createElement('div');
 //If user is not logged in create Login icon instead of logout
 if(!sessionUser) {
-  const logoutli = document.querySelector('.logout');
-  createLoginIcon(logoutli);
+  const logoutLi = document.querySelector('.logout');
+  createLoginIcon(logoutLi);
 }
 
 function replaceElement() {

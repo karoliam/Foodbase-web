@@ -1,5 +1,7 @@
 'use strict';
 
+// Authors Vili M. & Reima N.
+
 //------Preparations----------------------------------------------------------
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 // Moderator Tools link

@@ -1,5 +1,7 @@
 'use strict';
 
+// Author Reima N.
+
 // selecting login and signup forms and their necessary children
 const loginForm = document.querySelector('#login-form');
 const signupForm = document.querySelector('#signup-form');

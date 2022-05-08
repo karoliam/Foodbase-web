@@ -1,5 +1,7 @@
 'use strict';
+
 // Authors Reima N. & Vili M.
+
 const bcryptjs = require('bcryptjs');
 const userModel = require('../models/userModel');
 const {validationResult} = require("express-validator");

@@ -1,5 +1,7 @@
 'use strict';
 
+// Author Karoliina M.
+
 const createPost = document.querySelector('#createPost');
 const area = document.querySelector('#area');
 const allergensUL = document.querySelector('#allergens');

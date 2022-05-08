@@ -1,5 +1,7 @@
 'use strict';
 
+// Authors Karoliina M. & Reima N.
+
 // Select most important stuff
 const allergensDiv = document.querySelector('#allergens');
 const dietsDiv = document.querySelector('#diets');

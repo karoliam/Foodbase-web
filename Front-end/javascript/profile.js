@@ -1,5 +1,7 @@
 'use strict';
 
+// Author Reima N.
+
 // Select the elements
 const username = document.querySelector('#username');
 const email = document.querySelector('#email');

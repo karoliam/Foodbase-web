@@ -1,5 +1,7 @@
 'use strict';
 
+// Author Reima N.
+
 // Log the user in and redirect to given location string OR NOT if it is 0
 const logUserIn = async (fetchOpt, redirectLocation) => {
   // Waiting for server response. Saving token if response ok

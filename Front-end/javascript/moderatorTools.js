@@ -1,5 +1,7 @@
 'use strict';
 
+// Author Reima N.
+
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 const linkList = document.querySelector('.profile-links');
 linkList.style.fontSize = '0.7em';

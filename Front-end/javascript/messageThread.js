@@ -1,5 +1,6 @@
 'use strict';
-//chat
+
+// Author Karoliina M.
 
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 const chatContainer = document.getElementById('chat-container');

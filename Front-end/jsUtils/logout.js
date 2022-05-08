@@ -1,4 +1,5 @@
 'use strict';
+
 //  Author Reima N.
 
 // Logout button enabler

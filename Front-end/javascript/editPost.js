@@ -1,5 +1,7 @@
 'use strict';
 
+// Author Vili M.
+
 const editPost = document.getElementById('editPostForm');
 const allergensUL = document.querySelector('#allergens');
 const dietsUL = document.querySelector('#diets');

@@ -1,4 +1,5 @@
 'use strict';
+
 //  Authors Reima N. & Karoliina M.
 
 /**
@@ -185,7 +186,6 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
 
     //only when moderated, add the information about reports and messages
     if (moderated) {
-      console.log(post);
       const reportInfo = document.createElement('div');
       const reportSummary = document.createElement('h6');
       reportSummary.className = 'post-title';

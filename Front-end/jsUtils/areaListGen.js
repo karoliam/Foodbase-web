@@ -1,5 +1,7 @@
 'use strict';
 
+// Author Reima N.
+
 //list of areas
 const areaList = [
   'Alppiharju',

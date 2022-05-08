@@ -1,5 +1,7 @@
 'use strict';
 
+// Author karoliina M.
+
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 const article = document.querySelector('#message-article');
 
@@ -42,7 +44,6 @@ if (!sessionUser) {
       };
       const response = await fetch(url + '/message/username', fetchOptions);
       const username = await response.json();
-      console.log(username);
       //Here we generate the conversations
       await getUsernameConversation(username);
     } catch (e) {

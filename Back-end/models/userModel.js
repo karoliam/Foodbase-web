@@ -1,5 +1,7 @@
 'use strict';
+
 // Authors Reima N. & Vili M.
+
 const pool = require('../database/db');
 const promisePool = pool.promise();
 
