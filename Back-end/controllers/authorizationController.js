@@ -1,4 +1,5 @@
 'use strict';
+// Authors Reima N. Vili M.
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const userModel = require('../models/userModel');
@@ -6,7 +7,7 @@ const foodFactModel = require('../models/foodFactModel');
 const bcryptjs = require('bcryptjs');
 const {validationResult} = require("express-validator");
 
-
+// function to login
 const login = (req, res, next) => {
   passport.authenticate('local', {session: false}, (error, user) => {
     //In case of errors or missing user
@@ -28,6 +29,7 @@ const login = (req, res, next) => {
   })(req, res, next);
 };
 
+// function to create a user
 const userCreate_post = async (req, res) => {
 
   // Extract the validation errors from a request.
@@ -40,15 +42,16 @@ const userCreate_post = async (req, res) => {
     // bcrypted password
     const cryptedPass = await bcryptjs.hash(req.body.password, 13);
 
+    // something to hold the user base data and preferences separate
     const user = {};
     const prefIDS = [];
     user.username = req.body.username;
-    delete req.body.username;
     user.email = req.body.email;
-    delete req.body.email;
     user.password = cryptedPass;
-    delete req.body.password;
     user.area = req.body.area;
+    delete req.body.username;
+    delete req.body.email;
+    delete req.body.password;
     delete req.body.area;
 
     // after deleting other post info theres only preferences left in req.body

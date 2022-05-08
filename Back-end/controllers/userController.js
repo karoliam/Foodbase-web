@@ -1,12 +1,11 @@
 'use strict';
-
+// Authors Reima N. & Vili M.
 const bcryptjs = require('bcryptjs');
 const userModel = require('../models/userModel');
 const {validationResult} = require("express-validator");
 const {getUserFoodFacts} = require('../models/foodFactModel');
 const {getUserLogin} = require('../models/userModel');
 const {deleteAllPostsPreferencesByUserID, deleteAllPostsByUserID} = require('../models/postModel');
-
 
 
 //Authentication
@@ -40,7 +39,6 @@ const user_profile_put = async (req, res) => {
     newUser.area = req.body.area;
     delete req.body.area;
 
-    console.log("There should be strnums & on here: ",req.body)
     // after deleting other post info theres only preferences left in req.body
     for (const prefsKey in req.body) {
       prefIDS.push(parseInt(prefsKey));

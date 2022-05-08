@@ -1,5 +1,6 @@
 'use strict';
-
+// Reima N. & Vili M.
+// functions to get data straight from food facts table
 const foodFactModel = require('../models/foodFactModel');
 
 const food_fact_list_get = async (req, res) => {
