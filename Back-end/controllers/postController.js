@@ -118,13 +118,16 @@ const getPostsByPreferencesAndString = async (req, res) => {
     const postMain = await getAllPostsHelper(res);
     const postMainJson = await turnRowsToJson(postMain, res);
 
-    // delete for texts in the search field from post title and text
-    if (req.body.keywords.size > 0) {
-        const searchWords = req.body.keywords.split(" ");
-        for (const postMainJsonKey in postMainJson) {
-            if (!searchWords.some( ai => postMainJson[postMainJsonKey].name.includes(ai)
-                || postMainJson[postMainJsonKey].description.includes(ai))) {
-                delete postMainJson[postMainJsonKey];
+    if (typeof req.body.keywords != 'undefined' ) {
+        const textInSearch = req.body.keywords
+        // delete for texts in the search field from post title and text
+        if (textInSearch.length > 0) {
+            const searchWords = req.body.keywords.split(" ");
+            for (const postMainJsonKey in postMainJson) {
+                if (!searchWords.some( ai => postMainJson[postMainJsonKey].name.includes(ai)
+                    || postMainJson[postMainJsonKey].description.includes(ai))) {
+                    delete postMainJson[postMainJsonKey];
+                }
             }
         }
     }
