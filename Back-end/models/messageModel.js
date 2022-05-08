@@ -45,8 +45,8 @@ const getConversation = async (userID, mirkkuliID ,res) => {
 const addMessage = async(message, res) => {
   try {
     console.log(message)
-    const [rows] = await promisePool.query('INSERT INTO message(sender_ID, text, receiver_ID, sender_username, receiver_username) VALUES(?, ?, ?, ?, ?)',
-        [message.sender_ID, message.text, message.receiver_ID, message.sender_username, message.receiver_username]);
+    const [rows] = await promisePool.query('INSERT INTO message(sender_ID, text, receiver_ID) VALUES(?, ?, ?)',
+        [message.sender_ID, message.text, message.receiver_ID]);
     console.log('message sent in database', rows);
     return rows.insertId;
   } catch (e) {
