@@ -1,13 +1,13 @@
-label a {
-    font-size: 0.7em;
+span a {
+    font-size: 0.6em;
 }
 
 .fa-trash-can:hover {
     color: rgb(196, 81, 81);
 }
 
-label {
-    margin-top: -40px;
+span {
+    margin-top: -80px;
 }
 
 .description .post-title {

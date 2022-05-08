@@ -18,11 +18,11 @@ if (!sessionUser) {
         const box = document.createElement('div');
         box.className = 'message-thread';
         conversationLink.className = 'message-link';
-        conversationLink.href = `messageThread.html?userid=${username.sender_ID}&user=${username.sender_username}`;
+        conversationLink.href = `messageThread.html?userid=${username.sender_ID}`;
 
         //adding username for the button
         const messageUsername = document.createElement('p');
-        messageUsername.id = username.sender_username;
+        messageUsername.id = username.sender_ID;
         messageUsername.textContent = username.sender_username;
 
         box.appendChild(messageUsername);

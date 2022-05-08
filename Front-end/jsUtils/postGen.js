@@ -19,11 +19,10 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
     headingH6.textContent = post.name;
     headingH6.className = 'post-title';
 
-    //------imgLinkLabel (with edit and delete links)---------------------------
-    const imgLinkLabel = document.createElement('label');
+    //------imgLinkSpan (with edit and delete links)---------------------------
+    const imgLinkSpan = document.createElement('span');
     //Only generate icons if the post is editable or moderated
     if (editable || moderated) {
-      imgLinkLabel.htmlFor = 'post-image';
       //deleteLink
       const deleteLink = document.createElement('a');
 
@@ -42,8 +41,8 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
             deletePost(post.ID);
           }
         })
-        //append the deleteLink to imgLinkLabel
-        imgLinkLabel.appendChild(deleteLink);
+        //append the deleteLink to imgLinkSpan
+        imgLinkSpan.appendChild(deleteLink);
       } else {
         //editLink
         const editLink = document.createElement('a');
@@ -64,15 +63,15 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
             deletePost(post.ID);
           }
         })
-        //append both elements to imgLinkLabel
-        imgLinkLabel.appendChild(editLink);
-        imgLinkLabel.appendChild(deleteLink);
+        //append both elements to imgLinkSpan
+        imgLinkSpan.appendChild(editLink);
+        imgLinkSpan.appendChild(deleteLink);
       }
     }
 
     //------imageLink and its content (image)-----------------------------------
     const imageLink = document.createElement('a');
-    imageLink.href = `openedPost.html?id=${post.ID}&user=${post.username}&userid=${post.owner_ID}`;
+    imageLink.href = `openedPost.html?id=${post.ID}&userid=${post.owner_ID}`;
     imageLink.className = 'post-image-link';
 
     //set image attributes and append to imageLink
@@ -213,7 +212,7 @@ const postGenerator = async (feedElement, fetchedPosts, withLink, withFlag, edit
     figure.appendChild(headingH6);
     if (editable || moderated) {
       //append the editable/moderated post icon(s)
-      figure.appendChild(imgLinkLabel);
+      figure.appendChild(imgLinkSpan);
     }
     if (withLink) {
       //append the link with embedded image

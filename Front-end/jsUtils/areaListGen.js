@@ -127,11 +127,7 @@ const generateAreaListWithPreselect = async (selectElement, toBeSelectedId) => {
     if (areaList[i] === toBeSelectedId) {
       option.selected = true;
     }
-    // Create label for option
-    const label = document.createElement('label');
-    label.htmlFor = option.id;
     //Append to the selectElement
-    selectElement.appendChild(label);
     selectElement.appendChild(option);
   }
 }
