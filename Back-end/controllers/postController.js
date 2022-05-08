@@ -337,6 +337,8 @@ const delete_post_by_id = async (req, res) => {
         }
     }
     // delete post (that belongs to the postOwner) AND related food fact notes from DB
+    const delReports = await postModel.deletePostReportsByID(req.params.id);
+    console.log('items deleted from post_reports:', delReports);
     const delPreferences = await postModel.deletePostPreferencesByIdCheck(req.params.id, postOwnerId);
     console.log('items deleted from post_preferences:', delPreferences);
     const delPost = await postModel.deletePostByID(req.params.id, postOwnerId, res);

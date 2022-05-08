@@ -106,7 +106,6 @@ deleteButton.addEventListener('click',async (evt) => {
 const deleteProfile = async () => {
   try {
     const passwdInputData = document.querySelector('#passwd-input').value;
-    console.log(passwdInputData)
     const fetchOptions = {
       method: 'DELETE',
       headers: {

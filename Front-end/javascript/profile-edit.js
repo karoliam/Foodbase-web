@@ -108,6 +108,7 @@ passwdForm.addEventListener('submit', async (evt) => {
 
   // Relog the user in (if all went well)
   if (passwordUpdateResponseJson.passwordUpdated === true) {
+    passwdFormSubmit.textContent = 'Password Changed!';
     formedPasswdForm.set('username', currentMail);
     const newFetchOptions = {
       method: 'POST',
@@ -115,7 +116,7 @@ passwdForm.addEventListener('submit', async (evt) => {
       body: formedPasswdForm,
     };
     await logUserIn(newFetchOptions, 0);
-    passwdFormSubmit.textContent = 'Password Changed!';
+
     setTimeout(() => {passwdFormSubmit.textContent = 'Change password';},2000);
     return;
   }

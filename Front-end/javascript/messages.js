@@ -16,8 +16,7 @@ if (!sessionUser) {
         const conversationLink = document.createElement('a');
         conversationLink.className = 'message-link';
 
-        conversationLink.href = `messageThread.html?userid=${username.sender_ID}&user=${username.sender_username}`;
-        console.log(conversationLink.href);
+        conversationLink.href = `messageThread.html?userid=${username.sender_ID}`;
         const messageUsername = document.createElement('p');
         const box = document.createElement('div');
         box.className = 'message-thread';
@@ -42,12 +41,11 @@ if (!sessionUser) {
       const response = await fetch(url + '/message/username', fetchOptions);
       const username = await response.json();
       console.log(username);
-      //Here we generate the posts
+      //Here we generate the conversations
       await getUsernameConversation(username);
     } catch (e) {
       console.log(e.message);
     }
   };
-  // Initially at page load if user not logged in
   getUsername();
 }

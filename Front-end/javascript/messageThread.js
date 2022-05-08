@@ -81,7 +81,6 @@ if (!sessionUser) {
     }
   };
   getMessages();
-  // Initially at page load if user not logged in
 }
 contactForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();

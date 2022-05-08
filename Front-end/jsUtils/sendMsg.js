@@ -2,19 +2,14 @@
 
 const sendMsg = async (sessionUser, urlParams) => {
   const id = urlParams.get('userid');
-  const receiverUsername = urlParams.get('user');
   const messageField = document.querySelector('#contact');
-  console.log('session user', sessionUser.username, 'receiver username', receiverUsername);
 
-    console.log(sessionUser.ID, messageField.value.toString(), id);
+
     const messageDataJson = {
       "sender_ID": sessionUser.ID,
       "text": messageField.value.toString(),
       "receiver_ID": id,
-      "sender_username": sessionUser.username,
-      "receiver_username": receiverUsername,
     };
-    console.log('messagedatajson', messageDataJson);
     const messageToDb = {
       method: 'POST',
       headers: {
@@ -25,7 +20,6 @@ const sendMsg = async (sessionUser, urlParams) => {
       body: JSON.stringify(messageDataJson),
     };
     const response = await fetch(url + '/message', messageToDb);
-    console.log(response);
     await response.json();
     messageField.value = '';
 }

@@ -246,8 +246,8 @@ const deletePost = async (postID) => {
     const response = await fetch(url + `/post/${postID}`, fetchOptions);
     await response.json();
     //Reload page
-    const sessionUser = JSON.parse(sessionStorage.getItem('user'));
-    if (sessionUser.role === 0) {
+    const sessionUserAfterDelete = JSON.parse(sessionStorage.getItem('user'));
+    if (sessionUserAfterDelete.role === 0) {
       location.href = '../html/moderatorTools.html';
     } else {
       location.href = '../html/yourPosts.html';

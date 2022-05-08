@@ -6,6 +6,8 @@ const {validationResult} = require("express-validator");
 const {getUserFoodFacts} = require('../models/foodFactModel');
 const {getUserLogin} = require('../models/userModel');
 const {deleteAllPostsPreferencesByUserID, deleteAllPostsByUserID} = require('../models/postModel');
+const postModel = require('../models/postModel');
+const messageModel = require('../models/messageModel');
 
 
 //Authentication
@@ -127,9 +129,12 @@ const user_delete_byId = async (req, res) => {
     return res.json({message: 'Incorrect password.'});
   } else {
     //First delete the posts
+    // delete all reports made for this post
+    const postsDelReports = await postModel.deleteAllPostReportsByUserID(req.user.ID);
+    console.log('users post reports deleted:', postsDelReports);
     // delete post (that belongs to the user) related food fact notes from DB
     const postsDelPrefs = await deleteAllPostsPreferencesByUserID(req.user.ID, res);
-    console.log('users post preferences deleted:', postsDelPrefs)
+    console.log('users post preferences deleted:', postsDelPrefs);
     // delete the actual post data from DB
     const postsDel = await deleteAllPostsByUserID(req.user.ID, res);
     if (postsDel) {
@@ -139,6 +144,8 @@ const user_delete_byId = async (req, res) => {
 
       const userPrefDel = await userModel.deleteUserAllUserPreferences(req.user.ID);
       console.log('user preferences deleted: ', userPrefDel)
+      // const userMessagesDel = await messageModel.deleteUserAllUserPreferences(req.user.ID);
+      // console.log('user preferences deleted: ', userPrefDel)
       const userDel = await userModel.deleteUser(req.user.ID);
       if (userDel){
         return res.json({message: 'User deleted!', deleteSuccessful: true});

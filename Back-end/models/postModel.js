@@ -191,6 +191,18 @@ const deletePostReportsByID = async (postID) => {
     }
 }
 
+// delete all reports from all posts of a user
+const deleteAllPostReportsByUserID = async (userID) => {
+    try {
+        const [rows] = await promisePool.query('DELETE FROM post_reports WHERE post_ID IN(SELECT ID from post where owner_ID = ?)', [userID]);
+        console.log('postModel delete reports', rows);
+        return rows.affectedRows === 1;
+    } catch (e) {
+        console.error('postModel deleteAllPostsByUserID error', e.message);
+        return false;
+    }
+}
+
 module.exports = {
     getAllPosts,
     getPostByID,
@@ -208,4 +220,5 @@ module.exports = {
     deleteAllPostsByUserID,
     deleteAllPostsPreferencesByUserID,
     deletePostReportsByID,
+    deleteAllPostReportsByUserID,
 };
