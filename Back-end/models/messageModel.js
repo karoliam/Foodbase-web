@@ -18,8 +18,9 @@ const getAllMessages = async (res) => {
 // SELECT the usernames for a conversation (useful for listing different conversations)
 const usernameWithConversation = async (id, res) => {
   try {
-    const[rows] = await promisePool.query(`SELECT sender_username, sender_ID FROM message WHERE sender_ID = ? OR receiver_ID = ? UNION SELECT receiver_username, receiver_ID FROM message WHERE sender_ID = ? OR receiver_ID = ?`,
-        [id, id, id, id]);
+    const [rows] = await promisePool.query('SELECT user.username AS sender_username, message.sender_ID FROM message LEFT JOIN user ON message.sender_ID = user.ID ' +
+      'WHERE message.sender_ID =? OR message.receiver_ID =? UNION SELECT user.username AS receiver_username, message.receiver_ID FROM message ' +
+      'LEFT JOIN user ON message.receiver_ID = user.ID WHERE message.sender_ID =? OR message.receiver_ID =?', [id, id, id, id])
     return rows;
   } catch (e) {
     console.error('messageModel usernameWithConversation ', e);
@@ -30,9 +31,9 @@ const usernameWithConversation = async (id, res) => {
 // SELECT message data for a conversation
 const getConversation = async (userID, mirkkuliID ,res) => {
   try {
-    const[rows] = await promisePool.query(`SELECT text, time_stamp, sender_ID, sender_username, receiver_ID, receiver_username 
-    FROM message WHERE sender_ID = ? AND receiver_ID = ? OR sender_ID = ? AND receiver_ID = ?  `,
-        [userID, mirkkuliID,mirkkuliID ,userID]);
+    const [rows] = await promisePool.query('SELECT text, time_stamp, sender_ID, user.username AS sender_username, receiver_ID, user.username AS receiver_username ' +
+        'FROM message LEFT JOIN user ON message.sender_ID = user.ID AND message.receiver_ID = user.ID ' +
+        'WHERE sender_ID =? AND receiver_ID =? OR sender_ID =? AND receiver_ID =?', [userID, mirkkuliID,mirkkuliID ,userID])
     return rows;
   } catch (e) {
     console.error('messageModel getConversation', e);
