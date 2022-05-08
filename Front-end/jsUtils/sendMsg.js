@@ -4,7 +4,7 @@ const sendMsg = async (sessionUser, urlParams) => {
   const id = urlParams.get('userid');
   const messageField = document.querySelector('#contact');
 
-
+    //creating json
     const messageDataJson = {
       "sender_ID": sessionUser.ID,
       "text": messageField.value.toString(),

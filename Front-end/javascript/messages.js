@@ -10,16 +10,18 @@ if (!sessionUser) {
   const getUsernameConversation = async (username) => {
     username.forEach((username) => {
       if(username.sender_username !== sessionUser.username) {
+
+        //creating a button for conversations
         const usernameTitle = document.createElement('div');
         usernameTitle.className = 'username-time';
-
         const conversationLink = document.createElement('a');
-        conversationLink.className = 'message-link';
-
-        conversationLink.href = `messageThread.html?userid=${username.sender_ID}`;
-        const messageUsername = document.createElement('p');
         const box = document.createElement('div');
         box.className = 'message-thread';
+        conversationLink.className = 'message-link';
+        conversationLink.href = `messageThread.html?userid=${username.sender_ID}&user=${username.sender_username}`;
+
+        //adding username for the button
+        const messageUsername = document.createElement('p');
         messageUsername.id = username.sender_username;
         messageUsername.textContent = username.sender_username;
 

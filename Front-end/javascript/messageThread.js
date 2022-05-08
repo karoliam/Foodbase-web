@@ -1,4 +1,5 @@
 'use strict';
+//chat
 
 const sessionUser = JSON.parse(sessionStorage.getItem('user'));
 const chatContainer = document.getElementById('chat-container');
@@ -15,31 +16,29 @@ if (!sessionUser) {
 
   const getConversation = async (message) => {
     message.forEach((message) => {
-
+      //container for sent messages
       const messageContainerSent = document.createElement('div');
       messageContainerSent.className = 'message-container-sent';
 
+      //container for received messages
       const messageContainerReceived = document.createElement('div');
       messageContainerReceived.className = 'message-container-received';
 
+      //p tags for the messages
       const receivedMessage = document.createElement('p');
       const sentMessage = document.createElement('p');
       receivedMessage.className = 'received';
       sentMessage.className = 'sent';
-
-
       const receiverUsername = document.createElement('p');
       const timeStampReceiver = document.createElement('p');
       const timeStampSender = document.createElement('p');
-
       receiverUsername.className = 'receiver-username';
       timeStampReceiver.className = 'timestamp-receiver';
       timeStampSender.className = 'timestamp-sender';
-
       const senderUsername = document.createElement('p');
       senderUsername.className = 'sender-username';
 
-
+      //fixing the timestamp in readable form
       const time = new Date(message.time_stamp).toLocaleTimeString('fi-FI',
           { timeStyle: 'short', hour12: false});
 
@@ -82,6 +81,7 @@ if (!sessionUser) {
   };
   getMessages();
 }
+//sending messages to the database
 contactForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   await sendMsg(sessionUser, urlParams);
