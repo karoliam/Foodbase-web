@@ -44,7 +44,6 @@ const getConversation = async (userID, mirkkuliID ,res) => {
 // INSERT a new message to DB
 const addMessage = async(message, res) => {
   try {
-    console.log(message)
     const [rows] = await promisePool.query('INSERT INTO message(sender_ID, text, receiver_ID) VALUES(?, ?, ?)',
         [message.sender_ID, message.text, message.receiver_ID]);
     console.log('message sent in database', rows);
@@ -55,9 +54,22 @@ const addMessage = async(message, res) => {
   }
 }
 
+// Delete all messages by userID
+const deleteAllMessagesByUserID = async (userID) => {
+  try {
+    await promisePool.query('DELETE FROM message WHERE sender_ID = ? OR receiver_ID = ?',
+        [userID, userID]);
+    return true;
+  } catch (e) {
+    console.error('messageModel deleteAllMessagesByUserID error', e.message);
+    return false;
+  }
+}
+
 module.exports = {
   addMessage,
   getAllMessages,
   usernameWithConversation,
   getConversation,
+  deleteAllMessagesByUserID,
 };

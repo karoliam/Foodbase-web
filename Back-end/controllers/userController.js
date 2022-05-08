@@ -144,8 +144,8 @@ const user_delete_byId = async (req, res) => {
 
       const userPrefDel = await userModel.deleteUserAllUserPreferences(req.user.ID);
       console.log('user preferences deleted: ', userPrefDel)
-      // const userMessagesDel = await messageModel.deleteUserAllUserPreferences(req.user.ID);
-      // console.log('user preferences deleted: ', userPrefDel)
+      const userMessagesDel = await messageModel.deleteAllMessagesByUserID(req.user.ID);
+      console.log('user messages deleted: ', userMessagesDel);
       const userDel = await userModel.deleteUser(req.user.ID);
       if (userDel){
         return res.json({message: 'User deleted!', deleteSuccessful: true});
